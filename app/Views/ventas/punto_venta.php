@@ -55,16 +55,27 @@
             <h2>🛒 Venta Actual</h2>
         </div>
 
-        <!-- Cliente -->
-        <div class="cliente-section">
-            <label class="form-label">Clientes/Mesas</label>
-            <select id="cliente-select" class="form-input">
-                <option value="">Cliente general</option>
-                <?php foreach($clientes as $cliente): ?>
-                    <option value="<?= $cliente['id'] ?>"><?= esc($cliente['nombre']) ?></option>
-                <?php endforeach; ?>
-            </select>
-        </div>
+<div class="cliente-section">
+    <label class="form-label">Clientes / Mesas</label>
+    <select id="cliente-select" class="form-input">
+        <option value="" id="opcion-default">Seleccionar una opción</option>
+        <?php foreach ($clientes as $cliente): ?>
+            <option value="<?= $cliente['id'] ?>">
+                <?= esc($cliente['nombre']) ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+</div>
+<script>
+const selectCliente = document.getElementById('cliente-select');
+
+selectCliente.addEventListener('focus', () => {
+    const opcion = document.getElementById('opcion-default');
+    if (opcion) {
+        opcion.remove();
+    }
+});
+</script>
 
         <!-- Items del Carrito -->
         <div class="carrito-items" id="carrito-items">
