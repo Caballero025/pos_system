@@ -363,3 +363,659 @@ DEBUG - 2026-01-08 13:32:17 --> Session: Class initialized using 'CodeIgniter\Se
 DEBUG - 2026-01-08 13:37:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 DEBUG - 2026-01-08 13:39:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
 DEBUG - 2026-01-08 13:40:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 13:46:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 13:46:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 13:46:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 13:46:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 13:46:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 13:46:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 13:47:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 13:47:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 13:47:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 13:47:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 13:47:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 13:52:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 13:53:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:03:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:08:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:13:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:16:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:16:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-01-08 14:16:21 --> mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`pos_system`.`ventas`, CONSTRAINT `ventas_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`) ON DELETE SET NULL) in C:\pos_system\pos_system\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\pos_system\pos_system\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `ve...', 0)
+#1 C:\pos_system\pos_system\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `ve...')
+#2 C:\pos_system\pos_system\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `ve...')
+#3 C:\pos_system\pos_system\system\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `ve...', Array, false)
+#4 C:\pos_system\pos_system\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\pos_system\pos_system\system\BaseModel.php(838): CodeIgniter\Model->doInsert(Array)
+#6 C:\pos_system\pos_system\system\Model.php(797): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\pos_system\pos_system\app\Controllers\VentasController.php(141): CodeIgniter\Model->insert(Array)
+#8 C:\pos_system\pos_system\system\CodeIgniter.php(933): App\Controllers\VentasController->procesarVenta()
+#9 C:\pos_system\pos_system\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VentasController))
+#10 C:\pos_system\pos_system\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\pos_system\pos_system\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\pos_system\pos_system\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\pos_system\pos_system\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 C:\pos_system\pos_system\system\rewrite.php(44): require_once('C:\\pos_system\\p...')
+#15 {main}
+DEBUG - 2026-01-08 14:17:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:17:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:17:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:17:15 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:17:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:17:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:17:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:17:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:17:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:17:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:17:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:17:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-01-08 14:17:53 --> mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`pos_system`.`ventas`, CONSTRAINT `ventas_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`) ON DELETE SET NULL) in C:\pos_system\pos_system\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\pos_system\pos_system\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `ve...', 0)
+#1 C:\pos_system\pos_system\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `ve...')
+#2 C:\pos_system\pos_system\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `ve...')
+#3 C:\pos_system\pos_system\system\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `ve...', Array, false)
+#4 C:\pos_system\pos_system\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\pos_system\pos_system\system\BaseModel.php(838): CodeIgniter\Model->doInsert(Array)
+#6 C:\pos_system\pos_system\system\Model.php(797): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\pos_system\pos_system\app\Controllers\VentasController.php(141): CodeIgniter\Model->insert(Array)
+#8 C:\pos_system\pos_system\system\CodeIgniter.php(933): App\Controllers\VentasController->procesarVenta()
+#9 C:\pos_system\pos_system\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VentasController))
+#10 C:\pos_system\pos_system\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\pos_system\pos_system\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\pos_system\pos_system\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\pos_system\pos_system\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 C:\pos_system\pos_system\system\rewrite.php(44): require_once('C:\\pos_system\\p...')
+#15 {main}
+DEBUG - 2026-01-08 14:20:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-01-08 14:20:11 --> mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`pos_system`.`ventas`, CONSTRAINT `ventas_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`) ON DELETE SET NULL) in C:\pos_system\pos_system\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\pos_system\pos_system\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `ve...', 0)
+#1 C:\pos_system\pos_system\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `ve...')
+#2 C:\pos_system\pos_system\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `ve...')
+#3 C:\pos_system\pos_system\system\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `ve...', Array, false)
+#4 C:\pos_system\pos_system\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\pos_system\pos_system\system\BaseModel.php(838): CodeIgniter\Model->doInsert(Array)
+#6 C:\pos_system\pos_system\system\Model.php(797): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\pos_system\pos_system\app\Controllers\VentasController.php(141): CodeIgniter\Model->insert(Array)
+#8 C:\pos_system\pos_system\system\CodeIgniter.php(933): App\Controllers\VentasController->procesarVenta()
+#9 C:\pos_system\pos_system\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VentasController))
+#10 C:\pos_system\pos_system\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\pos_system\pos_system\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\pos_system\pos_system\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\pos_system\pos_system\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 C:\pos_system\pos_system\system\rewrite.php(44): require_once('C:\\pos_system\\p...')
+#15 {main}
+DEBUG - 2026-01-08 14:20:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-01-08 14:20:33 --> mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`pos_system`.`ventas`, CONSTRAINT `ventas_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`) ON DELETE SET NULL) in C:\pos_system\pos_system\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\pos_system\pos_system\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `ve...', 0)
+#1 C:\pos_system\pos_system\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `ve...')
+#2 C:\pos_system\pos_system\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `ve...')
+#3 C:\pos_system\pos_system\system\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `ve...', Array, false)
+#4 C:\pos_system\pos_system\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\pos_system\pos_system\system\BaseModel.php(838): CodeIgniter\Model->doInsert(Array)
+#6 C:\pos_system\pos_system\system\Model.php(797): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\pos_system\pos_system\app\Controllers\VentasController.php(141): CodeIgniter\Model->insert(Array)
+#8 C:\pos_system\pos_system\system\CodeIgniter.php(933): App\Controllers\VentasController->procesarVenta()
+#9 C:\pos_system\pos_system\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VentasController))
+#10 C:\pos_system\pos_system\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\pos_system\pos_system\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\pos_system\pos_system\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\pos_system\pos_system\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 C:\pos_system\pos_system\system\rewrite.php(44): require_once('C:\\pos_system\\p...')
+#15 {main}
+DEBUG - 2026-01-08 14:21:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:21:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:22:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:22:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-01-08 14:22:39 --> mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`pos_system`.`ventas`, CONSTRAINT `ventas_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`) ON DELETE SET NULL) in C:\pos_system\pos_system\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\pos_system\pos_system\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `ve...', 0)
+#1 C:\pos_system\pos_system\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `ve...')
+#2 C:\pos_system\pos_system\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `ve...')
+#3 C:\pos_system\pos_system\system\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `ve...', Array, false)
+#4 C:\pos_system\pos_system\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\pos_system\pos_system\system\BaseModel.php(838): CodeIgniter\Model->doInsert(Array)
+#6 C:\pos_system\pos_system\system\Model.php(797): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\pos_system\pos_system\app\Controllers\VentasController.php(141): CodeIgniter\Model->insert(Array)
+#8 C:\pos_system\pos_system\system\CodeIgniter.php(933): App\Controllers\VentasController->procesarVenta()
+#9 C:\pos_system\pos_system\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VentasController))
+#10 C:\pos_system\pos_system\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\pos_system\pos_system\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\pos_system\pos_system\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\pos_system\pos_system\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 C:\pos_system\pos_system\system\rewrite.php(44): require_once('C:\\pos_system\\p...')
+#15 {main}
+DEBUG - 2026-01-08 14:23:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:23:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:23:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-01-08 14:23:45 --> mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`pos_system`.`ventas`, CONSTRAINT `ventas_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`) ON DELETE SET NULL) in C:\pos_system\pos_system\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\pos_system\pos_system\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `ve...', 0)
+#1 C:\pos_system\pos_system\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `ve...')
+#2 C:\pos_system\pos_system\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `ve...')
+#3 C:\pos_system\pos_system\system\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `ve...', Array, false)
+#4 C:\pos_system\pos_system\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\pos_system\pos_system\system\BaseModel.php(838): CodeIgniter\Model->doInsert(Array)
+#6 C:\pos_system\pos_system\system\Model.php(797): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\pos_system\pos_system\app\Controllers\VentasController.php(141): CodeIgniter\Model->insert(Array)
+#8 C:\pos_system\pos_system\system\CodeIgniter.php(933): App\Controllers\VentasController->procesarVenta()
+#9 C:\pos_system\pos_system\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VentasController))
+#10 C:\pos_system\pos_system\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\pos_system\pos_system\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\pos_system\pos_system\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\pos_system\pos_system\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 C:\pos_system\pos_system\system\rewrite.php(44): require_once('C:\\pos_system\\p...')
+#15 {main}
+DEBUG - 2026-01-08 14:24:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:24:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-01-08 14:24:36 --> mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`pos_system`.`ventas`, CONSTRAINT `ventas_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`) ON DELETE SET NULL) in C:\pos_system\pos_system\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\pos_system\pos_system\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `ve...', 0)
+#1 C:\pos_system\pos_system\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `ve...')
+#2 C:\pos_system\pos_system\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `ve...')
+#3 C:\pos_system\pos_system\system\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `ve...', Array, false)
+#4 C:\pos_system\pos_system\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\pos_system\pos_system\system\BaseModel.php(838): CodeIgniter\Model->doInsert(Array)
+#6 C:\pos_system\pos_system\system\Model.php(797): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\pos_system\pos_system\app\Controllers\VentasController.php(141): CodeIgniter\Model->insert(Array)
+#8 C:\pos_system\pos_system\system\CodeIgniter.php(933): App\Controllers\VentasController->procesarVenta()
+#9 C:\pos_system\pos_system\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VentasController))
+#10 C:\pos_system\pos_system\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\pos_system\pos_system\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\pos_system\pos_system\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\pos_system\pos_system\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 C:\pos_system\pos_system\system\rewrite.php(44): require_once('C:\\pos_system\\p...')
+#15 {main}
+DEBUG - 2026-01-08 14:25:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:26:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:28:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:29:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:30:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-01-08 14:30:44 --> mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`pos_system`.`ventas`, CONSTRAINT `ventas_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`) ON DELETE SET NULL) in C:\pos_system\pos_system\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\pos_system\pos_system\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `ve...', 0)
+#1 C:\pos_system\pos_system\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `ve...')
+#2 C:\pos_system\pos_system\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `ve...')
+#3 C:\pos_system\pos_system\system\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `ve...', Array, false)
+#4 C:\pos_system\pos_system\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\pos_system\pos_system\system\BaseModel.php(838): CodeIgniter\Model->doInsert(Array)
+#6 C:\pos_system\pos_system\system\Model.php(797): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\pos_system\pos_system\app\Controllers\VentasController.php(141): CodeIgniter\Model->insert(Array)
+#8 C:\pos_system\pos_system\system\CodeIgniter.php(933): App\Controllers\VentasController->procesarVenta()
+#9 C:\pos_system\pos_system\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VentasController))
+#10 C:\pos_system\pos_system\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\pos_system\pos_system\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\pos_system\pos_system\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\pos_system\pos_system\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 C:\pos_system\pos_system\system\rewrite.php(44): require_once('C:\\pos_system\\p...')
+#15 {main}
+DEBUG - 2026-01-08 14:31:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:32:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:33:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:33:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:33:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:35:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:36:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-01-08 14:36:20 --> mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`pos_system`.`ventas`, CONSTRAINT `ventas_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`) ON DELETE SET NULL) in C:\pos_system\pos_system\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\pos_system\pos_system\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `ve...', 0)
+#1 C:\pos_system\pos_system\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `ve...')
+#2 C:\pos_system\pos_system\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `ve...')
+#3 C:\pos_system\pos_system\system\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `ve...', Array, false)
+#4 C:\pos_system\pos_system\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\pos_system\pos_system\system\BaseModel.php(838): CodeIgniter\Model->doInsert(Array)
+#6 C:\pos_system\pos_system\system\Model.php(797): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\pos_system\pos_system\app\Controllers\VentasController.php(141): CodeIgniter\Model->insert(Array)
+#8 C:\pos_system\pos_system\system\CodeIgniter.php(933): App\Controllers\VentasController->procesarVenta()
+#9 C:\pos_system\pos_system\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VentasController))
+#10 C:\pos_system\pos_system\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\pos_system\pos_system\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\pos_system\pos_system\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\pos_system\pos_system\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 C:\pos_system\pos_system\system\rewrite.php(44): require_once('C:\\pos_system\\p...')
+#15 {main}
+DEBUG - 2026-01-08 14:39:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:39:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-01-08 14:39:28 --> mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`pos_system`.`ventas`, CONSTRAINT `ventas_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`) ON DELETE SET NULL) in C:\pos_system\pos_system\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\pos_system\pos_system\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `ve...', 0)
+#1 C:\pos_system\pos_system\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `ve...')
+#2 C:\pos_system\pos_system\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `ve...')
+#3 C:\pos_system\pos_system\system\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `ve...', Array, false)
+#4 C:\pos_system\pos_system\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\pos_system\pos_system\system\BaseModel.php(838): CodeIgniter\Model->doInsert(Array)
+#6 C:\pos_system\pos_system\system\Model.php(797): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\pos_system\pos_system\app\Controllers\VentasController.php(141): CodeIgniter\Model->insert(Array)
+#8 C:\pos_system\pos_system\system\CodeIgniter.php(933): App\Controllers\VentasController->procesarVenta()
+#9 C:\pos_system\pos_system\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VentasController))
+#10 C:\pos_system\pos_system\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\pos_system\pos_system\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\pos_system\pos_system\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\pos_system\pos_system\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 C:\pos_system\pos_system\system\rewrite.php(44): require_once('C:\\pos_system\\p...')
+#15 {main}
+DEBUG - 2026-01-08 14:39:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-01-08 14:39:41 --> mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`pos_system`.`ventas`, CONSTRAINT `ventas_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`) ON DELETE SET NULL) in C:\pos_system\pos_system\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\pos_system\pos_system\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `ve...', 0)
+#1 C:\pos_system\pos_system\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `ve...')
+#2 C:\pos_system\pos_system\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `ve...')
+#3 C:\pos_system\pos_system\system\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `ve...', Array, false)
+#4 C:\pos_system\pos_system\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\pos_system\pos_system\system\BaseModel.php(838): CodeIgniter\Model->doInsert(Array)
+#6 C:\pos_system\pos_system\system\Model.php(797): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\pos_system\pos_system\app\Controllers\VentasController.php(141): CodeIgniter\Model->insert(Array)
+#8 C:\pos_system\pos_system\system\CodeIgniter.php(933): App\Controllers\VentasController->procesarVenta()
+#9 C:\pos_system\pos_system\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VentasController))
+#10 C:\pos_system\pos_system\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\pos_system\pos_system\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\pos_system\pos_system\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\pos_system\pos_system\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 C:\pos_system\pos_system\system\rewrite.php(44): require_once('C:\\pos_system\\p...')
+#15 {main}
+DEBUG - 2026-01-08 14:39:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:39:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:39:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:39:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:39:53 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:40:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:40:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:40:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:40:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:40:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:40:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+ERROR - 2026-01-08 14:40:24 --> mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`pos_system`.`ventas`, CONSTRAINT `ventas_ibfk_1` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`) ON DELETE SET NULL) in C:\pos_system\pos_system\system\Database\MySQLi\Connection.php:327
+Stack trace:
+#0 C:\pos_system\pos_system\system\Database\MySQLi\Connection.php(327): mysqli->query('INSERT INTO `ve...', 0)
+#1 C:\pos_system\pos_system\system\Database\BaseConnection.php(729): CodeIgniter\Database\MySQLi\Connection->execute('INSERT INTO `ve...')
+#2 C:\pos_system\pos_system\system\Database\BaseConnection.php(646): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO `ve...')
+#3 C:\pos_system\pos_system\system\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO `ve...', Array, false)
+#4 C:\pos_system\pos_system\system\Model.php(394): CodeIgniter\Database\BaseBuilder->insert()
+#5 C:\pos_system\pos_system\system\BaseModel.php(838): CodeIgniter\Model->doInsert(Array)
+#6 C:\pos_system\pos_system\system\Model.php(797): CodeIgniter\BaseModel->insert(Array, true)
+#7 C:\pos_system\pos_system\app\Controllers\VentasController.php(141): CodeIgniter\Model->insert(Array)
+#8 C:\pos_system\pos_system\system\CodeIgniter.php(933): App\Controllers\VentasController->procesarVenta()
+#9 C:\pos_system\pos_system\system\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VentasController))
+#10 C:\pos_system\pos_system\system\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#11 C:\pos_system\pos_system\system\Boot.php(363): CodeIgniter\CodeIgniter->run()
+#12 C:\pos_system\pos_system\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#13 C:\pos_system\pos_system\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#14 C:\pos_system\pos_system\system\rewrite.php(44): require_once('C:\\pos_system\\p...')
+#15 {main}
+DEBUG - 2026-01-08 14:42:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:42:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:42:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:42:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-01-08 14:42:23 --> ErrorException: copy(\\Caballero\POS-58): Failed to open stream: No such file or directory
+[Method: GET, Route: ventas/imprimir/61]
+in VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php on line 378.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'copy(\\\\Caballero\\POS-58): Failed to open stream: No such file or directory', 'C:\\pos_system\\pos_system\\vendor\\mike42\\escpos-php\\src\\Mike42\\Escpos\\PrintConnectors\\WindowsPrintConnector.php', 378)
+ 2 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(378): copy('C:\\Users\\jseca\\AppData\\Local\\Temp\\esc8566.tmp', '\\\\Caballero\\POS-58')
+ 3 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(296): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->runCopy('C:\\Users\\jseca\\AppData\\Local\\Temp\\esc8566.tmp', '\\\\Caballero\\POS-58')
+ 4 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(176): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->finalizeWin('@aEMI TIEND
+E' . "\0" . 'calle arbolin
+Tel: 4141148085
+RFC: MARA020430AK7
+--------------------------------
+a' . "\0" . 'Folio: V20260108144223540
+Fecha: 08/01/2026 14:42
+Cliente: Cliente general
+Atendio: Marco
+--------------------------------
+ECant Producto              Importe
+E' . "\0" . '   3 cacahuates   45.00
+--------------------------------
+                Subtotal: $45.00
+               Efectivo: $200.00
+                 Cambio: $155.00
+E                   TOTAL: $45.00
+E' . "\0" . '
+a­Gracias por su compra! vuelva pronto :)*** Venta COMPLETADA ***
+Powered by POS System
+VA')
+ 5 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\Printer.php(502): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->finalize()
+ 6 APPPATH\Controllers\VentasController.php(349): Mike42\Escpos\Printer->close()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\VentasController->imprimirTicket('61')
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VentasController))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\pos_system\\pos_system\\public\\index.php')
+DEBUG - 2026-01-08 14:42:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:42:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:42:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:42:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:42:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:44:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:44:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:44:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:44:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:44:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:46:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:46:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:46:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:48:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:48:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:48:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:48:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:48:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:48:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-01-08 14:48:43 --> ErrorException: copy(\\Caballero\POS-58): Failed to open stream: No such file or directory
+[Method: GET, Route: ventas/imprimir/63]
+in VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php on line 378.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'copy(\\\\Caballero\\POS-58): Failed to open stream: No such file or directory', 'C:\\pos_system\\pos_system\\vendor\\mike42\\escpos-php\\src\\Mike42\\Escpos\\PrintConnectors\\WindowsPrintConnector.php', 378)
+ 2 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(378): copy('C:\\Users\\jseca\\AppData\\Local\\Temp\\esc50CD.tmp', '\\\\Caballero\\POS-58')
+ 3 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(296): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->runCopy('C:\\Users\\jseca\\AppData\\Local\\Temp\\esc50CD.tmp', '\\\\Caballero\\POS-58')
+ 4 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(176): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->finalizeWin('@aEMI TIEND
+E' . "\0" . 'calle arbolin
+Tel: 4141148085
+RFC: MARA020430AK7
+--------------------------------
+a' . "\0" . 'Folio: V20260108144842876
+Fecha: 08/01/2026 14:48
+Cliente: Cliente general
+Atendio: Marco
+--------------------------------
+ECant Producto              Importe
+E' . "\0" . '   1 cacahuates   15.00
+--------------------------------
+                Subtotal: $15.00
+               Efectivo: $500.00
+                 Cambio: $485.00
+E                   TOTAL: $15.00
+E' . "\0" . '
+a­Gracias por su compra! vuelva pronto :)*** Venta COMPLETADA ***
+Powered by POS System
+VA')
+ 5 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\Printer.php(502): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->finalize()
+ 6 APPPATH\Controllers\VentasController.php(349): Mike42\Escpos\Printer->close()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\VentasController->imprimirTicket('63')
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VentasController))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\pos_system\\pos_system\\public\\index.php')
+DEBUG - 2026-01-08 14:48:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:48:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:48:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:48:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:48:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:48:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:49:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-01-08 14:49:05 --> ErrorException: copy(\\Caballero\POS-58): Failed to open stream: No such file or directory
+[Method: GET, Route: ventas/imprimir/63]
+in VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php on line 378.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'copy(\\\\Caballero\\POS-58): Failed to open stream: No such file or directory', 'C:\\pos_system\\pos_system\\vendor\\mike42\\escpos-php\\src\\Mike42\\Escpos\\PrintConnectors\\WindowsPrintConnector.php', 378)
+ 2 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(378): copy('C:\\Users\\jseca\\AppData\\Local\\Temp\\escA641.tmp', '\\\\Caballero\\POS-58')
+ 3 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(296): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->runCopy('C:\\Users\\jseca\\AppData\\Local\\Temp\\escA641.tmp', '\\\\Caballero\\POS-58')
+ 4 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(176): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->finalizeWin('@aEMI TIEND
+E' . "\0" . 'calle arbolin
+Tel: 4141148085
+RFC: MARA020430AK7
+--------------------------------
+a' . "\0" . 'Folio: V20260108144842876
+Fecha: 08/01/2026 14:48
+Cliente: Cliente general
+Atendio: Administrador
+--------------------------------
+ECant Producto              Importe
+E' . "\0" . '   1 cacahuates   15.00
+--------------------------------
+                Subtotal: $15.00
+               Efectivo: $500.00
+                 Cambio: $485.00
+E                   TOTAL: $15.00
+E' . "\0" . '
+a­Gracias por su compra! vuelva pronto :)*** Venta COMPLETADA ***
+Powered by POS System
+VA')
+ 5 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\Printer.php(502): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->finalize()
+ 6 APPPATH\Controllers\VentasController.php(349): Mike42\Escpos\Printer->close()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\VentasController->imprimirTicket('63')
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VentasController))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\pos_system\\pos_system\\public\\index.php')
+DEBUG - 2026-01-08 14:52:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:52:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:52:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:52:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:52:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:52:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:52:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-01-08 14:52:36 --> ErrorException: copy(\\Caballero\POS-58): Failed to open stream: No such file or directory
+[Method: GET, Route: ventas/imprimir/64]
+in VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php on line 378.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'copy(\\\\Caballero\\POS-58): Failed to open stream: No such file or directory', 'C:\\pos_system\\pos_system\\vendor\\mike42\\escpos-php\\src\\Mike42\\Escpos\\PrintConnectors\\WindowsPrintConnector.php', 378)
+ 2 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(378): copy('C:\\Users\\jseca\\AppData\\Local\\Temp\\escDF46.tmp', '\\\\Caballero\\POS-58')
+ 3 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(296): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->runCopy('C:\\Users\\jseca\\AppData\\Local\\Temp\\escDF46.tmp', '\\\\Caballero\\POS-58')
+ 4 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(176): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->finalizeWin('@aEMI TIEND
+E' . "\0" . 'calle arbolin
+Tel: 4141148085
+RFC: MARA020430AK7
+--------------------------------
+a' . "\0" . 'Folio: V20260108145236109
+Fecha: 08/01/2026 14:52
+Cliente: Cliente general
+Atendio: Marco
+--------------------------------
+ECant Producto              Importe
+E' . "\0" . '   1 cacahuates   15.00
+--------------------------------
+                Subtotal: $15.00
+               Efectivo: $500.00
+                 Cambio: $485.00
+E                   TOTAL: $15.00
+E' . "\0" . '
+a­Gracias por su compra! vuelva pronto :)*** Venta COMPLETADA ***
+Powered by POS System
+VA')
+ 5 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\Printer.php(502): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->finalize()
+ 6 APPPATH\Controllers\VentasController.php(349): Mike42\Escpos\Printer->close()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\VentasController->imprimirTicket('64')
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VentasController))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\pos_system\\pos_system\\public\\index.php')
+DEBUG - 2026-01-08 14:53:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:53:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-01-08 14:53:38 --> ErrorException: copy(\\Caballero\POS-58): Failed to open stream: No such file or directory
+[Method: GET, Route: ventas/imprimir/65]
+in VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php on line 378.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'copy(\\\\Caballero\\POS-58): Failed to open stream: No such file or directory', 'C:\\pos_system\\pos_system\\vendor\\mike42\\escpos-php\\src\\Mike42\\Escpos\\PrintConnectors\\WindowsPrintConnector.php', 378)
+ 2 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(378): copy('C:\\Users\\jseca\\AppData\\Local\\Temp\\escD03E.tmp', '\\\\Caballero\\POS-58')
+ 3 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(296): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->runCopy('C:\\Users\\jseca\\AppData\\Local\\Temp\\escD03E.tmp', '\\\\Caballero\\POS-58')
+ 4 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(176): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->finalizeWin('@aEMI TIEND
+E' . "\0" . 'calle arbolin
+Tel: 4141148085
+RFC: MARA020430AK7
+--------------------------------
+a' . "\0" . 'Folio: V20260108145337292
+Fecha: 08/01/2026 14:53
+Cliente: Cliente general
+Atendio: Marco
+--------------------------------
+ECant Producto              Importe
+E' . "\0" . '   2 cacahuates   30.00
+--------------------------------
+                Subtotal: $30.00
+               Efectivo: $500.00
+                 Cambio: $470.00
+E                   TOTAL: $30.00
+E' . "\0" . '
+a­Gracias por su compra! vuelva pronto :)*** Venta COMPLETADA ***
+Powered by POS System
+VA')
+ 5 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\Printer.php(502): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->finalize()
+ 6 APPPATH\Controllers\VentasController.php(349): Mike42\Escpos\Printer->close()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\VentasController->imprimirTicket('65')
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VentasController))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\pos_system\\pos_system\\public\\index.php')
+DEBUG - 2026-01-08 14:55:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:55:03 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:55:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:55:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:56:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:56:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:56:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:56:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-01-08 14:56:41 --> ErrorException: copy(\\Caballero\POS-58): Failed to open stream: No such file or directory
+[Method: GET, Route: ventas/imprimir/66]
+in VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php on line 378.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'copy(\\\\Caballero\\POS-58): Failed to open stream: No such file or directory', 'C:\\pos_system\\pos_system\\vendor\\mike42\\escpos-php\\src\\Mike42\\Escpos\\PrintConnectors\\WindowsPrintConnector.php', 378)
+ 2 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(378): copy('C:\\Users\\jseca\\AppData\\Local\\Temp\\esc9B07.tmp', '\\\\Caballero\\POS-58')
+ 3 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(296): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->runCopy('C:\\Users\\jseca\\AppData\\Local\\Temp\\esc9B07.tmp', '\\\\Caballero\\POS-58')
+ 4 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(176): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->finalizeWin('@aEMI TIEND
+E' . "\0" . 'calle arbolin
+Tel: 4141148085
+RFC: MARA020430AK7
+--------------------------------
+a' . "\0" . 'Folio: V20260108145640320
+Fecha: 08/01/2026 14:56
+Cliente: Cliente general
+Atendio: Marco
+--------------------------------
+ECant Producto              Importe
+E' . "\0" . '   2 cacahuates   30.00
+--------------------------------
+                Subtotal: $30.00
+               Efectivo: $800.00
+                 Cambio: $770.00
+E                   TOTAL: $30.00
+E' . "\0" . '
+a­Gracias por su compra! vuelva pronto :)*** Venta COMPLETADA ***
+Powered by POS System
+VA')
+ 5 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\Printer.php(502): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->finalize()
+ 6 APPPATH\Controllers\VentasController.php(349): Mike42\Escpos\Printer->close()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\VentasController->imprimirTicket('66')
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VentasController))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\pos_system\\pos_system\\public\\index.php')
+DEBUG - 2026-01-08 14:57:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:58:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 14:58:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-01-08 14:58:10 --> ErrorException: copy(\\Caballero\POS-58): Failed to open stream: No such file or directory
+[Method: GET, Route: ventas/imprimir/67]
+in VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php on line 378.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'copy(\\\\Caballero\\POS-58): Failed to open stream: No such file or directory', 'C:\\pos_system\\pos_system\\vendor\\mike42\\escpos-php\\src\\Mike42\\Escpos\\PrintConnectors\\WindowsPrintConnector.php', 378)
+ 2 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(378): copy('C:\\Users\\jseca\\AppData\\Local\\Temp\\escF643.tmp', '\\\\Caballero\\POS-58')
+ 3 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(296): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->runCopy('C:\\Users\\jseca\\AppData\\Local\\Temp\\escF643.tmp', '\\\\Caballero\\POS-58')
+ 4 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(176): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->finalizeWin('@aEMI TIEND
+E' . "\0" . 'calle arbolin
+Tel: 4141148085
+RFC: MARA020430AK7
+--------------------------------
+a' . "\0" . 'Folio: V20260108145809962
+Fecha: 08/01/2026 14:58
+Cliente: Cliente general
+Atendio: Marco
+--------------------------------
+ECant Producto              Importe
+E' . "\0" . '   3 cacahuates   45.00
+--------------------------------
+                Subtotal: $45.00
+               Efectivo: $100.00
+                  Cambio: $55.00
+E                   TOTAL: $45.00
+E' . "\0" . '
+a­Gracias por su compra! vuelva pronto :)*** Venta COMPLETADA ***
+Powered by POS System
+VA')
+ 5 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\Printer.php(502): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->finalize()
+ 6 APPPATH\Controllers\VentasController.php(349): Mike42\Escpos\Printer->close()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\VentasController->imprimirTicket('67')
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VentasController))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\pos_system\\pos_system\\public\\index.php')
+DEBUG - 2026-01-08 15:01:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:01:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:01:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:01:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:03:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:03:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:03:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:03:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:03:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:03:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:03:25 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:03:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:03:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:03:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:03:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:03:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:03:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:03:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:03:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:03:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:03:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:03:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:03:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:03:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:03:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:04:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:05:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:07:11 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:08:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:08:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:12:05 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:12:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:13:30 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:13:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 15:13:50 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-01-08 15:13:50 --> ErrorException: copy(\\Caballero\POS-58): Failed to open stream: No such file or directory
+[Method: GET, Route: ventas/imprimir/69]
+in VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php on line 378.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'copy(\\\\Caballero\\POS-58): Failed to open stream: No such file or directory', 'C:\\pos_system\\pos_system\\vendor\\mike42\\escpos-php\\src\\Mike42\\Escpos\\PrintConnectors\\WindowsPrintConnector.php', 378)
+ 2 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(378): copy('C:\\Users\\jseca\\AppData\\Local\\Temp\\esc4F2E.tmp', '\\\\Caballero\\POS-58')
+ 3 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(296): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->runCopy('C:\\Users\\jseca\\AppData\\Local\\Temp\\esc4F2E.tmp', '\\\\Caballero\\POS-58')
+ 4 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(176): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->finalizeWin('@aEMI TIEND
+E' . "\0" . 'calle arbolin
+Tel: 4141148085
+RFC: MARA020430AK7
+--------------------------------
+a' . "\0" . 'Folio: V20260108151350532
+Fecha: 08/01/2026 15:13
+Cliente: Cliente general
+Atendio: Marco
+--------------------------------
+ECant Producto              Importe
+E' . "\0" . '   5 cacahuates   75.00
+--------------------------------
+                Subtotal: $75.00
+               Efectivo: $500.00
+                 Cambio: $425.00
+E                   TOTAL: $75.00
+E' . "\0" . '
+a­Gracias por su compra! vuelva pronto :)*** Venta COMPLETADA ***
+Powered by POS System
+VA')
+ 5 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\Printer.php(502): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->finalize()
+ 6 APPPATH\Controllers\VentasController.php(349): Mike42\Escpos\Printer->close()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\VentasController->imprimirTicket('69')
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VentasController))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\pos_system\\pos_system\\public\\index.php')

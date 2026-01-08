@@ -1,17 +1,34 @@
 <?= $this->include('layouts/header') ?>
 <link rel="stylesheet" href="<?= base_url('assets/css/punto_venta.css') ?>">
 <?php if (session()->get('user_role') === 'admin'): ?>
-    
+<div class="page-header">
+    <h1>Punto de Venta</h1>
+    <div style="display: flex; gap: 10px;">
+                <a href="<?= base_url('ventas/historial') ?>" class="btn-historial" style="display: inline-flex; align-items: center; gap: 5px; padding: 10px 15px; background: #17a2b8; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background 0.3s;">
+            📊 Historial
+        </a>
+        
+        <!-- Botón Dashboard -->
+        <a href="<?= base_url('dashboard') ?>" class="btn-dashboard" style="display: inline-flex; align-items: center; gap: 5px; padding: 10px 15px; background: #6c757d; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background 0.3s;">
+            🏠 Dashboard
+        </a>
+    </div>
+</div>
  <?php endif; ?>
 
 <div class="punto-venta-container">
     <!-- Panel de Productos -->
     <div class="productos-panel">
+        <!-- Scanner -->
+        <div class="scanner-section">
+
+            <div id="scanner-message" style="margin-top: 5px; font-size: 12px; color: #666;"></div>
+        </div>
 
         <!-- Lista de Productos -->
         <h3>Productos Disponibles</h3>
         <div class="productos-grid" id="productos-grid">
-    <?php foreach($productos as $producto): ?>
+       <?php foreach($productos as $producto): ?>
         <?php if($producto['stock'] > 0): ?>
             <div class="producto-card" onclick="agregarAlCarrito(<?= $producto['id'] ?>)">
 
@@ -29,8 +46,7 @@
             </div>
         <?php endif; ?>
     <?php endforeach; ?>
-</div>
-
+        </div>
     </div>
 
     <!-- Panel del Carrito -->
@@ -41,19 +57,14 @@
 
         <!-- Cliente -->
         <div class="cliente-section">
-        <label class="form-label">Cliente / Mesa</label>
-        <input list="mesas" id="cliente-input" class="form-input" placeholder="Ejemplo: Mesa 1">
-    
-        <datalist id="mesas">
-            <option value="Mesa 1">
-            <option value="Mesa 2">
-            <option value="Mesa 3">
-            <option value="Mesa 4">
-            <option value="Mesa 5">
-            <option value="Cliente general">
-            <option value="Para llevar">
-        </datalist>
-    </div>
+            <label class="form-label">Clientes/Mesas</label>
+            <select id="cliente-select" class="form-input">
+                <option value="">Cliente general</option>
+                <?php foreach($clientes as $cliente): ?>
+                    <option value="<?= $cliente['id'] ?>"><?= esc($cliente['nombre']) ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
 
         <!-- Items del Carrito -->
         <div class="carrito-items" id="carrito-items">
@@ -115,16 +126,7 @@ productosMap[<?= $producto['id'] ?>] = {
 };
 <?php endforeach; ?>
 
-// Scanner de código de barras
-document.getElementById('scanner-input').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') {
-        const codigo = this.value.trim();
-        if (codigo) {
-            buscarProductoPorCodigo(codigo);
-        }
-        this.value = '';
-    }
-});
+
 
 // Buscar producto por código
 function buscarProductoPorCodigo(codigo) {

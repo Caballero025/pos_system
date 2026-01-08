@@ -10,7 +10,7 @@ class ClienteModel extends Model
     protected $primaryKey = 'id';
     
     //  Campos permitidos
-    protected $allowedFields = ['nombre', 'telefono', 'direccion', 'email'];
+    protected $allowedFields = ['nombre'];
     
     protected $useTimestamps = false;
 }
