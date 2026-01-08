@@ -32,17 +32,26 @@
         <!-- Lista de Productos -->
         <h3>Productos Disponibles</h3>
         <div class="productos-grid" id="productos-grid">
-            <?php foreach($productos as $producto): ?>
-                <?php if($producto['stock'] > 0): ?>
-                    <div class="producto-card" onclick="agregarAlCarrito(<?= $producto['id'] ?>)">
-                        <h4><?= esc($producto['nombre']) ?></h4>
-                        <div class="producto-precio">$<?= number_format($producto['precio'], 2) ?></div>
-                        <div class="producto-stock">Stock: <?= $producto['stock'] ?></div>
-                        <div style="font-size: 10px; color: #999;"><?= esc($producto['codigo']) ?></div>
-                    </div>
-                <?php endif; ?>
-            <?php endforeach; ?>
-        </div>
+    <?php foreach($productos as $producto): ?>
+        <?php if($producto['stock'] > 0): ?>
+            <div class="producto-card" onclick="agregarAlCarrito(<?= $producto['id'] ?>)">
+
+                <!-- IMAGEN -->
+                <img 
+                    src="<?= base_url('uploads/productos/' . $producto['imagen']) ?>" 
+                    alt="<?= esc($producto['nombre']) ?>" 
+                    style="width:100%; height:120px; object-fit:cover; border-radius:8px;"
+                >
+
+                <h4><?= esc($producto['nombre']) ?></h4>
+                <div class="producto-precio">$<?= number_format($producto['precio'], 2) ?></div>
+                <div class="producto-stock">Stock: <?= $producto['stock'] ?></div>
+                <div style="font-size: 10px; color: #999;"><?= esc($producto['codigo']) ?></div>
+            </div>
+        <?php endif; ?>
+    <?php endforeach; ?>
+</div>
+
     </div>
 
     <!-- Panel del Carrito -->
