@@ -1,0 +1,143 @@
+/* Estilos para el módulo de Configuración */
+.configuracion-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Tarjetas personalizadas */
+.card-configuracion {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
+
+.card-configuracion:hover {
+    transform: translateY(-5px);
+}
+
+.card-configuracion .card-header {
+    border-radius: 10px 10px 0 0;
+    font-weight: bold;
+    padding: 15px 20px;
+}
+
+/* Formularios */
+.form-config {
+    max-width: 600px;
+}
+
+.form-group-config {
+    margin-bottom: 1.5rem;
+}
+
+.form-label-config {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 0.5rem;
+}
+
+.form-input-config {
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    padding: 10px 15px;
+    transition: border-color 0.3s ease;
+}
+
+.form-input-config:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.form-textarea-config {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Tabla de usuarios */
+.table-usuarios th {
+    border-top: none;
+    font-weight: 600;
+    color: #495057;
+}
+
+.table-usuarios tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* Badges personalizados */
+.badge-admin {
+    background: linear-gradient(135deg, #dc3545, #e83e8c);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+
+.badge-vendedor {
+    background: linear-gradient(135deg, #007bff, #6f42c1);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+
+.badge-activo {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+
+.badge-inactivo {
+    background: linear-gradient(135deg, #6c757d, #495057);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+}
+
+/* Botones personalizados */
+.btn-guardar-config {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    color: white;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-guardar-config:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+}
+
+.btn-crear-usuario {
+    background: linear-gradient(135deg, #007bff, #6f42c1);
+    color: white;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-crear-usuario:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .configuracion-container {
+        padding: 10px;
+    }
+    
+    .card-configuracion {
+        margin-bottom: 15px;
+    }
+    
+    .form-input-config {
+        font-size: 16px; /* Evita zoom en iOS */
+    }
+}

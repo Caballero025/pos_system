@@ -1,0 +1,56 @@
+<?php
+use CodeIgniter\Router\RouteCollection;
+
+/**
+ * @var RouteCollection $routes
+ */
+
+$routes->get('/', 'LoginController::index');
+$routes->get('/login', 'LoginController::index');
+$routes->post('/login/auth', 'LoginController::auth');
+$routes->get('/logout', 'LoginController::logout');
+$routes->get('/dashboard', 'DashboardController::index');
+$routes->group('admin', ['filter' => 'admin'], function($routes) {
+// Rutas de Productos
+$routes->get('productos', 'ProductosController::index');
+$routes->get('productos/crear', 'ProductosController::crear');
+$routes->post('productos/guardar', 'ProductosController::guardar');
+$routes->get('productos/editar/(:num)', 'ProductosController::editar/$1');
+$routes->post('productos/actualizar/(:num)', 'ProductosController::actualizar/$1');
+$routes->get('productos/eliminar/(:num)', 'ProductosController::eliminar/$1'); // Para enlaces GET
+$routes->delete('productos/eliminar/(:num)', 'ProductosController::eliminar/$1'); // Para formularios DELETE
+// Rutas de Caja
+$routes->get('caja', 'CajaController::index');
+$routes->post('caja/abrir', 'CajaController::abrirCaja');
+$routes->post('caja/cerrar', 'CajaController::cerrarCaja');
+$routes->post('caja/movimiento', 'CajaController::movimiento');
+// Rutas de Reportes
+$routes->get('reportes', 'ReportesController::index');
+$routes->get('reportes/ventas', 'ReportesController::ventas');
+$routes->get('reportes/productos', 'ReportesController::productos');
+$routes->get('reportes/clientes', 'ReportesController::clientes');
+
+// Rutas de Configuración
+$routes->get('configuracion', 'ConfiguracionController::index');
+$routes->post('configuracion/guardar-tienda', 'ConfiguracionController::guardarTienda');
+$routes->post('configuracion/crear-usuario', 'ConfiguracionController::crearUsuario');
+
+// Rutas de Clientes
+$routes->get('clientes', 'CliesntesController::index');
+$routes->get('clientes/crear', 'ClientesController::crear');
+$routes->post('clientes/guardar', 'ClientesController::guardar');
+$routes->get('clientes/editar/(:num)', 'ClientesController::editar/$1');
+$routes->post('clientes/actualizar/(:num)', 'ClientesController::actualizar/$1');
+$routes->get('clientes/eliminar/(:num)', 'ClientesController::eliminar/$1');
+$routes->get('clientes/buscar', 'ClientesController::buscar');
+});
+// Rutas de Ventas
+$routes->get('/ventas', 'VentasController::puntoVenta');
+$routes->get('/ventas/historial', 'VentasController::historial');
+$routes->post('/ventas/procesar', 'VentasController::procesarVenta');
+$routes->get('/ventas/buscar-producto/(:any)', 'VentasController::buscarProducto/$1');
+$routes->get('/ventas/detalle/(:num)', 'VentasController::detalle/$1');
+$routes->get('/ventas/imprimir/(:num)', 'VentasController::imprimirTicket/$1');
+$routes->get('/ventas/cancelar/(:num)', 'VentasController::cancelarVenta/$1');
+
+
