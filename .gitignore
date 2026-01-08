@@ -1,0 +1,60 @@
+# =========================
+# CodeIgniter 4
+# =========================
+
+# Writable (logs, cache, sessions, uploads temporales)
+writable/
+!writable/.gitkeep
+
+# Environment
+.env
+
+# Cache
+*.cache
+*.log
+
+# =========================
+# Vendor / Dependencias
+# =========================
+vendor/
+
+# =========================
+# IDEs / Editores
+# =========================
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# =========================
+# Sistema Operativo
+# =========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =========================
+# Composer / NPM
+# =========================
+composer.lock
+package-lock.json
+node_modules/
+
+# =========================
+# Archivos temporales
+# =========================
+*.tmp
+*.bak
+*.swp
+
+# =========================
+# Logs de servidor
+# =========================
+*.log
+apache.log
+php_error.log
+
+# =========================
+# Uploads (si no quieres versionarlos)
+# =========================
+public/uploads/
