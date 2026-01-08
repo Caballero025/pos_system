@@ -1,33 +1,12 @@
 <?= $this->include('layouts/header') ?>
 <link rel="stylesheet" href="<?= base_url('assets/css/punto_venta.css') ?>">
 <?php if (session()->get('user_role') === 'admin'): ?>
-<div class="page-header">
-    <h1>Punto de Venta</h1>
-    <div style="display: flex; gap: 10px;">
-                <a href="<?= base_url('ventas/historial') ?>" class="btn-historial" style="display: inline-flex; align-items: center; gap: 5px; padding: 10px 15px; background: #17a2b8; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background 0.3s;">
-            📊 Historial
-        </a>
-        
-        <!-- Botón Dashboard -->
-        <a href="<?= base_url('dashboard') ?>" class="btn-dashboard" style="display: inline-flex; align-items: center; gap: 5px; padding: 10px 15px; background: #6c757d; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; transition: background 0.3s;">
-            🏠 Dashboard
-        </a>
-    </div>
-</div>
+    
  <?php endif; ?>
 
 <div class="punto-venta-container">
     <!-- Panel de Productos -->
     <div class="productos-panel">
-        <!-- Scanner -->
-        <div class="scanner-section">
-            <input type="text" 
-                   id="scanner-input" 
-                   class="scanner-input" 
-                   placeholder="🔍 Escanear código de barras o buscar producto..."
-                   autofocus>
-            <div id="scanner-message" style="margin-top: 5px; font-size: 12px; color: #666;"></div>
-        </div>
 
         <!-- Lista de Productos -->
         <h3>Productos Disponibles</h3>
