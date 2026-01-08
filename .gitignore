@@ -58,3 +58,4 @@ php_error.log
 # Uploads (si no quieres versionarlos)
 # =========================
 public/uploads/
+ 
