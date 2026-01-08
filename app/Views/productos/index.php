@@ -63,11 +63,10 @@
         <tbody>
             <?php foreach ($productos as $producto): ?>
                 <tr>
-                    <td class="product-image-cell">
+                 <td class="product-image-cell">
                         <div class="product-image">
-                            <img src="<?= base_url('admin/uploads/productos/' . $producto['imagen']) ?>" 
+                            <img src="<?= base_url('uploads/productos/' . $producto['imagen']) ?>" 
                                  alt="<?= esc($producto['nombre']) ?>" 
-                                 onerror="this.src='<?= base_url('admin/uploads/productos/default.png') ?>'"
                                  class="product-thumbnail">
                         </div>
                     </td>
