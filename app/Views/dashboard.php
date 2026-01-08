@@ -34,7 +34,7 @@ $stats = [
     <div class="action-buttons">
 
         <button class="action-btn btn-primary" onclick="location.href='<?= base_url('admin/productos') ?>'">
-            <span class="icon">📦</span> Gestionar Productos
+            <span class="icon">📦</span> Gestión Productos
         </button>
         <button class="action-btn btn-success" onclick="location.href='<?= base_url('ventas') ?>'">
             <span class="icon">💰</span> Nueva Venta
