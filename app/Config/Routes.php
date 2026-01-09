@@ -13,6 +13,10 @@ $routes->get('/dashboard', 'DashboardController::index');
 $routes->group('admin', ['filter' => 'admin'], function($routes) {
 // Rutas de Productos
 $routes->get('productos', 'ProductosController::index');
+$routes->get(
+    'productos/categoria/(:num)',
+    'ProductosController::productos/$1'
+);
 $routes->get('productos/crear', 'ProductosController::crear');
 $routes->post('productos/guardar', 'ProductosController::guardar');
 $routes->get('productos/editar/(:num)', 'ProductosController::editar/$1');

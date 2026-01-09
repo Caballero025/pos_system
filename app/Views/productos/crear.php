@@ -19,13 +19,50 @@
 
 <div class="form-card">
     <form method="post" action="<?= base_url('admin/productos/guardar') ?>" enctype="multipart/form-data">
+<?php if ($categoria_id == 1): ?>
         <div class="form-group">
-            <label class="form-label" for="codigo">Código del Producto *</label>
-            <input type="text" id="codigo" name="codigo" class="form-input" 
-                   value="<?= old('codigo') ?>" required 
-                   placeholder="Ej: PROD001">
+            <label class="form-label" for="nombre">Nombre del Producto *</label>
+            <input type="text" id="nombre" name="nombre" class="form-input" 
+                   value="<?= old('nombre') ?>" required 
+                   placeholder="Ej: Tacos campechanos">
         </div>
 
+
+        <!-- NUEVO CAMPO PARA IMAGEN -->
+        <div class="form-group">
+            <label class="form-label" for="imagen">Imagen del Producto</label>
+            <input type="file" id="imagen" name="imagen" class="form-input" accept="image/*">
+            <small class="form-text text-muted">Formatos: JPG, PNG, GIF. Máx: 2MB</small>
+        </div>
+
+        <div class="form-row" style="display: flex; gap: 15px;">
+            <div class="form-group" style="flex: 1;">
+                <label class="form-label" for="precio">Precio de Venta *</label>
+                <input type="number" id="precio" name="precio" class="form-input" 
+                       value="<?= old('precio') ?>" step="0.01" min="0" required 
+                       placeholder="0.00">
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label class="form-label" for="categoria_id">Categoría</label>
+            <select id="categoria_id" name="categoria_id" class="form-input">
+                <option value="">Seleccionar categoría</option>
+                <?php foreach($categorias as $categoria): ?>
+                    <option value="<?= $categoria['id'] ?>" 
+                        <?= old('categoria_id') == $categoria['id'] ? 'selected' : '' ?>>
+                        <?= esc($categoria['nombre']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+        <div class="form-actions">
+            <a href="<?= base_url('admin/productos') ?>" class="btn-cancel">Cancelar</a>
+            <button type="submit" class="btn btn-primary">💾 Guardar Producto</button>
+        </div>
+          <?php else: ?>
         <div class="form-group">
             <label class="form-label" for="nombre">Nombre del Producto *</label>
             <input type="text" id="nombre" name="nombre" class="form-input" 
@@ -33,11 +70,6 @@
                    placeholder="Ej: Refresco">
         </div>
 
-        <div class="form-group">
-            <label class="form-label" for="descripcion">Descripción</label>
-            <textarea id="descripcion" name="descripcion" class="form-input" 
-                      rows="3" placeholder="Descripción del producto..."><?= old('descripcion') ?></textarea>
-        </div>
 
         <!-- NUEVO CAMPO PARA IMAGEN -->
         <div class="form-group">
@@ -70,12 +102,7 @@
                        placeholder="0">
             </div>
 
-            <div class="form-group" style="flex: 1;">
-                <label class="form-label" for="stock_minimo">Stock Mínimo</label>
-                <input type="number" id="stock_minimo" name="stock_minimo" class="form-input" 
-                       value="<?= old('stock_minimo', 5) ?>" min="0" 
-                       placeholder="5">
-            </div>
+        
         </div>
 
         <div class="form-group">
@@ -92,10 +119,14 @@
         </div>
 
         <div class="form-actions">
-            <a href="<?= base_url('admin/productos') ?>" class="btn-cancel">Cancelar</a>
+            <a href="<?= base_url("admin/productos/categoria/$categoria_id") ?>" class="btn-cancel">Cancelar</a>
             <button type="submit" class="btn btn-primary">💾 Guardar Producto</button>
         </div>
+    
+        <?php endif; ?>
+
     </form>
+
 </div>
 
 </div><!-- content-area -->

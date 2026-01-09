@@ -42,7 +42,6 @@
                 <h4><?= esc($producto['nombre']) ?></h4>
                 <div class="producto-precio">$<?= number_format($producto['precio'], 2) ?></div>
                 <div class="producto-stock">Stock: <?= $producto['stock'] ?></div>
-                <div style="font-size: 10px; color: #999;"><?= esc($producto['codigo']) ?></div>
             </div>
         <?php endif; ?>
     <?php endforeach; ?>
@@ -133,7 +132,6 @@ productosMap[<?= $producto['id'] ?>] = {
     nombre: '<?= addslashes($producto['nombre']) ?>',
     precio: <?= floatval($producto['precio']) ?>,
     stock: <?= intval($producto['stock']) ?>,
-    codigo: '<?= addslashes($producto['codigo']) ?>'
 };
 <?php endforeach; ?>
 
