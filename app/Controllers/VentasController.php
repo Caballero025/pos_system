@@ -66,130 +66,118 @@ class VentasController extends BaseController
 
     // PROCESAR VENTA 
     public function procesarVenta()
-    {
-        $this->checkLogin();
+{
+    $this->checkLogin();
 
-        if (!$this->request->is('post')) {
-            return $this->response->setJSON([
-                'success' => false,
-                'message' => 'Método no permitido'
-            ]);
+    if (!$this->request->is('post')) {
+        return $this->response->setJSON([
+            'success' => false,
+            'message' => 'Método no permitido'
+        ]);
+    }
+
+    // Obtener datos
+    $input = $this->request->getJSON(true) ?: $this->request->getPost();
+    
+    $carrito = $input['carrito'] ?? [];
+    $cliente_id = $input['cliente_id'] ?? null;
+    $efectivo = floatval($input['efectivo'] ?? 0);
+    $total = floatval($input['total'] ?? 0);
+
+    // Validaciones
+    if (empty($carrito)) {
+        return $this->response->setJSON([
+            'success' => false,
+            'message' => 'El carrito está vacío'
+        ]);
+    }
+
+    if ($efectivo <= 0) {
+        return $this->response->setJSON([
+            'success' => false,
+            'message' => 'El efectivo debe ser mayor a 0'
+        ]);
+    }
+
+    if ($efectivo < $total) {
+        return $this->response->setJSON([
+            'success' => false,
+            'message' => 'El efectivo recibido es menor al total'
+        ]);
+    }
+
+    $cambio = $efectivo - $total;
+
+    // Transacción
+    $db = \Config\Database::connect();
+    $db->transStart();
+
+    try {
+        $folio = 'V' . date('YmdHis') . rand(100, 999);
+
+        $session = session();
+        $user_id = $session->get('user_id') ?: 1;
+
+        $ventaData = [
+            'folio' => $folio,
+            'cliente_id' => !empty($cliente_id) ? $cliente_id : null,
+            'usuario_id' => $user_id,
+            'total' => $total,
+            'efectivo' => $efectivo,
+            'cambio' => $cambio,
+            'estado' => 'completada'
+        ];
+
+        $venta_id = $this->ventaModel->insert($ventaData);
+        if (!$venta_id) {
+            throw new \Exception('Error al crear la venta');
         }
 
-        // Obtener datos
-        $input = $this->request->getJSON(true);
-        
-        if (!$input) {
-            $input = $this->request->getPost();
-        }
-        
-        $carrito = $input['carrito'] ?? [];
-        $cliente_id = $input['cliente_id'] ?? null;
-        $efectivo = floatval($input['efectivo'] ?? 0);
-        $total = floatval($input['total'] ?? 0);
-
-        // Validaciones
-        if (empty($carrito)) {
-            return $this->response->setJSON([
-                'success' => false,
-                'message' => 'El carrito está vacío'
-            ]);
-        }
-
-        if ($efectivo <= 0) {
-            return $this->response->setJSON([
-                'success' => false,
-                'message' => 'El efectivo debe ser mayor a 0'
-            ]);
-        }
-
-        if ($efectivo < $total) {
-            return $this->response->setJSON([
-                'success' => false,
-                'message' => 'El efectivo recibido es menor al total'
-            ]);
-        }
-
-        $cambio = $efectivo - $total;
-
-        // Transacción
-        $db = \Config\Database::connect();
-        $db->transStart();
-
-        try {
-            $folio = 'V' . date('YmdHis') . rand(100, 999);
-
-            // Obtener user_id
-            $session = session();
-            $user_id = $session->get('user_id');
-
-            if (!$user_id) {
-                $user_id = 1; // ← CAMBIA ESTE VALOR
+        foreach ($carrito as $item) {
+            $producto = $this->productoModel->find($item['id']);
+            if (!$producto) {
+                throw new \Exception('Producto no encontrado: ' . $item['id']);
             }
 
-            $ventaData = [
-                'folio' => $folio,
-                'cliente_id' => !empty($cliente_id) ? $cliente_id : null,
-                'usuario_id' => $user_id,
-                'total' => $total,
-                'efectivo' => $efectivo,
-                'cambio' => $cambio,
-                'estado' => 'completada'
-                // 'fecha_venta' se auto-genera si tienes DEFAULT CURRENT_TIMESTAMP
+            // ✅ Verificar stock solo si es bebida (categoria_id = 2)
+            if ($producto['categoria_id'] == 2 && $item['cantidad'] > $producto['stock']) {
+                throw new \Exception('Stock insuficiente para: ' . $producto['nombre']);
+            }
+
+            $detalleData = [
+                'venta_id' => $venta_id,
+                'producto_id' => $item['id'],
+                'cantidad' => $item['cantidad'],
+                'precio_unitario' => $item['precio'],
+                'subtotal' => $item['subtotal']
             ];
+            $this->detalleVentaModel->insert($detalleData);
 
-            $venta_id = $this->ventaModel->insert($ventaData);
-
-            if (!$venta_id) {
-                $errors = $this->ventaModel->errors();
-                throw new \Exception('Error al crear la venta: ' . implode(', ', $errors));
-            }
-
-            // Procesar cada item del carrito
-            foreach ($carrito as $item) {
-                $producto = $this->productoModel->find($item['id']);
-                if (!$producto) {
-                    throw new \Exception('Producto no encontrado: ' . $item['id']);
-                }
-
-                if ($producto['stock'] < $item['cantidad']) {
-                    throw new \Exception('Stock insuficiente para: ' . $producto['nombre']);
-                }
-
-                //Ajusta nombres de campos según tu tabla 'detalle_ventas'
-                $detalleData = [
-                    'venta_id' => $venta_id,
-                    'producto_id' => $item['id'],
-                    'cantidad' => $item['cantidad'],
-                    'precio_unitario' => $item['precio'],
-                    'subtotal' => $item['subtotal']
-                ];
-                
-                $this->detalleVentaModel->insert($detalleData);
-
-                // Actualizar stock
+            // ✅ Actualizar stock solo para bebidas
+            if ($producto['categoria_id'] == 2) {
                 $nuevoStock = $producto['stock'] - $item['cantidad'];
                 $this->productoModel->update($item['id'], ['stock' => $nuevoStock]);
             }
-
-            $db->transCommit();
-
-            return $this->response->setJSON([
-                'success' => true,
-                'venta_id' => $venta_id,
-                'folio' => $folio,
-                'cambio' => $cambio,
-                'message' => 'Venta procesada correctamente'
-            ]);
-
-        } catch (\Exception $e) {
-            $db->transRollback();
-            return $this->response->setJSON([
-                'success' => false,
-                'message' => 'Error al procesar venta: ' . $e->getMessage()
-            ]);
         }
+
+        $db->transCommit();
+
+        return $this->response->setJSON([
+            'success' => true,
+            'venta_id' => $venta_id,
+            'folio' => $folio,
+            'cambio' => $cambio,
+            'message' => 'Venta procesada correctamente'
+        ]);
+
+    } catch (\Exception $e) {
+        $db->transRollback();
+        return $this->response->setJSON([
+            'success' => false,
+            'message' => 'Error al procesar venta: ' . $e->getMessage()
+        ]);
     }
+}
 
     // HISTORIAL DE VENTAS
     public function historial()

@@ -2380,3 +2380,386 @@ in APPPATH\Views\ventas\punto_venta.php on line 135.
 11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
 12 SYSTEMPATH\rewrite.php(44): require_once('C:\\pos_system\\pos_system\\public\\index.php')
 DEBUG - 2026-01-08 20:59:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:01:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:01:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:01:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:01:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:01:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:01:41 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:01:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:01:44 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:02:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:02:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:02:48 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:02:49 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:02:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:03:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:07:26 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:07:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:07:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:08:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:08:18 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:08:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:08:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:08:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:08:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:08:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:08:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:08:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:09:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:09:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:09:46 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:09:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:09:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:09:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:09:59 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:10:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:10:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:10:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:10:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:10:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:12:34 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:14:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:15:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:18:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:18:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:18:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:18:35 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:18:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:18:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:19:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:19:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:19:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:19:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:19:13 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:22:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:22:01 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:22:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:22:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:22:08 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:22:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:22:14 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:22:16 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:22:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:22:19 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:22:20 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:22:22 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:22:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:22:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:22:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:22:31 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:22:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:22:55 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:22:56 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:23:00 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:23:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:23:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:23:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:23:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:23:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:23:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:23:39 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:23:40 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:23:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:26:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:26:28 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:26:37 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:29:23 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:29:32 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:29:45 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:33:47 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:33:57 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:33:58 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-01-08 21:33:58 --> ErrorException: copy(\\Caballero\POS-58): Failed to open stream: No such file or directory
+[Method: GET, Route: ventas/imprimir/78]
+in VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php on line 378.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'copy(\\\\Caballero\\POS-58): Failed to open stream: No such file or directory', 'C:\\pos_system\\pos_system\\vendor\\mike42\\escpos-php\\src\\Mike42\\Escpos\\PrintConnectors\\WindowsPrintConnector.php', 378)
+ 2 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(378): copy('C:\\Users\\jseca\\AppData\\Local\\Temp\\esc54BD.tmp', '\\\\Caballero\\POS-58')
+ 3 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(296): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->runCopy('C:\\Users\\jseca\\AppData\\Local\\Temp\\esc54BD.tmp', '\\\\Caballero\\POS-58')
+ 4 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(176): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->finalizeWin('@aEMI TIEND
+E' . "\0" . 'calle arbolin
+Tel: 4141148085
+RFC: MARA020430AK7
+--------------------------------
+a' . "\0" . 'Folio: V20260108213357919
+Fecha: 08/01/2026 21:33
+Cliente: Cliente general
+Atendio: Marco
+--------------------------------
+ECant Producto              Importe
+E' . "\0" . '   3 Quesadillas   75.00
+--------------------------------
+                Subtotal: $75.00
+               Efectivo: $100.00
+                  Cambio: $25.00
+E                   TOTAL: $75.00
+E' . "\0" . '
+a­Gracias por su compra! vuelva pronto :)*** Venta COMPLETADA ***
+Powered by POS System
+VA')
+ 5 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\Printer.php(502): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->finalize()
+ 6 APPPATH\Controllers\VentasController.php(337): Mike42\Escpos\Printer->close()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\VentasController->imprimirTicket('78')
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VentasController))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\pos_system\\pos_system\\public\\index.php')
+DEBUG - 2026-01-08 21:34:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:34:17 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:34:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:34:21 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:34:24 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:36:27 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:36:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:36:29 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:36:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:36:33 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:36:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:37:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:38:09 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:38:10 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-01-08 21:38:10 --> ErrorException: copy(\\Caballero\POS-58): Failed to open stream: No such file or directory
+[Method: GET, Route: ventas/imprimir/79]
+in VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php on line 378.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'copy(\\\\Caballero\\POS-58): Failed to open stream: No such file or directory', 'C:\\pos_system\\pos_system\\vendor\\mike42\\escpos-php\\src\\Mike42\\Escpos\\PrintConnectors\\WindowsPrintConnector.php', 378)
+ 2 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(378): copy('C:\\Users\\jseca\\AppData\\Local\\Temp\\esc2C62.tmp', '\\\\Caballero\\POS-58')
+ 3 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(296): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->runCopy('C:\\Users\\jseca\\AppData\\Local\\Temp\\esc2C62.tmp', '\\\\Caballero\\POS-58')
+ 4 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(176): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->finalizeWin('@aEMI TIEND
+E' . "\0" . 'calle arbolin
+Tel: 4141148085
+RFC: MARA020430AK7
+--------------------------------
+a' . "\0" . 'Folio: V20260108213809647
+Fecha: 08/01/2026 21:38
+Cliente: Cliente general
+Atendio: Marco
+--------------------------------
+ECant Producto              Importe
+E' . "\0" . '   1 Coca col   40.00
+   9 Tacos campechano  450.00
+--------------------------------
+               Subtotal: $490.00
+               Efectivo: $500.00
+                  Cambio: $10.00
+E                  TOTAL: $490.00
+E' . "\0" . '
+a­Gracias por su compra! vuelva pronto :)*** Venta COMPLETADA ***
+Powered by POS System
+VA')
+ 5 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\Printer.php(502): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->finalize()
+ 6 APPPATH\Controllers\VentasController.php(337): Mike42\Escpos\Printer->close()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\VentasController->imprimirTicket('79')
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VentasController))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\pos_system\\pos_system\\public\\index.php')
+DEBUG - 2026-01-08 21:50:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:50:42 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:51:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:51:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-01-08 21:51:07 --> ErrorException: copy(\\Caballero\POS-58): Failed to open stream: No such file or directory
+[Method: GET, Route: ventas/imprimir/81]
+in VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php on line 378.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'copy(\\\\Caballero\\POS-58): Failed to open stream: No such file or directory', 'C:\\pos_system\\pos_system\\vendor\\mike42\\escpos-php\\src\\Mike42\\Escpos\\PrintConnectors\\WindowsPrintConnector.php', 378)
+ 2 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(378): copy('C:\\Users\\jseca\\AppData\\Local\\Temp\\esc9CD.tmp', '\\\\Caballero\\POS-58')
+ 3 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(296): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->runCopy('C:\\Users\\jseca\\AppData\\Local\\Temp\\esc9CD.tmp', '\\\\Caballero\\POS-58')
+ 4 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(176): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->finalizeWin('@aEMI TIEND
+E' . "\0" . 'calle arbolin
+Tel: 4141148085
+RFC: MARA020430AK7
+--------------------------------
+a' . "\0" . 'Folio: V20260108215106478
+Fecha: 08/01/2026 21:51
+Cliente: Cliente general
+Atendio: Marco
+--------------------------------
+ECant Producto              Importe
+E' . "\0" . '   1 Coca col   40.00
+   4 Quesadillas  100.00
+--------------------------------
+               Subtotal: $140.00
+             Efectivo: $1,000.00
+                 Cambio: $860.00
+E                  TOTAL: $140.00
+E' . "\0" . '
+a­Gracias por su compra! vuelva pronto :)*** Venta COMPLETADA ***
+Powered by POS System
+VA')
+ 5 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\Printer.php(502): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->finalize()
+ 6 APPPATH\Controllers\VentasController.php(337): Mike42\Escpos\Printer->close()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\VentasController->imprimirTicket('81')
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VentasController))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\pos_system\\pos_system\\public\\index.php')
+DEBUG - 2026-01-08 21:51:36 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:51:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:51:38 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:52:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:52:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-01-08 21:52:04 --> ErrorException: copy(\\Caballero\POS-58): Failed to open stream: No such file or directory
+[Method: GET, Route: ventas/imprimir/82]
+in VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php on line 378.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'copy(\\\\Caballero\\POS-58): Failed to open stream: No such file or directory', 'C:\\pos_system\\pos_system\\vendor\\mike42\\escpos-php\\src\\Mike42\\Escpos\\PrintConnectors\\WindowsPrintConnector.php', 378)
+ 2 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(378): copy('C:\\Users\\jseca\\AppData\\Local\\Temp\\escE941.tmp', '\\\\Caballero\\POS-58')
+ 3 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(296): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->runCopy('C:\\Users\\jseca\\AppData\\Local\\Temp\\escE941.tmp', '\\\\Caballero\\POS-58')
+ 4 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(176): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->finalizeWin('@aEMI TIEND
+E' . "\0" . 'calle arbolin
+Tel: 4141148085
+RFC: MARA020430AK7
+--------------------------------
+a' . "\0" . 'Folio: V20260108215204819
+Fecha: 08/01/2026 21:52
+Cliente: Cliente general
+Atendio: Marco
+--------------------------------
+ECant Producto              Importe
+E' . "\0" . '   3 Quesadillas   75.00
+   2 Coca col   80.00
+   4 Tacos campechano  200.00
+--------------------------------
+               Subtotal: $355.00
+               Efectivo: $500.00
+                 Cambio: $145.00
+E                  TOTAL: $355.00
+E' . "\0" . '
+a­Gracias por su compra! vuelva pronto :)*** Venta COMPLETADA ***
+Powered by POS System
+VA')
+ 5 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\Printer.php(502): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->finalize()
+ 6 APPPATH\Controllers\VentasController.php(337): Mike42\Escpos\Printer->close()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\VentasController->imprimirTicket('82')
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VentasController))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\pos_system\\pos_system\\public\\index.php')
+DEBUG - 2026-01-08 21:52:12 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:55:54 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:56:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:56:02 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-01-08 21:56:02 --> ErrorException: copy(\\Caballero\POS-58): Failed to open stream: No such file or directory
+[Method: GET, Route: ventas/imprimir/83]
+in VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php on line 378.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'copy(\\\\Caballero\\POS-58): Failed to open stream: No such file or directory', 'C:\\pos_system\\pos_system\\vendor\\mike42\\escpos-php\\src\\Mike42\\Escpos\\PrintConnectors\\WindowsPrintConnector.php', 378)
+ 2 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(378): copy('C:\\Users\\jseca\\AppData\\Local\\Temp\\esc8A08.tmp', '\\\\Caballero\\POS-58')
+ 3 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(296): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->runCopy('C:\\Users\\jseca\\AppData\\Local\\Temp\\esc8A08.tmp', '\\\\Caballero\\POS-58')
+ 4 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(176): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->finalizeWin('@aEMI TIEND
+E' . "\0" . 'calle arbolin
+Tel: 4141148085
+RFC: MARA020430AK7
+--------------------------------
+a' . "\0" . 'Folio: V20260108215602365
+Fecha: 08/01/2026 21:56
+Cliente: Cliente general
+Atendio: Marco
+--------------------------------
+ECant Producto              Importe
+E' . "\0" . '   4 Coca col  160.00
+--------------------------------
+               Subtotal: $160.00
+               Efectivo: $500.00
+                 Cambio: $340.00
+E                  TOTAL: $160.00
+E' . "\0" . '
+a­Gracias por su compra! vuelva pronto :)*** Venta COMPLETADA ***
+Powered by POS System
+VA')
+ 5 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\Printer.php(502): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->finalize()
+ 6 APPPATH\Controllers\VentasController.php(337): Mike42\Escpos\Printer->close()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\VentasController->imprimirTicket('83')
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VentasController))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\pos_system\\pos_system\\public\\index.php')
+DEBUG - 2026-01-08 21:56:07 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:56:43 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:56:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 21:56:51 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-01-08 21:56:51 --> ErrorException: copy(\\Caballero\POS-58): Failed to open stream: No such file or directory
+[Method: GET, Route: ventas/imprimir/84]
+in VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php on line 378.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'copy(\\\\Caballero\\POS-58): Failed to open stream: No such file or directory', 'C:\\pos_system\\pos_system\\vendor\\mike42\\escpos-php\\src\\Mike42\\Escpos\\PrintConnectors\\WindowsPrintConnector.php', 378)
+ 2 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(378): copy('C:\\Users\\jseca\\AppData\\Local\\Temp\\esc4877.tmp', '\\\\Caballero\\POS-58')
+ 3 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(296): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->runCopy('C:\\Users\\jseca\\AppData\\Local\\Temp\\esc4877.tmp', '\\\\Caballero\\POS-58')
+ 4 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(176): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->finalizeWin('@aEMI TIEND
+E' . "\0" . 'calle arbolin
+Tel: 4141148085
+RFC: MARA020430AK7
+--------------------------------
+a' . "\0" . 'Folio: V20260108215651695
+Fecha: 08/01/2026 21:56
+Cliente: Cliente general
+Atendio: Marco
+--------------------------------
+ECant Producto              Importe
+E' . "\0" . '   3 Coca col  120.00
+--------------------------------
+               Subtotal: $120.00
+               Efectivo: $200.00
+                  Cambio: $80.00
+E                  TOTAL: $120.00
+E' . "\0" . '
+a­Gracias por su compra! vuelva pronto :)*** Venta COMPLETADA ***
+Powered by POS System
+VA')
+ 5 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\Printer.php(502): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->finalize()
+ 6 APPPATH\Controllers\VentasController.php(337): Mike42\Escpos\Printer->close()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\VentasController->imprimirTicket('84')
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VentasController))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\pos_system\\pos_system\\public\\index.php')
+DEBUG - 2026-01-08 21:56:52 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 22:00:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+DEBUG - 2026-01-08 22:00:04 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.
+CRITICAL - 2026-01-08 22:00:04 --> ErrorException: copy(\\Caballero\POS-58): Failed to open stream: No such file or directory
+[Method: GET, Route: ventas/imprimir/85]
+in VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php on line 378.
+ 1 [internal function]: CodeIgniter\Debug\Exceptions->errorHandler(2, 'copy(\\\\Caballero\\POS-58): Failed to open stream: No such file or directory', 'C:\\pos_system\\pos_system\\vendor\\mike42\\escpos-php\\src\\Mike42\\Escpos\\PrintConnectors\\WindowsPrintConnector.php', 378)
+ 2 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(378): copy('C:\\Users\\jseca\\AppData\\Local\\Temp\\esc3BD7.tmp', '\\\\Caballero\\POS-58')
+ 3 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(296): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->runCopy('C:\\Users\\jseca\\AppData\\Local\\Temp\\esc3BD7.tmp', '\\\\Caballero\\POS-58')
+ 4 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\PrintConnectors\WindowsPrintConnector.php(176): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->finalizeWin('@aEMI TIEND
+E' . "\0" . 'calle arbolin
+Tel: 4141148085
+RFC: MARA020430AK7
+--------------------------------
+a' . "\0" . 'Folio: V20260108220004130
+Fecha: 08/01/2026 22:00
+Cliente: Cliente general
+Atendio: Marco
+--------------------------------
+ECant Producto              Importe
+E' . "\0" . '   1 Quesadillas   25.00
+   3 Coca col  120.00
+   1 Tacos campechano   50.00
+--------------------------------
+               Subtotal: $195.00
+               Efectivo: $500.00
+                 Cambio: $305.00
+E                  TOTAL: $195.00
+E' . "\0" . '
+a­Gracias por su compra! vuelva pronto :)*** Venta COMPLETADA ***
+Powered by POS System
+VA')
+ 5 VENDORPATH\mike42\escpos-php\src\Mike42\Escpos\Printer.php(502): Mike42\Escpos\PrintConnectors\WindowsPrintConnector->finalize()
+ 6 APPPATH\Controllers\VentasController.php(337): Mike42\Escpos\Printer->close()
+ 7 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\VentasController->imprimirTicket('85')
+ 8 SYSTEMPATH\CodeIgniter.php(507): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\VentasController))
+ 9 SYSTEMPATH\CodeIgniter.php(354): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+10 SYSTEMPATH\Boot.php(363): CodeIgniter\CodeIgniter->run()
+11 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+12 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+13 SYSTEMPATH\rewrite.php(44): require_once('C:\\pos_system\\pos_system\\public\\index.php')
+DEBUG - 2026-01-08 22:00:06 --> Session: Class initialized using 'CodeIgniter\Session\Handlers\FileHandler' driver.

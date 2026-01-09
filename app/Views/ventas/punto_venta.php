@@ -26,26 +26,41 @@
         </div>
 
         <!-- Lista de Productos -->
-        <h3>Productos Disponibles</h3>
-        <div class="productos-grid" id="productos-grid">
-       <?php foreach($productos as $producto): ?>
-        <?php if($producto['stock'] > 0): ?>
-            <div class="producto-card" onclick="agregarAlCarrito(<?= $producto['id'] ?>)">
+<h3>Productos Disponibles</h3>
+<div class="productos-grid" id="productos-grid">
+<?php foreach($productos as $producto): ?>
 
-                <!-- IMAGEN -->
-                <img 
-                    src="<?= base_url('uploads/productos/' . $producto['imagen']) ?>" 
-                    alt="<?= esc($producto['nombre']) ?>" 
-                    style="width:100%; height:120px; object-fit:cover; border-radius:8px;"
-                >
+    <?php
+    // Suponiendo que categoría 1 = comida, 2 = bebida
+    $mostrar = false;
 
-                <h4><?= esc($producto['nombre']) ?></h4>
-                <div class="producto-precio">$<?= number_format($producto['precio'], 2) ?></div>
-                <div class="producto-stock">Stock: <?= $producto['stock'] ?></div>
-            </div>
-        <?php endif; ?>
-    <?php endforeach; ?>
+    if ($producto['categoria_id'] == 1) {
+        // Comida → mostrar siempre
+        $mostrar = true;
+    } elseif ($producto['categoria_id'] == 2 && $producto['stock'] > 0) {
+        // Bebida → mostrar solo si stock > 0
+        $mostrar = true;
+    }
+    ?>
+
+    <?php if ($mostrar): ?>
+        <div class="producto-card" onclick="agregarAlCarrito(<?= $producto['id'] ?>)">
+            <!-- IMAGEN -->
+            <img 
+                src="<?= base_url('uploads/productos/' . $producto['imagen']) ?>" 
+                alt="<?= esc($producto['nombre']) ?>" 
+                style="width:100%; height:120px; object-fit:cover; border-radius:8px;"
+            >
+
+            <h4><?= esc($producto['nombre']) ?></h4>
+            <div class="producto-precio">$<?= number_format($producto['precio'], 2) ?></div>
+            <div class="producto-stock">Stock: <?= $producto['stock'] ?></div>
         </div>
+    <?php endif; ?>
+
+<?php endforeach; ?>
+</div>
+
     </div>
 
     <!-- Panel del Carrito -->
@@ -124,7 +139,6 @@ selectCliente.addEventListener('focus', () => {
 <script>
 let carrito = [];
 
-// Crear mapa de productos de forma robusta
 const productosMap = {};
 <?php foreach($productos as $producto): ?>
 productosMap[<?= $producto['id'] ?>] = {
@@ -132,9 +146,9 @@ productosMap[<?= $producto['id'] ?>] = {
     nombre: '<?= addslashes($producto['nombre']) ?>',
     precio: <?= floatval($producto['precio']) ?>,
     stock: <?= intval($producto['stock']) ?>,
+    categoria_id: <?= intval($producto['categoria_id']) ?>, // 🔹 agregado
 };
 <?php endforeach; ?>
-
 
 
 // Buscar producto por código
@@ -154,33 +168,30 @@ function buscarProductoPorCodigo(codigo) {
         });
 }
 
-// Agregar producto al carrito
 function agregarAlCarrito(productoId) {
     const producto = productosMap[productoId];
     
     if (!producto) {
-        console.error('Producto no encontrado:', productoId);
         showMessage('❌ Producto no encontrado', 'error');
         return;
     }
-    
-    // Verificar stock
-    if (producto.stock <= 0) {
+
+    // Solo verificar stock si es bebida
+    if (producto.categoria_id == 2 && producto.stock <= 0) {
         showMessage('❌ Producto sin stock disponible', 'error');
         return;
     }
     
     const itemExistente = carrito.find(item => item.id == productoId);
-    
+
     if (itemExistente) {
-        // Verificar que no exceda el stock disponible
-        if (itemExistente.cantidad < producto.stock) {
-            itemExistente.cantidad++;
-            itemExistente.subtotal = itemExistente.cantidad * itemExistente.precio;
-        } else {
+        // Incremento según categoría
+        if (producto.categoria_id == 2 && itemExistente.cantidad >= producto.stock) {
             showMessage('❌ No hay suficiente stock disponible', 'error');
             return;
         }
+        itemExistente.cantidad++;
+        itemExistente.subtotal = itemExistente.cantidad * itemExistente.precio;
     } else {
         carrito.push({
             id: producto.id,
@@ -190,10 +201,13 @@ function agregarAlCarrito(productoId) {
             subtotal: producto.precio
         });
     }
-    
+
     actualizarCarrito();
     showMessage('✓ Producto agregado al carrito', 'success');
-    document.getElementById('scanner-input').focus();
+
+    // Evitar error null al focus si no existe scanner-input
+    const scannerInput = document.getElementById('scanner-input');
+    if (scannerInput) scannerInput.focus();
 }
 
 // Actualizar interfaz del carrito
@@ -246,39 +260,40 @@ function actualizarCarrito() {
     calcularCambio();
 }
 
-// Funciones del carrito
 function modificarCantidad(index, cambio) {
     const producto = productosMap[carrito[index].id];
     const nuevaCantidad = carrito[index].cantidad + cambio;
-    
-    if (nuevaCantidad >= 1 && nuevaCantidad <= producto.stock) {
+
+    // Solo bebidas respetan stock
+    if (producto.categoria_id == 2 && nuevaCantidad > producto.stock) {
+        showMessage('❌ No hay suficiente stock disponible', 'error');
+        return;
+    }
+
+    if (nuevaCantidad >= 1) {
         carrito[index].cantidad = nuevaCantidad;
         carrito[index].subtotal = nuevaCantidad * carrito[index].precio;
         actualizarCarrito();
-    } else if (nuevaCantidad > producto.stock) {
-        showMessage('❌ No hay suficiente stock disponible', 'error');
     }
 }
 
 function actualizarCantidad(index, nuevaCantidad) {
     const producto = productosMap[carrito[index].id];
     nuevaCantidad = parseInt(nuevaCantidad);
-    
-    if (nuevaCantidad >= 1 && nuevaCantidad <= producto.stock) {
-        carrito[index].cantidad = nuevaCantidad;
-        carrito[index].subtotal = nuevaCantidad * carrito[index].precio;
-        actualizarCarrito();
-    } else if (nuevaCantidad > producto.stock) {
+
+    if (producto.categoria_id == 2 && nuevaCantidad > producto.stock) {
         showMessage('❌ No hay suficiente stock disponible', 'error');
         carrito[index].cantidad = producto.stock;
         carrito[index].subtotal = producto.stock * carrito[index].precio;
         actualizarCarrito();
+        return;
     }
-}
 
-function eliminarDelCarrito(index) {
-    carrito.splice(index, 1);
-    actualizarCarrito();
+    if (nuevaCantidad >= 1) {
+        carrito[index].cantidad = nuevaCantidad;
+        carrito[index].subtotal = nuevaCantidad * carrito[index].precio;
+        actualizarCarrito();
+    }
 }
 
 // Cálculo de cambio
@@ -349,23 +364,24 @@ function procesarVenta() {
         body: JSON.stringify(ventaData)
     })
     .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            showMessage(`✅ ${data.message}`, 'success');
-            
-            // Abrir ticket en nueva ventana
-            const ticketUrl = `<?= base_url('ventas/imprimir/') ?>${data.venta_id}`;
-            window.open(ticketUrl, '_blank', 'width=400,height=600');
-            
-            // Limpiar carrito después de éxito
-            setTimeout(() => {
-                cancelarVenta();
-            }, 2000);
-            
-        } else {
-            showMessage(`❌ ${data.message}`, 'error');
-        }
-    })
+.then(data => {
+    if (data.success) {
+        showMessage(`✅ ${data.message}`, 'success');
+
+        // Abrir ticket en nueva ventana
+        const ticketUrl = `<?= base_url('ventas/imprimir/') ?>${data.venta_id}`;
+        window.open(ticketUrl, '_blank', 'width=400,height=600');
+
+        // Recargar la página después de 1.5 segundos para que el usuario vea el mensaje
+        setTimeout(() => {
+            location.reload();
+        }, 1500);
+
+    } else {
+        showMessage(`❌ ${data.message}`, 'error');
+    }
+})
+
     .catch(error => {
         console.error('Error:', error);
         showMessage('❌ Error de conexión al procesar la venta', 'error');

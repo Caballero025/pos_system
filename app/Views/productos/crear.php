@@ -59,7 +59,7 @@
         </div>
 
         <div class="form-actions">
-            <a href="<?= base_url('admin/productos') ?>" class="btn-cancel">Cancelar</a>
+            <a href="<?= base_url("admin/productos/categoria/$categoria_id") ?>" class="btn-cancel">Cancelar</a>
             <button type="submit" class="btn btn-primary">💾 Guardar Producto</button>
         </div>
           <?php else: ?>
