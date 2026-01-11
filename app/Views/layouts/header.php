@@ -9,32 +9,30 @@
 </head>
 <body>
     <!-- Sidebar -->
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <h2>🛒 Mi Tienda</h2>
-            <small>Sistema de Ventas</small>
-        </div>
+<div class="sidebar">
+    <div class="sidebar-header">
+        <img src="<?= base_url('assets/img/logo.png') ?>" 
+             alt="Logo"
+             class="sidebar-logo">
+    </div>
 
-       <?php if (session()->get('user_role') === 'admin'): ?>
+    <?php if (session()->get('user_role') === 'admin'): ?>
         <ul class="nav-links">
-            <ul class="nav-links">
-    <li><a href="<?= base_url('dashboard') ?>">🏠 Inicio</a></li>
-    <li><a href="<?= base_url('admin/productos') ?>">📦 Productos</a></li>
-    <li><a href="<?= base_url('ventas') ?>">💰 Ventas</a></li>
-    <li><a href="<?= base_url('admin/caja') ?>">💵 Caja</a></li>
-    <li><a href="<?= base_url('ventas/historial') ?>">📊 Historial</a></li>
-    <li><a href="<?= base_url('admin/reportes') ?>">📈 Reportes</a></li>
-    <li><a href="<?= base_url('admin/configuracion') ?>">⚙️ Configuración</a></li>
-</ul>
-
+            <li><a href="<?= base_url('dashboard') ?>">🏠 Inicio</a></li>
+            <li><a href="<?= base_url('admin/productos') ?>">📦 Productos</a></li>
+            <li><a href="<?= base_url('ventas') ?>">💰 Ventas</a></li>
+            <li><a href="<?= base_url('admin/materias') ?>">🥩 Materias primas</a></li>
+            <li><a href="<?= base_url('ventas/historial') ?>">📊 Detalles ventas</a></li>
+            <li><a href="<?= base_url('admin/reportes') ?>">📈 Reportes</a></li>
+            <li><a href="<?= base_url('admin/configuracion') ?>">⚙️ Configuración</a></li>
         </ul>
-
-        <?php else: ?>
-            <ul class="nav-links">
+    <?php else: ?>
+        <ul class="nav-links">
             <li><a href="<?= base_url('ventas') ?>">💰 Ventas</a></li>
         </ul>
-        <?php endif; ?>
-    </div>
+    <?php endif; ?>
+</div>
+
 
     <!-- Main Content -->
     <div class="main-content">

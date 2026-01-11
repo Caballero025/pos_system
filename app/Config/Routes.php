@@ -23,11 +23,14 @@ $routes->get('productos/editar/(:num)', 'ProductosController::editar/$1');
 $routes->post('productos/actualizar/(:num)', 'ProductosController::actualizar/$1');
 $routes->get('productos/eliminar/(:num)', 'ProductosController::eliminar/$1'); // Para enlaces GET
 $routes->delete('productos/eliminar/(:num)', 'ProductosController::eliminar/$1'); // Para formularios DELETE
-// Rutas de Caja
-$routes->get('caja', 'CajaController::index');
-$routes->post('caja/abrir', 'CajaController::abrirCaja');
-$routes->post('caja/cerrar', 'CajaController::cerrarCaja');
-$routes->post('caja/movimiento', 'CajaController::movimiento');
+// Rutas de materias
+$routes->get('materias', 'MateriasController::materias');
+$routes->get('materias/crear', 'MateriasController::crear');
+$routes->post('materias/guardar', 'MateriasController::guardar');
+$routes->get('materias/editar/(:num)', 'MateriasController::editar/$1');
+$routes->post('materias/actualizar/(:num)', 'MateriasController::actualizar/$1');
+$routes->get('materias/eliminar/(:num)', 'MateriasController::eliminar/$1'); // Para enlaces GET
+$routes->delete('materias/eliminar/(:num)', 'MateriasController::eliminar/$1'); // Para formularios DELETE
 // Rutas de Reportes
 $routes->get('reportes', 'ReportesController::index');
 $routes->get('reportes/ventas', 'ReportesController::ventas');
