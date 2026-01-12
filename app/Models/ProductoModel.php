@@ -17,7 +17,8 @@ protected $allowedFields = [
     'stock',
     'categoria_id',
     'imagen',
-    'activo'
+    'activo',
+    'medida_id'
 ];    
     protected $useTimestamps = false;
 

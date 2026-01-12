@@ -44,7 +44,8 @@
     ?>
 
     <?php if ($mostrar): ?>
-        <div class="producto-card" onclick="agregarAlCarrito(<?= $producto['id'] ?>)">
+        <div class="producto-card" onclick="abrirModal(<?= $producto['id'] ?>)">
+
             <!-- IMAGEN -->
             <img 
                 src="<?= base_url('uploads/productos/' . $producto['imagen']) ?>" 
@@ -62,6 +63,53 @@
 </div>
 
     </div>
+<!-- MODAL DE AGREGADOS -->
+<div id="modal-agregados" class="modal-overlay" style="display:none;">
+  <div class="modal-box minimal">
+
+    <div class="modal-header">
+      <span class="modal-icon"></span>
+      <h3 id="modal-producto-nombre"></h3>
+    </div>
+
+    <p class="modal-precio">
+      $<span id="modal-precio-base"></span>
+    </p>
+
+    <p id="modal-mensaje" class="modal-mensaje"></p>
+<div class="modal-opciones"></div>
+<div id="monto-control" class="monto-control" style="display:none;">
+    <label>Monto a pagar</label>
+
+    <div class="monto-input-wrapper">
+        <span class="currency">$</span>
+        <input 
+            type="text"
+            id="monto-input"
+            placeholder="0.00"
+            inputmode="numeric"
+            oninput="calcularPesoDesdeMonto()"
+        />
+    </div>
+</div>
+
+<div id="resultado-peso" class="peso-info" style="display:none;">
+    <span id="peso-texto"></span>
+</div>
+
+<div class="cantidad-control">
+  <button type="button" onclick="cambiarCantidad(-1)">−</button>
+  <span id="cantidad-producto">1</span>
+  <button type="button" onclick="cambiarCantidad(1)">+</button>
+</div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="cerrarModal()">Cancelar</button>
+      <button class="btn-confirm" onclick="confirmarProducto()">Agregar</button>
+    </div>
+
+  </div>
+</div>
+
 
     <!-- Panel del Carrito -->
     <div class="carrito-panel">
@@ -175,17 +223,14 @@ function agregarAlCarrito(productoId) {
         showMessage('❌ Producto no encontrado', 'error');
         return;
     }
-
-    // Solo verificar stock si es bebida
     if (producto.categoria_id == 2 && producto.stock <= 0) {
         showMessage('❌ Producto sin stock disponible', 'error');
         return;
     }
-    
+
     const itemExistente = carrito.find(item => item.id == productoId);
 
     if (itemExistente) {
-        // Incremento según categoría
         if (producto.categoria_id == 2 && itemExistente.cantidad >= producto.stock) {
             showMessage('❌ No hay suficiente stock disponible', 'error');
             return;
@@ -193,24 +238,63 @@ function agregarAlCarrito(productoId) {
         itemExistente.cantidad++;
         itemExistente.subtotal = itemExistente.cantidad * itemExistente.precio;
     } else {
-        carrito.push({
-            id: producto.id,
-            nombre: producto.nombre,
-            precio: producto.precio,
-            cantidad: 1,
-            subtotal: producto.precio
-        });
+ carrito.push({
+    id: productoActual.id,
+    nombre: productoActual.nombre + (extras.length ? ' + ' + extras.join(', ') : ''),
+    precio: productoActual.precio + extraTotal,
+    cantidad: cantidadActual,
+    subtotal: (productoActual.precio + extraTotal) * cantidadActual,
+    extras: extras
+});
+
+    }
+
+    if (
+        producto.nombre.trim().toLowerCase() === 'servicio de carnitas' &&
+        !carrito.some(i => i.nombre.trim().toLowerCase() === 'tortillas')
+    ) {
+        const productoExtra = Object.values(productosMap)
+            .find(p => p.nombre.trim().toLowerCase() === 'tortillas');
+
+        if (productoExtra) {
+            agregarProductoExtra(productoExtra.id);
+        }
     }
 
     actualizarCarrito();
     showMessage('✓ Producto agregado al carrito', 'success');
 
-    // Evitar error null al focus si no existe scanner-input
     const scannerInput = document.getElementById('scanner-input');
     if (scannerInput) scannerInput.focus();
 }
+function agregarProductoExtra(productoId) {
+    const producto = productosMap[productoId];
+    if (!producto) return;
 
-// Actualizar interfaz del carrito
+    const item = carrito.find(i => i.id == productoId);
+
+ 
+    const precioFinal = producto.precio + 10;
+
+    if (item) {
+        return;
+    } else {
+        carrito.push({
+            id: producto.id,
+            nombre: producto.nombre,
+            precio: precioFinal,   
+            cantidad: 1,
+            subtotal: precioFinal,
+            soloUno: true     
+        });
+    }
+
+    actualizarCarrito();
+}
+
+
+
+
 function actualizarCarrito() {
     const carritoItems = document.getElementById('carrito-items');
     const subtotalElement = document.getElementById('subtotal');
@@ -261,10 +345,14 @@ function actualizarCarrito() {
 }
 
 function modificarCantidad(index, cambio) {
+
+    if (carrito[index].soloUno) {
+        return;
+    }
+
     const producto = productosMap[carrito[index].id];
     const nuevaCantidad = carrito[index].cantidad + cambio;
 
-    // Solo bebidas respetan stock
     if (producto.categoria_id == 2 && nuevaCantidad > producto.stock) {
         showMessage('❌ No hay suficiente stock disponible', 'error');
         return;
@@ -277,7 +365,17 @@ function modificarCantidad(index, cambio) {
     }
 }
 
+
 function actualizarCantidad(index, nuevaCantidad) {
+
+    if (carrito[index].soloUno) {
+
+        carrito[index].cantidad = 1; 
+        carrito[index].subtotal = carrito[index].precio;
+        actualizarCarrito();
+        return;
+    }
+
     const producto = productosMap[carrito[index].id];
     nuevaCantidad = parseInt(nuevaCantidad);
 
@@ -349,7 +447,7 @@ function procesarVenta() {
         total: total
     };
     
-    // Mostrar loading
+
     const btnProcesar = document.querySelector('.btn-procesar');
     const originalText = btnProcesar.innerHTML;
     btnProcesar.innerHTML = '⏳ Procesando...';
@@ -368,11 +466,9 @@ function procesarVenta() {
     if (data.success) {
         showMessage(`✅ ${data.message}`, 'success');
 
-        // Abrir ticket en nueva ventana
         const ticketUrl = `<?= base_url('ventas/imprimir/') ?>${data.venta_id}`;
         window.open(ticketUrl, '_blank', 'width=400,height=600');
 
-        // Recargar la página después de 1.5 segundos para que el usuario vea el mensaje
         setTimeout(() => {
             location.reload();
         }, 1500);
@@ -387,12 +483,12 @@ function procesarVenta() {
         showMessage('❌ Error de conexión al procesar la venta', 'error');
     })
     .finally(() => {
-        // Restaurar botón
+
         btnProcesar.innerHTML = originalText;
         btnProcesar.disabled = false;
     });
 }
-// Búsqueda dinámica de clientes
+
 document.getElementById('cliente-select').addEventListener('input', function(e) {
     const searchTerm = this.value;
     
@@ -401,12 +497,12 @@ document.getElementById('cliente-select').addEventListener('input', function(e) 
             .then(response => response.json())
             .then(clientes => {
                 console.log('Clientes encontrados:', clientes);
-                // Aquí puedes implementar autocompletado
+                
             });
     }
 });
 
-// Botón para agregar cliente rápido desde punto de venta
+
 function agregarClienteRapido() {
     const nombre = prompt('Nombre del cliente:');
     if (nombre) {
@@ -470,6 +566,228 @@ function showMessage(message, type) {
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('scanner-input').focus();
 });
+
+
+let productoActual = null;
+let cantidadActual = 1;
+
+
+const opcionesPorProducto = {
+    taco: {
+        extras: [{ nombre: 'Queso extra', precio: 5, icono: '🧀' }]
+    },
+
+    torta: {
+        extras: [{ nombre: 'Queso extra', precio: 5, icono: '🧀' }]
+    },
+
+    carnitas: {
+        tipoVenta: [
+            { tipo: 'kilo', nombre: 'Por kilo', icono: '⚖️' },
+            { tipo: 'monto', nombre: 'Por monto ($)', icono: '💵' }
+        ]
+    },
+
+    bistec: {
+        tipoVenta: [
+            { tipo: 'kilo', nombre: 'Por kilo', icono: '⚖️' },
+            { tipo: 'monto', nombre: 'Por monto ($)', icono: '💵' }
+        ]
+    },
+
+    chorizo: {
+        tipoVenta: [
+            { tipo: 'kilo', nombre: 'Por kilo', icono: '⚖️' },
+            { tipo: 'monto', nombre: 'Por monto ($)', icono: '💵' }
+        ]
+    },
+
+    arrachera: {
+        tipoVenta: [
+            { tipo: 'kilo', nombre: 'Por kilo', icono: '⚖️' },
+            { tipo: 'monto', nombre: 'Por monto ($)', icono: '💵' }
+        ]
+    },
+
+    bebida: {}
+};
+
+
+function calcularPesoDesdeMonto() {
+    const monto = parseFloat(document.getElementById('monto-input').value);
+    const precioKilo = productoActual.precio;
+
+    const resultado = document.getElementById('resultado-peso');
+    const texto = document.getElementById('peso-texto');
+
+    if (!monto || monto <= 0) {
+        resultado.style.display = 'none';
+        return;
+    }
+
+    const kilos = monto / precioKilo;
+
+    if (kilos >= 1) {
+        texto.textContent = `${kilos.toFixed(2)} kg`;
+    } else {
+        texto.textContent = `${Math.round(kilos * 1000)} g`;
+    }
+
+    resultado.style.display = 'block';
+}
+
+function abrirModal(productoId) {
+
+    productoActual = productosMap[productoId];
+    if (!productoActual) return;
+
+    cantidadActual = 1;
+    document.getElementById('cantidad-producto').textContent = cantidadActual;
+
+    document.getElementById('modal-producto-nombre').textContent = productoActual.nombre;
+    document.getElementById('modal-precio-base').textContent = productoActual.precio.toFixed(2);
+
+    document.querySelector('.modal-opciones').innerHTML = '';
+    document.getElementById('monto-control').style.display = 'none';
+    document.querySelector('.cantidad-control').style.display = 'flex';
+    document.getElementById('monto-input').value = '';
+    document.getElementById('resultado-peso').style.display = 'none';
+    tipoVentaSeleccionado = null;
+
+    let tipo = 'bebida';
+    const nombre = productoActual.nombre.toLowerCase();
+
+    if (nombre.includes('taco')) tipo = 'taco';
+    else if (nombre.includes('torta')) tipo = 'torta';
+    else if (nombre.includes('carnita')) tipo = 'carnitas';
+    else if (nombre.includes('bistec')) tipo = 'bistec';
+    else if (nombre.includes('chorizo')) tipo = 'chorizo';
+    else if (nombre.includes('arrachera')) tipo = 'arrachera';
+
+    const config = opcionesPorProducto[tipo] || {};
+    const opcionesDiv = document.querySelector('.modal-opciones');
+
+    // 🔹 Tipo de venta
+    if (config.tipoVenta) {
+        config.tipoVenta.forEach(op => {
+            const btn = document.createElement('button');
+            btn.className = 'opcion-btn';
+            btn.innerHTML = `${op.icono} ${op.nombre}`;
+            btn.onclick = () => seleccionarTipoVenta(op.tipo);
+            opcionesDiv.appendChild(btn);
+        });
+
+        document.querySelector('.cantidad-control').style.display = 'none';
+    }
+
+    // 🔹 Extras
+    if (config.extras) {
+        config.extras.forEach(extra => {
+            opcionesDiv.innerHTML += `
+                <label class="extra-item">
+                    <input type="checkbox" value="${extra.precio}" data-nombre="${extra.nombre}">
+                    <span>${extra.icono} ${extra.nombre}</span>
+                    <small>+$${extra.precio}</small>
+                </label>
+            `;
+        });
+    }
+
+    document.getElementById('modal-agregados').style.display = 'flex';
+}
+
+let tipoVentaSeleccionado = null;
+
+function seleccionarTipoVenta(tipo) {
+    tipoVentaSeleccionado = tipo;
+
+    if (tipo === 'monto') {
+        document.getElementById('monto-control').style.display = 'block';
+        document.querySelector('.cantidad-control').style.display = 'none';
+    } 
+    else if (tipo === 'kilo') {
+        document.getElementById('monto-control').style.display = 'none';
+        document.querySelector('.cantidad-control').style.display = 'flex';
+    }
+}
+
+
+function cambiarCantidad(valor) {
+    cantidadActual += valor;
+    if (cantidadActual < 1) cantidadActual = 1;
+    document.getElementById('cantidad-producto').textContent = cantidadActual;
+}
+function cerrarModal() {
+    document.getElementById('modal-agregados').style.display = 'none';
+    productoActual = null;
+    tipoVentaSeleccionado = null;
+
+    document.getElementById('monto-control').style.display = 'none';
+    document.querySelector('.cantidad-control').style.display = 'flex';
+}
+
+
+function confirmarProducto() {
+
+    // 🥩 PRODUCTOS POR MONTO (carnitas, arrachera, bistec, etc.)
+    if (tipoVentaSeleccionado === 'monto') {
+
+        const monto = parseFloat(document.getElementById('monto-input').value);
+
+        if (!monto || monto <= 0) {
+            showMessage('❌ Ingrese un monto válido', 'error');
+            return;
+        }
+
+        const kilos = monto / productoActual.precio;
+
+        const descripcionPeso = kilos >= 1
+            ? `${kilos.toFixed(2)} kg`
+            : `${Math.round(kilos * 1000)} g`;
+
+        carrito.push({
+            id: productoActual.id,
+            nombre: `${productoActual.nombre} (${descripcionPeso})`,
+            precio: monto,
+            cantidad: 1,
+            subtotal: monto,
+            tipoVenta: 'monto',
+            peso: descripcionPeso
+        });
+    }
+
+    // 🌮 PRODUCTOS NORMALES (tacos, tortas, etc.)
+    else {
+
+        let extras = [];
+        let extraTotal = 0;
+
+        document
+            .querySelectorAll('#modal-agregados input[type="checkbox"]:checked')
+            .forEach(c => {
+                extras.push(c.dataset.nombre);
+                extraTotal += parseFloat(c.value);
+            });
+
+        const precioFinal = productoActual.precio + extraTotal;
+
+        carrito.push({
+            id: productoActual.id,
+            nombre: productoActual.nombre + (extras.length ? ' + ' + extras.join(', ') : ''),
+            precio: precioFinal,
+            cantidad: cantidadActual,
+            subtotal: precioFinal * cantidadActual,
+            extras
+        });
+    }
+
+    cerrarModal();
+    actualizarCarrito();
+    showMessage('✓ Producto agregado', 'success');
+}
+
+
+
 </script>
 
 <?= $this->include('layouts/footer') ?>

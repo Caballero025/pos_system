@@ -58,6 +58,19 @@
             </select>
         </div>
 
+                     <div class="form-group">
+            <label class="form-label" for="medida_id">Unidad de medida</label>
+            <select id="medida_id" name="medida_id" class="form-input">
+                <option value="">Seleccionar medida</option>
+                <?php foreach($medidas as $medida): ?>
+                    <option value="<?= $medida['id'] ?>" 
+                        <?= old('medida_id') == $medida['id'] ? 'selected' : '' ?>>
+                        <?= esc($medida['nombre']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
         <div class="form-actions">
             <a href="<?= base_url("admin/productos/categoria/$categoria_id") ?>" class="btn-cancel">Cancelar</a>
             <button type="submit" class="btn btn-primary">💾 Guardar Producto</button>
@@ -113,6 +126,20 @@
                     <option value="<?= $categoria['id'] ?>" 
                         <?= old('categoria_id') == $categoria['id'] ? 'selected' : '' ?>>
                         <?= esc($categoria['nombre']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+        
+                     <div class="form-group">
+            <label class="form-label" for="medida_id">Unidad de medida</label>
+            <select id="medida_id" name="medida_id" class="form-input">
+                <option value="">Seleccionar medida</option>
+                <?php foreach($medidas as $medida): ?>
+                    <option value="<?= $medida['id'] ?>" 
+                        <?= old('medida_id') == $medida['id'] ? 'selected' : '' ?>>
+                        <?= esc($medida['nombre']) ?>
                     </option>
                 <?php endforeach; ?>
             </select>

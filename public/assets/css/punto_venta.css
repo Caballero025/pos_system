@@ -269,3 +269,199 @@
     color: #6c757d;
     padding: 40px 0;
 }
+
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-box.minimal {
+  background: #fff;
+  width: 320px;
+  padding: 18px;
+  border-radius: 14px;
+  font-family: system-ui, sans-serif;
+  box-shadow: 0 10px 30px rgba(0,0,0,.15);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.modal-icon {
+  font-size: 26px;
+}
+
+.modal-precio {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 10px 0;
+}
+
+.modal-mensaje {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.modal-extras {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.extra-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #eee;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.extra-item input {
+  margin-right: 8px;
+}
+
+.extra-item small {
+  color: #999;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.cantidad-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 12px 0;
+}
+
+.cantidad-control button {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  font-size: 20px;
+  background: #f1f1f1;
+  cursor: pointer;
+}
+
+#cantidad-producto {
+  font-size: 18px;
+  font-weight: 600;
+  min-width: 24px;
+  text-align: center;
+}
+
+.monto-control {
+    margin: 15px 0;
+}
+
+.monto-control label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.monto-input-wrapper {
+    display: flex;
+    align-items: center;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 18px;
+    transition: border 0.2s;
+    background: #fafafa;
+}
+
+.monto-input-wrapper:focus-within {
+    border-color: #28a745;
+}
+
+.monto-input-wrapper .currency {
+    font-weight: bold;
+    margin-right: 6px;
+    color: #555;
+}
+
+#monto-input {
+    border: none;
+    outline: none;
+    font-size: 20px;
+    width: 100%;
+    background: transparent;
+}
+
+.peso-info {
+    margin-top: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #28a745;
+}
+.modal-opciones {
+    display: flex;
+    gap: 12px;
+    margin: 14px 0;
+}
+
+.opcion-btn {
+    flex: 1;
+    background: #f8f9fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 12px;
+    padding: 14px 12px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.opcion-btn:hover {
+    background: #f1f3f5;
+    border-color: #cfd4da;
+}
+
+.opcion-btn.activo {
+    background: #111827;
+    color: #fff;
+    border-color: #111827;
+}
+
+
+.btn-cancel {
+  flex: 1;
+  background: #f3f3f3;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.btn-confirm {
+  flex: 1;
+  background: #111;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+}
+

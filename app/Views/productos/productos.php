@@ -62,6 +62,7 @@
                     <th>Nombre</th>
                     <th>Precio</th>
                     <th>Categoria</th>
+                    <th>Medida</th>
                     <th>Estado</th>
                     <th>Acciones</th>
                 </tr>
@@ -75,7 +76,8 @@
                         </td>
                         <td><?= esc($producto['nombre']) ?></td>
                         <td>$<?= number_format($producto['precio'], 2) ?></td>
-                     <td><?= $producto['categoria_id'] ?></td>
+                     <td><?= $producto['categoria_nombre'] ?></td>
+                     <td><?= $producto['medida_nombre'] ?></td>
                         <td><?= $producto['activo'] ? 'Activo' : 'Inactivo' ?></td>
                                 </td>
                     <td class="actions">
@@ -114,6 +116,7 @@
                     <th>Precio</th>
                     <th>Stock</th>
                     <th>Categoría</th>
+                    <th>Medida</th>
                     <th>Estado</th>
                     <th>Acciones</th>
                 </tr>
@@ -129,6 +132,7 @@
                         <td>$<?= number_format($producto['precio'], 2) ?></td>
                         <td><?= number_format($producto['stock'], 0, '', '') ?></td>
                         <td><?= esc($producto['categoria_nombre']) ?></td>
+                        <td><?= esc($producto['medida_nombre']) ?></td>
                         <td><?= $producto['activo'] ? 'Activo' : 'Inactivo' ?></td>
                            </td>
                     <td class="actions">

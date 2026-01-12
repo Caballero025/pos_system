@@ -4,17 +4,20 @@ namespace App\Controllers;
 use App\Models\ProductoModel;
 use App\Models\CategoriaModel;
 use App\Models\DetalleVentaModel;
+use App\Models\MedidaModel;
 
 
 class ProductosController extends BaseController
 {
     protected $productoModel;
     protected $categoriaModel;
+    protected $medidaModel;
 
     public function __construct()
     {
         $this->productoModel = new ProductoModel();
         $this->categoriaModel = new CategoriaModel();
+        $this->medidaModel = new MedidaModel();
     }
 
     public function index()
@@ -27,12 +30,13 @@ class ProductosController extends BaseController
 {
     $this->checkLogin();
 
-    $search = null; // 👈 IMPORTANTE
+    $search = null; 
 
     $builder = $this->productoModel
-        ->select('productos.*, categorias.nombre as categoria_nombre')
-        ->join('categorias', 'categorias.id = productos.categoria_id', 'left');
-
+        ->select('productos.*, categorias.nombre AS categoria_nombre, unidades_medida.nombre AS medida_nombre')
+        ->join('categorias', 'categorias.id = productos.categoria_id', 'left')
+         ->join('unidades_medida', 'unidades_medida.id = productos.medida_id', 'left');
+ 
     if ($categoria_id) {
         $builder->where('productos.categoria_id', $categoria_id);
     }
@@ -52,14 +56,15 @@ class ProductosController extends BaseController
     public function crear()
     {
         $this->checkLogin();
-        $categoria_id = $this->request->getGet('categoria_id'); // obtiene 2
-
+        $categoria_id = $this->request->getGet('categoria_id');
         $categorias = $this->categoriaModel->findAll();
+        $medidas = $this->medidaModel->findAll();
 
         $data = [
             'title' => 'Agregar Producto',
             'categorias' => $categorias,
-            'categoria_id' => $categoria_id
+            'categoria_id' => $categoria_id,
+            'medidas' =>  $medidas,
         ];
 
         return view('productos/crear', $data);
@@ -99,6 +104,7 @@ class ProductosController extends BaseController
         'nombre' => $this->request->getPost('nombre'),
         'precio' => $this->request->getPost('precio'),
         'categoria_id' => $categoria_id,
+        'medida_id' => $this->request->getPost('medida_id'),
         'imagen' => $imagenName,
         'activo' => 1,
         'stock' => 0,
@@ -106,12 +112,12 @@ class ProductosController extends BaseController
     ];
 if ($categoria_id == 2) {
     $productoData['stock'] = $this->request->getPost('stock');
-    $productoData['costo'] = $this->request->getPost('costo'); // <- aquí
+    $productoData['costo'] = $this->request->getPost('costo'); 
 }
     $id = $this->productoModel->insert($productoData);
 
     if (!$id) {
-        dd($this->productoModel->errors()); // depura si hubo errores
+        dd($this->productoModel->errors());
     }
 
     return redirect()->to("admin/productos/categoria/$categoria_id")
@@ -121,7 +127,8 @@ if ($categoria_id == 2) {
     public function editar($id)
     {
         $this->checkLogin();
-        $categoria_id = $this->request->getGet('categoria_id'); // obtiene 2
+        $categoria_id = $this->request->getGet('categoria_id');
+        $medidas = $this->medidaModel->findAll();
 
         $producto = $this->productoModel->find($id);
         $categorias = $this->categoriaModel->findAll();
@@ -134,7 +141,8 @@ if ($categoria_id == 2) {
             'title' => 'Editar Producto',
             'producto' => $producto,
             'categorias' => $categorias,
-             'categoria_id' => $categoria_id
+            'categoria_id' => $categoria_id,
+  'medidas' =>  $medidas,
         ];
 
         return view('productos/editar', $data);
@@ -181,6 +189,7 @@ if ($categoria_id == 2) {
         'nombre' => $this->request->getPost('nombre'),
         'precio' => $this->request->getPost('precio'),
         'categoria_id' => $categoria_id,
+        'medida_id' => $this->request->getPost('medida_id'),
         'imagen' => $imagenName,
         'activo' => 1,
         'stock' => 0,
@@ -189,7 +198,7 @@ if ($categoria_id == 2) {
 
  if ($categoria_id == 2) {
     $productoData['stock'] = $this->request->getPost('stock');
-    $productoData['costo'] = $this->request->getPost('costo'); // <- aquí
+    $productoData['costo'] = $this->request->getPost('costo'); 
 }   $this->productoModel->update($id, $productoData);
 
             return redirect()->to("admin/productos/categoria/$categoria_id")->with('success', 'Producto actualizado correctamente');
