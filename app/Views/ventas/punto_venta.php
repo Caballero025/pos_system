@@ -98,9 +98,17 @@
 </div>
 
 <div class="cantidad-control">
-  <button type="button" onclick="cambiarCantidad(-1)">−</button>
-  <span id="cantidad-producto">1</span>
-  <button type="button" onclick="cambiarCantidad(1)">+</button>
+    <button type="button" onclick="cambiarCantidad(-1)">−</button>
+
+    <input
+        type="text"
+        id="cantidad-producto"
+        inputmode="decimal"
+        placeholder="Ej. 1.5"
+        oninput="actualizarCantidadDesdeInput(this)"
+    >
+
+    <button type="button" onclick="cambiarCantidad(1)">+</button>
 </div>
     <div class="modal-actions">
       <button class="btn-cancel" onclick="cerrarModal()">Cancelar</button>
@@ -316,26 +324,54 @@ function actualizarCarrito() {
     let subtotal = 0;
     let html = '';
     
-    carrito.forEach((item, index) => {
-        subtotal += item.subtotal;
-        
-        html += `
-            <div class="carrito-item">
-                <div class="item-info">
-                    <h4>${item.nombre}</h4>
-                    <div class="item-precio">$${item.precio.toFixed(2)} c/u</div>
-                </div>
-                <div class="item-cantidad">
-                    <button class="cantidad-btn" onclick="modificarCantidad(${index}, -1)">-</button>
-                    <input type="number" class="cantidad-input" value="${item.cantidad}" 
-                           onchange="actualizarCantidad(${index}, this.value)" min="1">
-                    <button class="cantidad-btn" onclick="modificarCantidad(${index}, 1)">+</button>
-                </div>
-                <div class="item-total">$${item.subtotal.toFixed(2)}</div>
-                <button class="eliminar-item" onclick="eliminarDelCarrito(${index})">×</button>
+carrito.forEach((item, index) => {
+    subtotal += item.subtotal;
+
+    const bloqueado = item.bloqueado ? 'disabled' : '';
+    const claseBloqueado = item.bloqueado ? 'item-bloqueado' : '';
+
+    html += `
+        <div class="carrito-item ${claseBloqueado}">
+            <div class="item-info">
+                <h4>${item.nombre}${item.bloqueado ? ' 🔒' : ''}</h4>
+                <div class="item-precio">$${item.precio.toFixed(2)} c/u</div>
             </div>
-        `;
-    });
+
+            <div class="item-cantidad">
+                <button 
+                    class="cantidad-btn"
+                    ${bloqueado}
+                    onclick="modificarCantidad(${index}, -1)"
+                >-</button>
+
+                <input 
+                    type="number"
+                    class="cantidad-input"
+                    value="${item.cantidad}"
+                    ${bloqueado}
+                    onchange="actualizarCantidad(${index}, this.value)"
+                    min="0.1"
+                    step="0.1"
+                >
+
+                <button 
+                    class="cantidad-btn"
+                    ${bloqueado}
+                    onclick="modificarCantidad(${index}, 1)"
+                >+</button>
+            </div>
+
+            <div class="item-total">$${item.subtotal.toFixed(2)}</div>
+
+            ${
+                item.bloqueado
+                    ? ''
+                    : `<button class="eliminar-item" onclick="eliminarDelCarrito(${index})">×</button>`
+            }
+        </div>
+    `;
+});
+
     
     carritoItems.innerHTML = html;
     subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
@@ -346,25 +382,37 @@ function actualizarCarrito() {
 
 function modificarCantidad(index, cambio) {
 
-    if (carrito[index].soloUno) {
+    const item = carrito[index];
+    if (!item) return;
+
+    // 🔒 No permitir tocar tortillas
+    if (item.bloqueado) {
+        showMessage('⚠️ Las tortillas se ajustan automáticamente', 'info');
         return;
     }
 
-    const producto = productosMap[carrito[index].id];
-    const nuevaCantidad = carrito[index].cantidad + cambio;
+    let incremento = item.esServicioCarnitas ? 0.1 : 1;
+    item.cantidad = Math.round((item.cantidad + cambio * incremento) * 10) / 10;
 
-    if (producto.categoria_id == 2 && nuevaCantidad > producto.stock) {
-        showMessage('❌ No hay suficiente stock disponible', 'error');
-        return;
-    }
-
-    if (nuevaCantidad >= 1) {
-        carrito[index].cantidad = nuevaCantidad;
-        carrito[index].subtotal = nuevaCantidad * carrito[index].precio;
+    if (item.cantidad <= 0) {
+        // 🗑️ Si se elimina el servicio, eliminar tortillas
+        if (item.esServicioCarnitas) {
+            carrito = carrito.filter(i => !i.ligadoCarnitas);
+        }
+        carrito.splice(index, 1);
         actualizarCarrito();
+        return;
     }
-}
 
+    item.subtotal = item.precio * item.cantidad;
+
+    // 🔄 SI ES SERVICIO → ACTUALIZAR TORTILLAS
+    if (item.esServicioCarnitas) {
+        agregarActualizarTortillas(item.cantidad);
+    }
+
+    actualizarCarrito();
+}
 
 function actualizarCantidad(index, nuevaCantidad) {
 
@@ -574,7 +622,7 @@ let cantidadActual = 1;
 
 const opcionesPorProducto = {
     taco: {
-        extras: [{ nombre: 'Queso extra', precio: 5, icono: '🧀' }]
+        extras: [{ nombre: 'Queso extra', precio: 2, icono: '🧀' }]
     },
 
     torta: {
@@ -635,14 +683,18 @@ function calcularPesoDesdeMonto() {
 
     resultado.style.display = 'block';
 }
+function esServicioCarnitas(producto) {
+    return producto.nombre.trim().toLowerCase() === 'servicio de carnitas';
+}
 
 function abrirModal(productoId) {
-
+   
     productoActual = productosMap[productoId];
     if (!productoActual) return;
 
     cantidadActual = 1;
-    document.getElementById('cantidad-producto').textContent = cantidadActual;
+document.getElementById('cantidad-producto').value = 1;
+
 
     document.getElementById('modal-producto-nombre').textContent = productoActual.nombre;
     document.getElementById('modal-precio-base').textContent = productoActual.precio.toFixed(2);
@@ -656,7 +708,16 @@ function abrirModal(productoId) {
 
     let tipo = 'bebida';
     const nombre = productoActual.nombre.toLowerCase();
+if (esServicioCarnitas(productoActual)) {
 
+    document.querySelector('.modal-opciones').innerHTML += `
+        <label class="extra-item obligatorio">
+            <input type="checkbox" checked disabled>
+            <span>🫓 Tortillas</span>
+            <small>Incluido</small>
+        </label>
+    `;
+}
     if (nombre.includes('taco')) tipo = 'taco';
     else if (nombre.includes('torta')) tipo = 'torta';
     else if (nombre.includes('carnita')) tipo = 'carnitas';
@@ -701,21 +762,37 @@ let tipoVentaSeleccionado = null;
 function seleccionarTipoVenta(tipo) {
     tipoVentaSeleccionado = tipo;
 
+    const inputCantidad = document.getElementById('cantidad-producto');
+
     if (tipo === 'monto') {
         document.getElementById('monto-control').style.display = 'block';
         document.querySelector('.cantidad-control').style.display = 'none';
+
+        inputCantidad.disabled = true;
     } 
     else if (tipo === 'kilo') {
         document.getElementById('monto-control').style.display = 'none';
         document.querySelector('.cantidad-control').style.display = 'flex';
+
+        inputCantidad.disabled = false;
+        inputCantidad.focus();
     }
 }
 
-
 function cambiarCantidad(valor) {
-    cantidadActual += valor;
-    if (cantidadActual < 1) cantidadActual = 1;
-    document.getElementById('cantidad-producto').textContent = cantidadActual;
+    if (tipoVentaSeleccionado !== 'kilo') return;
+
+    const input = document.getElementById('cantidad-producto');
+    let cantidad = parseFloat(input.value) || 0;
+
+    cantidad += valor * 0.1;
+    cantidad = Math.round(cantidad * 10) / 10;
+
+    if (cantidad <= 0) cantidad = 0.1;
+
+    input.value = cantidad;
+    cantidadActual = cantidad;
+
 }
 function cerrarModal() {
     document.getElementById('modal-agregados').style.display = 'none';
@@ -727,36 +804,54 @@ function cerrarModal() {
 }
 
 
+
 function confirmarProducto() {
 
-    // 🥩 PRODUCTOS POR MONTO (carnitas, arrachera, bistec, etc.)
+    const productoConfirmado = productoActual; 
+
+  
     if (tipoVentaSeleccionado === 'monto') {
 
-        const monto = parseFloat(document.getElementById('monto-input').value);
+    const monto = parseFloat(document.getElementById('monto-input').value);
+    const kilos = Math.round((monto / productoActual.precio) * 10) / 10;
 
-        if (!monto || monto <= 0) {
-            showMessage('❌ Ingrese un monto válido', 'error');
-            return;
-        }
+carrito.push({
+    id: productoActual.id,
+    nombre: `${productoActual.nombre} (${kilos} kg)`,
+    precio: monto,
+    cantidad: kilos,
+    subtotal: monto,
+    tipoVenta: 'monto',
+    esServicioCarnitas: true  
+});
 
-        const kilos = monto / productoActual.precio;
 
-        const descripcionPeso = kilos >= 1
-            ? `${kilos.toFixed(2)} kg`
-            : `${Math.round(kilos * 1000)} g`;
 
-        carrito.push({
-            id: productoActual.id,
-            nombre: `${productoActual.nombre} (${descripcionPeso})`,
-            precio: monto,
-            cantidad: 1,
-            subtotal: monto,
-            tipoVenta: 'monto',
-            peso: descripcionPeso
-        });
+    if (esServicioCarnitas(productoActual)) {
+        agregarActualizarTortillas(kilos);
     }
+}
 
-    // 🌮 PRODUCTOS NORMALES (tacos, tortas, etc.)
+else if (tipoVentaSeleccionado === 'kilo') {
+
+    cantidadActual = Math.round(cantidadActual * 10) / 10;
+    const subtotal = productoActual.precio * cantidadActual;
+carrito.push({
+    id: productoActual.id,
+    nombre: `${productoActual.nombre} (${cantidadActual} kg)`,
+    precio: productoActual.precio,
+    cantidad: cantidadActual,
+    subtotal: subtotal,
+    tipoVenta: 'kilo',
+    esServicioCarnitas: true   
+});
+
+
+    if (esServicioCarnitas(productoActual)) {
+        agregarActualizarTortillas(cantidadActual);
+    }
+}
+
     else {
 
         let extras = [];
@@ -769,11 +864,11 @@ function confirmarProducto() {
                 extraTotal += parseFloat(c.value);
             });
 
-        const precioFinal = productoActual.precio + extraTotal;
+        const precioFinal = productoConfirmado.precio + extraTotal;
 
         carrito.push({
-            id: productoActual.id,
-            nombre: productoActual.nombre + (extras.length ? ' + ' + extras.join(', ') : ''),
+            id: productoConfirmado.id,
+            nombre: productoConfirmado.nombre + (extras.length ? ' + ' + extras.join(', ') : ''),
             precio: precioFinal,
             cantidad: cantidadActual,
             subtotal: precioFinal * cantidadActual,
@@ -781,9 +876,58 @@ function confirmarProducto() {
         });
     }
 
+
     cerrarModal();
     actualizarCarrito();
     showMessage('✓ Producto agregado', 'success');
+}
+
+function actualizarCantidadDesdeInput(input) {
+    
+    input.value = input.value.replace(/[^0-9.]/g, '');
+
+    const partes = input.value.split('.');
+    if (partes.length > 2) {
+        input.value = partes[0] + '.' + partes.slice(1).join('');
+    }
+
+    const valor = parseFloat(input.value);
+
+    if (!isNaN(valor) && valor > 0) {
+        cantidadActual = Math.round(valor * 10) / 10;
+    } else {
+        cantidadActual = null;
+    }
+}
+function agregarActualizarTortillas(kilosCarnitas) {
+
+    const productoTortillas = Object.values(productosMap)
+        .find(p => p.nombre.trim().toLowerCase() === 'tortillas');
+
+    if (!productoTortillas) return;
+
+    const precioPorKilo = 40;
+    const kilos = Math.round(kilosCarnitas * 10) / 10;
+    const subtotal = kilos * precioPorKilo;
+
+    let tortillas = carrito.find(i => i.ligadoCarnitas);
+
+    if (tortillas) {
+        tortillas.cantidad = kilos;
+        tortillas.precio = precioPorKilo;
+        tortillas.subtotal = subtotal;
+        tortillas.nombre = `Tortillas (${kilos} kg)`;
+    } else {
+        carrito.push({
+            id: productoTortillas.id,
+            nombre: `Tortillas (${kilos} kg)`,
+            precio: precioPorKilo,
+            cantidad: kilos,
+            subtotal: subtotal,
+            bloqueado: true,
+            ligadoCarnitas: true
+        });
+    }
 }
 
 
