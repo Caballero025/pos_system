@@ -35,9 +35,15 @@
             <h3>📈 Ganancias</h3>
             <canvas id="graficaGanancias"></canvas>
         </div>
+
         <div class="card-reporte small">
             <h3>💵 Ingresos</h3>
             <canvas id="graficaIngresos"></canvas>
+        </div>
+
+        <div class="card-reporte small">
+            <h3>📉 Inversión</h3>
+            <canvas id="graficaInversion"></canvas>
         </div>
     </div>
 
@@ -53,8 +59,8 @@
             <div class="metric-card success clickable" onclick="location.href='<?= base_url('ventas') ?>'">
                 💰 Nueva Venta
             </div>
-            <div class="metric-card warning clickable" onclick="location.href='<?= base_url('admin/caja') ?>'">
-                💵 Caja
+            <div class="metric-card warning clickable" onclick="location.href='<?= base_url('admin/materias') ?>'">
+                🥩 Materias primas
             </div>
             <div class="metric-card info clickable" onclick="location.href='<?= base_url('admin/reportes') ?>'">
                 📊 Reportes
@@ -71,17 +77,25 @@
 </div>
 
 <script>
+const labels = ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
+
 const ctxG = document.getElementById('graficaGanancias');
 new Chart(ctxG, {
     type: 'line',
     data: {
-        labels: ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'],
+        labels: labels,
         datasets: [{
             label: 'Ganancias',
             data: [120,190,300,250,220,320,400],
             tension: 0.4,
             fill: true
         }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: true }
+        }
     }
 });
 
@@ -89,11 +103,37 @@ const ctxI = document.getElementById('graficaIngresos');
 new Chart(ctxI, {
     type: 'bar',
     data: {
-        labels: ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'],
+        labels: labels,
         datasets: [{
             label: 'Ingresos',
             data: [500,700,800,650,900,1000,1200]
         }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: true }
+        }
+    }
+});
+
+const ctxInv = document.getElementById('graficaInversion');
+new Chart(ctxInv, {
+    type: 'line',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'Inversión',
+            data: [300,400,350,500,450,600,550],
+            tension: 0.4,
+            fill: true
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: true }
+        }
     }
 });
 
@@ -104,4 +144,3 @@ toggle.onclick = () => {
 </script>
 
 <?= $this->include('layouts/footer') ?>
-

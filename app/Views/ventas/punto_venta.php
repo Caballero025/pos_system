@@ -382,6 +382,12 @@ carrito.forEach((item, index) => {
     calcularCambio();
 }
 
+
+function eliminarDelCarrito(index) {
+    console.log('Eliminar item:', index);
+    carrito.splice(index, 1);
+    actualizarCarrito();
+}
 function modificarCantidad(index, cambio) {
 
     const item = carrito[index];
@@ -776,6 +782,10 @@ function abrirModal(productoId) {
     if (productoActual.nombre.toLowerCase().includes('refresco vidrio')) {
         cargarRefrescosvidrio();
     }
+    if (productoActual.nombre.toLowerCase().includes('agua de sabor')) {
+    cargarOpcionesAgua();
+}
+
 
     // Abrir modal
     document.getElementById('modal-agregados').style.display = 'flex';
@@ -839,7 +849,7 @@ function cargarRefrescos600() {
 
                 const label = document.createElement('label');
                 label.setAttribute('for', `materia-${m.id}`);
-                label.textContent = `${m.nombre} - $${productoActual.precio.toFixed(2)}`;
+                label.textContent = `${m.nombre}`;
 
                 wrapper.appendChild(checkbox);
                 wrapper.appendChild(label);
@@ -1000,47 +1010,106 @@ function confirmarProducto() {
     }
 
     // 🌮 PRODUCTOS NORMALES (tacos, tortas, bebidas, etc.)
-    else {
+else {
 
-        let extras = [];
-        let extraTotal = 0;
+    let extras = [];
+    let extraTotal = 0;
 
-        const esRefresco = productoActual.nombre.toLowerCase().includes('refresco');
+    const esRefresco = productoActual.nombre.toLowerCase().includes('refresco');
+    const esAgua = productoActual.nombre.toLowerCase().includes('agua');
 
-        document
-            .querySelectorAll('#modal-agregados input[type="checkbox"]:checked')
-            .forEach(c => {
-                extras.push(c.dataset.nombre);
+    document
+        .querySelectorAll('#modal-agregados input[type="checkbox"]:checked')
+        .forEach(c => {
+            extras.push(c.dataset.nombre);
 
-                // ✅ Solo sumamos precio si NO es refresco
-                if (!esRefresco) {
-                    extraTotal += parseFloat(c.value);
-                }
-            });
-
-        const precioFinal = productoConfirmado.precio + extraTotal;
-
-        carrito.push({
-            id: productoConfirmado.id,
-            nombre: productoConfirmado.nombre + (extras.length ? ' + ' + extras.join(', ') : ''),
-            precio: precioFinal,
-            cantidad: cantidadActual || 1,
-            subtotal: precioFinal * (cantidadActual || 1),
-            extras
+            if (!esRefresco && !esAgua) {
+                extraTotal += parseFloat(c.value);
+            }
         });
 
-        // Para mostrar el nombre de la bebida seleccionada
-        if (esRefresco) {
-            const refrescoSeleccionado = document.querySelector('input[name="refresco"]:checked');
-            if (refrescoSeleccionado) {
-                carrito[carrito.length - 1].nombre += ` (${refrescoSeleccionado.value})`;
-            }
+    let nombreFinal = productoConfirmado.nombre;
+    let precioFinal = parseFloat(productoConfirmado.precio);
+
+    if (esAgua && productoActual.opcionAgua) {
+        nombreFinal += ` / ${productoActual.opcionAgua.nombre}`;
+        precioFinal = productoActual.opcionAgua.precio;
+    }
+
+const cantidad = cantidadActual || 1;
+const precioUnitario = precioFinal + extraTotal;
+
+carrito.push({
+    id: productoConfirmado.id,
+    nombre: nombreFinal + (extras.length ? ' / ' + extras.join(', ') : ''),
+    precio: precioUnitario,
+    cantidad: cantidad,
+    subtotal: precioUnitario * cantidad,
+    extras
+});
+
+
+    if (esRefresco) {
+        const refrescoSeleccionado = document.querySelector('input[name="refresco"]:checked');
+        if (refrescoSeleccionado) {
+            carrito[carrito.length - 1].nombre += ` (${refrescoSeleccionado.value})`;
         }
     }
+}
+
 
     cerrarModal();
     actualizarCarrito();
     showMessage('✓ Producto agregado', 'success');
+}
+function cargarOpcionesAgua() {
+    const contenedor = document.querySelector('.modal-opciones');
+    contenedor.innerHTML = '';
+
+    delete productoActual.opcionAgua;
+
+    const opciones = [
+        { label: '1 Litro', factor: 1 },
+        { label: '½ Litro', factor: 0.5 }
+    ];
+
+    opciones.forEach((opcion, index) => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'extra-item';
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.id = `agua-${index}`;
+        checkbox.dataset.factor = opcion.factor;
+
+        const precioCalculado = parseFloat(productoActual.precio) * opcion.factor;
+
+        const label = document.createElement('label');
+        label.setAttribute('for', checkbox.id);
+        label.textContent = `${opcion.label} - $${precioCalculado.toFixed(2)}`;
+
+        
+        checkbox.addEventListener('change', () => {
+
+            if (checkbox.checked) {
+                contenedor.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                    if (cb !== checkbox) cb.checked = false;
+                });
+
+                productoActual.opcionAgua = {
+                    nombre: opcion.label,
+                    factor: opcion.factor,
+                    precio: precioCalculado
+                };
+            } else {
+                delete productoActual.opcionAgua;
+            }
+        });
+
+        wrapper.appendChild(checkbox);
+        wrapper.appendChild(label);
+        contenedor.appendChild(wrapper);
+    });
 }
 
 function actualizarCantidadDesdeInput(input) {
@@ -1060,6 +1129,11 @@ function actualizarCantidadDesdeInput(input) {
         cantidadActual = null;
     }
 }
+
+
+
+
+
 function agregarActualizarTortillas(kilosCarnitas) {
 
     const productoTortillas = Object.values(productosMap)
