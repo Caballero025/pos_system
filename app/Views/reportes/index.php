@@ -3,22 +3,22 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <div class="reportes-container">
-<div class="filtros-reportes">
-    <form method="get" class="row">
-        <div class="col">
-            <label>Fecha inicio</label>
-            <input type="date" name="fecha_inicio" class="form-control-reporte" value="<?= $fecha_inicio ?? '' ?>">
-        </div>
-        <div class="col">
-            <label>Fecha fin</label>
-            <input type="date" name="fecha_fin" class="form-control-reporte" value="<?= $fecha_fin ?? '' ?>">
-        </div>
-        <div class="col">
-            <label style="opacity:0;">Filtrar</label>
-            <button class="btn-reporte">🔍 Filtrar</button>
-        </div>
-    </form>
-</div>
+    <div class="filtros-reportes">
+        <form method="get" class="row">
+            <div class="col">
+                <label>Fecha inicio</label>
+                <input type="date" name="fecha_inicio" class="form-control-reporte" value="<?= $fecha_inicio ?? '' ?>">
+            </div>
+            <div class="col">
+                <label>Fecha fin</label>
+                <input type="date" name="fecha_fin" class="form-control-reporte" value="<?= $fecha_fin ?? '' ?>">
+            </div>
+            <div class="col">
+                <label style="opacity:0;">Filtrar</label>
+                <button class="btn-reporte">🔍 Filtrar</button>
+            </div>
+        </form>
+    </div>
 
     <div class="page-header">
         <h1>📊 Dashboard de Reportes</h1>
@@ -106,6 +106,23 @@
         </div>
     </div>
 
+<div class="col-md-6"> 
+    <div class="card-reporte">
+        <div class="card-header-reporte">🔗 Acceso Rápido</div> 
+        <div class="card-body-reporte">
+            <div class="acceso-rapido-buttons">
+                <a href="<?= base_url('admin/reportes/ventas') . '?fecha_inicio=' . $fecha_inicio . '&fecha_fin=' . $fecha_fin ?>" class="btn-acceso">
+                    📋 Reporte Detallado de Ventas
+                </a>
+                <a href="<?= base_url('admin/reportes/productos') ?>" class="btn-acceso">
+                    🏷️ Reporte de Productos
+                </a>
+                <a href="<?= base_url('admin/reportes/clientes') ?>" class="btn-acceso">
+                    👥 Reporte de Clientes
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script>

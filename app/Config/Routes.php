@@ -10,6 +10,7 @@ $routes->get('/login', 'LoginController::index');
 $routes->post('/login/auth', 'LoginController::auth');
 $routes->get('/logout', 'LoginController::logout');
 $routes->get('/dashboard', 'DashboardController::index');
+$routes->get('materias-primas/obtener/(:num)', 'MateriasController::obtenerPorCategoria/$1');
 $routes->group('admin', ['filter' => 'admin'], function($routes) {
 // Rutas de Productos
 $routes->get('productos', 'ProductosController::index');

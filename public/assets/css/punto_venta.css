@@ -319,22 +319,58 @@
 }
 
 .extra-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border: 1px solid #eee;
-  padding: 8px 10px;
-  border-radius: 8px;
-  cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #ddd;
+    padding: 10px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    background: #fff;
+    transition: border-color 0.2s ease;
 }
 
-.extra-item input {
-  margin-right: 8px;
+.extra-item:hover {
+    border-color: #000;
 }
 
+/* ⛔ Ocultamos el checkbox real */
+.extra-item input[type="checkbox"] {
+    display: none;
+}
+
+/* 🎯 Texto */
+.extra-item span {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+/* ⬜ Cuadro del checkbox */
+.extra-item span::before {
+    content: "";
+    width: 18px;
+    height: 18px;
+    border: 2px solid #000;
+    border-radius: 4px;
+    display: inline-block;
+    flex-shrink: 0;
+    background: #fff;
+    transition: all 0.2s ease;
+}
+
+/* ✅ SOLO el recuadro cuando está seleccionado */
+.extra-item input[type="checkbox"]:checked + span::before {
+    background: #000;
+}
+
+/* Precio */
 .extra-item small {
-  color: #999;
+    margin-left: auto;
+    opacity: 0.7;
 }
+
 
 .modal-actions {
   display: flex;
@@ -465,3 +501,79 @@
   border-radius: 8px;
 }
 
+.extra-item-boton {
+    display: inline-block;
+    margin: 6px;
+}
+
+.modal-opciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.modal-opciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Contenedor de cada opción */
+.extra-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+}
+
+.extra-item:hover {
+    background-color: #f0f0f0;
+}
+
+/* Ocultar checkbox real */
+.extra-item input[type="checkbox"] {
+    display: none;
+}
+
+/* Crear un nuevo "checkbox" visual */
+.extra-item label {
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+    user-select: none;
+    font-weight: 500;
+}
+
+/* El cuadro del checkbox */
+.extra-item label::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid #000; /* borde negro */
+    border-radius: 4px;
+    background-color: #fff;
+    transition: all 0.2s;
+}
+
+/* Marcar el checkbox */
+.extra-item input[type="checkbox"]:checked + label::before {
+    background-color: #000; /* fondo negro al seleccionar */
+    border-color: #000;
+}
+
+/* Checkmark (✔) dentro del cuadro negro */
+.extra-item input[type="checkbox"]:checked + label::after {
+    position: absolute;
+    left: 3px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+}

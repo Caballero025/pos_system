@@ -1,62 +1,107 @@
 <?= $this->include('layouts/header') ?>
+<link rel="stylesheet" href="<?= base_url('assets/css/dashboard-dark.css') ?>">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<?php
-// Datos de ejemplo para las estadísticas
-$stats = [
-    'total_productos' => $total_productos ?? 0,
-    'total_ventas' => $total_ventas ?? 0,
-    'ventas_hoy' => $ventas_hoy ?? 0
-];
-?>
+<div class="dashboard-container animate">
 
-<!-- Estadísticas -->
-<div class="stats">
-    <div class="stat-card">
-        <h3>Total Productos</h3>
-        <div class="stat-number"><?= $stats['total_productos'] ?></div>
+    <div class="page-header">
+        <h1>📊 Dashboard</h1>
+        <button id="toggleTheme" class="btn-toggle">🌙 Modo oscuro</button>
     </div>
-    <div class="stat-card">
-        <h3>Total Ventas</h3>
-        <div class="stat-number"><?= $stats['total_ventas'] ?></div>
+
+    <!-- MÉTRICAS -->
+    <div class="row">
+        <div class="metric-card primary">
+            <div class="metric-label">Total Productos</div>
+            <div class="metric-value"><?= $total_productos ?? 0 ?></div>
+        </div>
+        <div class="metric-card success">
+            <div class="metric-label">Total Ventas</div>
+            <div class="metric-value"><?= $total_ventas ?? 0 ?></div>
+        </div>
+        <div class="metric-card info">
+            <div class="metric-label">Ventas Hoy</div>
+            <div class="metric-value"><?= $ventas_hoy ?? 0 ?></div>
+        </div>
+        <div class="metric-card warning">
+            <div class="metric-label">Ganancias</div>
+            <div class="metric-value">$<?= number_format($ganancias ?? 0, 2) ?></div>
+        </div>
     </div>
-    <div class="stat-card">
-        <h3>Ventas Hoy</h3>
-        <div class="stat-number"><?= $stats['ventas_hoy'] ?></div>
+
+    <!-- GRÁFICAS -->
+    <div class="row mt-4">
+        <div class="card-reporte small">
+            <h3>📈 Ganancias</h3>
+            <canvas id="graficaGanancias"></canvas>
+        </div>
+        <div class="card-reporte small">
+            <h3>💵 Ingresos</h3>
+            <canvas id="graficaIngresos"></canvas>
+        </div>
     </div>
-    
+
+    <!-- ACCIONES RÁPIDAS -->
+    <div class="card-reporte mt-4">
+        <h2>⚡ Acciones Rápidas</h2>
+
+        <?php if (session()->get('user_role') === 'admin'): ?>
+        <div class="row">
+            <div class="metric-card primary clickable" onclick="location.href='<?= base_url('admin/productos') ?>'">
+                📦 Gestión Productos
+            </div>
+            <div class="metric-card success clickable" onclick="location.href='<?= base_url('ventas') ?>'">
+                💰 Nueva Venta
+            </div>
+            <div class="metric-card warning clickable" onclick="location.href='<?= base_url('admin/caja') ?>'">
+                💵 Caja
+            </div>
+            <div class="metric-card info clickable" onclick="location.href='<?= base_url('admin/reportes') ?>'">
+                📊 Reportes
+            </div>
+        </div>
+        <?php else: ?>
+        <div class="row">
+            <div class="metric-card success clickable" onclick="location.href='<?= base_url('ventas') ?>'">
+                💰 Nueva Venta
+            </div>
+        </div>
+        <?php endif; ?>
+    </div>
 </div>
 
-<!-- Acciones Rápidas -->
-<div class="quick-actions">
-    <h2>Acciones Rápidas</h2>
-    <?php if (session()->get('user_role') === 'admin'): ?>
+<script>
+const ctxG = document.getElementById('graficaGanancias');
+new Chart(ctxG, {
+    type: 'line',
+    data: {
+        labels: ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'],
+        datasets: [{
+            label: 'Ganancias',
+            data: [120,190,300,250,220,320,400],
+            tension: 0.4,
+            fill: true
+        }]
+    }
+});
 
-    <div class="action-buttons">
+const ctxI = document.getElementById('graficaIngresos');
+new Chart(ctxI, {
+    type: 'bar',
+    data: {
+        labels: ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'],
+        datasets: [{
+            label: 'Ingresos',
+            data: [500,700,800,650,900,1000,1200]
+        }]
+    }
+});
 
-        <button class="action-btn btn-primary" onclick="location.href='<?= base_url('admin/productos') ?>'">
-            <span class="icon">📦</span> Gestión Productos
-        </button>
-        <button class="action-btn btn-success" onclick="location.href='<?= base_url('ventas') ?>'">
-            <span class="icon">💰</span> Nueva Venta
-        </button>
-        <button class="action-btn btn-warning" onclick="location.href='<?= base_url('admin/caja') ?>'">
-            <span class="icon">💵</span> Caja Registradora
-        </button>
-        <button class="action-btn btn-info" onclick="location.href='<?= base_url('admin/reportes') ?>'">
-            <span class="icon">📈</span> Ver Reportes
-        </button>
-    </div>
-     <?php else: ?>
-        <div class="action-buttons">
-        <button class="action-btn btn-success" onclick="location.href='<?= base_url('ventas') ?>'">
-            <span class="icon">💰</span> Nueva Venta
-        </button>
-      
-    </div>
-     <?php endif; ?>
-</div>
+const toggle = document.getElementById('toggleTheme');
+toggle.onclick = () => {
+    document.body.classList.toggle('dark-mode');
+}
+</script>
 
-</div><!-- content-area -->
-</div><!-- main-content -->
-</body>
-</html>
+<?= $this->include('layouts/footer') ?>
+

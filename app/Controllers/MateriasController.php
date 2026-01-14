@@ -156,5 +156,15 @@ public function eliminar($id)
     return redirect()->to('admin/materias')
         ->with('success', 'Producto eliminado correctamente');
 }
+public function obtenerPorCategoria($categoriaId)
+{
+    // Buscar materias primas activas de esa categoría
+    $materias = $this->materiaModel
+        ->where('categoria_id', $categoriaId)
+        ->where('activo', 1)
+        ->findAll();
+
+    return $this->response->setJSON($materias);
+}
 
 }

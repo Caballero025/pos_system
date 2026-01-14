@@ -100,13 +100,14 @@
 <div class="cantidad-control">
     <button type="button" onclick="cambiarCantidad(-1)">−</button>
 
-    <input
-        type="text"
-        id="cantidad-producto"
-        inputmode="decimal"
-        placeholder="Ej. 1.5"
-        oninput="actualizarCantidadDesdeInput(this)"
-    >
+<input
+    type="number"
+    id="cantidad-producto"
+    value="1"
+    inputmode="decimal"
+    oninput="actualizarCantidadDesdeInput(this)"
+    min="0.1"
+    step="0.1" <!-- 🔹 Esto permite decimales -->
 
     <button type="button" onclick="cambiarCantidad(1)">+</button>
 </div>
@@ -203,6 +204,7 @@ productosMap[<?= $producto['id'] ?>] = {
     precio: <?= floatval($producto['precio']) ?>,
     stock: <?= intval($producto['stock']) ?>,
     categoria_id: <?= intval($producto['categoria_id']) ?>, // 🔹 agregado
+    medida_id: <?= intval($producto['medida_id']) ?> // 🔹 importante
 };
 <?php endforeach; ?>
 
@@ -683,22 +685,34 @@ function calcularPesoDesdeMonto() {
 
     resultado.style.display = 'block';
 }
+
 function esServicioCarnitas(producto) {
     return producto.nombre.trim().toLowerCase() === 'servicio de carnitas';
 }
 
 function abrirModal(productoId) {
-   
     productoActual = productosMap[productoId];
     if (!productoActual) return;
 
     cantidadActual = 1;
-document.getElementById('cantidad-producto').value = 1;
 
+    // Configurar input de cantidad
+    const inputCantidad = document.getElementById('cantidad-producto');
+    inputCantidad.value = 1;
 
+    if (productoActual.medida_id == 1) { // kilos
+        inputCantidad.step = "0.1";
+        inputCantidad.min = "0.1";
+    } else { // piezas
+        inputCantidad.step = "1";
+        inputCantidad.min = "1";
+    }
+
+    // Nombre y precio
     document.getElementById('modal-producto-nombre').textContent = productoActual.nombre;
     document.getElementById('modal-precio-base').textContent = productoActual.precio.toFixed(2);
 
+    // Limpiar modal
     document.querySelector('.modal-opciones').innerHTML = '';
     document.getElementById('monto-control').style.display = 'none';
     document.querySelector('.cantidad-control').style.display = 'flex';
@@ -706,18 +720,20 @@ document.getElementById('cantidad-producto').value = 1;
     document.getElementById('resultado-peso').style.display = 'none';
     tipoVentaSeleccionado = null;
 
+    // 🔹 Servicio de carnitas
+    if (esServicioCarnitas(productoActual)) {
+        document.querySelector('.modal-opciones').innerHTML += `
+            <label class="extra-item obligatorio">
+                <input type="checkbox" checked disabled>
+                <span>🫓 Tortillas</span>
+                <small>Incluido</small>
+            </label>
+        `;
+    }
+
+    // Determinar tipo de producto
     let tipo = 'bebida';
     const nombre = productoActual.nombre.toLowerCase();
-if (esServicioCarnitas(productoActual)) {
-
-    document.querySelector('.modal-opciones').innerHTML += `
-        <label class="extra-item obligatorio">
-            <input type="checkbox" checked disabled>
-            <span>🫓 Tortillas</span>
-            <small>Incluido</small>
-        </label>
-    `;
-}
     if (nombre.includes('taco')) tipo = 'taco';
     else if (nombre.includes('torta')) tipo = 'torta';
     else if (nombre.includes('carnita')) tipo = 'carnitas';
@@ -728,7 +744,7 @@ if (esServicioCarnitas(productoActual)) {
     const config = opcionesPorProducto[tipo] || {};
     const opcionesDiv = document.querySelector('.modal-opciones');
 
-    // 🔹 Tipo de venta
+    // 🔹 Tipo de venta (kilo / monto)
     if (config.tipoVenta) {
         config.tipoVenta.forEach(op => {
             const btn = document.createElement('button');
@@ -737,7 +753,6 @@ if (esServicioCarnitas(productoActual)) {
             btn.onclick = () => seleccionarTipoVenta(op.tipo);
             opcionesDiv.appendChild(btn);
         });
-
         document.querySelector('.cantidad-control').style.display = 'none';
     }
 
@@ -754,8 +769,18 @@ if (esServicioCarnitas(productoActual)) {
         });
     }
 
+    // 🔹 Refresco 600 ml
+    if (productoActual.nombre.toLowerCase().includes('refresco 600ml')) {
+        cargarRefrescos600();
+    }
+    if (productoActual.nombre.toLowerCase().includes('refresco vidrio')) {
+        cargarRefrescosvidrio();
+    }
+
+    // Abrir modal
     document.getElementById('modal-agregados').style.display = 'flex';
 }
+
 
 let tipoVentaSeleccionado = null;
 
@@ -778,22 +803,135 @@ function seleccionarTipoVenta(tipo) {
         inputCantidad.focus();
     }
 }
+function cargarRefrescos600() {
+    const categoriaId = 5; // categoría 600 ml
+    const contenedor = document.querySelector('.modal-opciones');
+    contenedor.innerHTML = ''; // limpiar el contenedor
+
+    fetch(`/materias-primas/obtener/${categoriaId}`)
+        .then(res => res.json())
+        .then(data => {
+            if (!data.length) {
+                contenedor.innerHTML = '<p>No hay materias primas disponibles</p>';
+                return;
+            }
+
+            data.forEach(m => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'extra-item';
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.dataset.nombre = m.nombre;
+                checkbox.value = productoActual.precio;
+                checkbox.id = `materia-${m.id}`;
+
+                // ✅ Evitar que se seleccionen varios
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        // Desmarcar todos los demás checkboxes
+                        const todos = contenedor.querySelectorAll('input[type="checkbox"]');
+                        todos.forEach(cb => {
+                            if (cb !== this) cb.checked = false;
+                        });
+                    }
+                });
+
+                const label = document.createElement('label');
+                label.setAttribute('for', `materia-${m.id}`);
+                label.textContent = `${m.nombre} - $${productoActual.precio.toFixed(2)}`;
+
+                wrapper.appendChild(checkbox);
+                wrapper.appendChild(label);
+
+                contenedor.appendChild(wrapper);
+            });
+        })
+        .catch(err => console.error('Error cargando materias primas:', err));
+}
+
+
+function cargarRefrescosvidrio() {
+    const categoriaId = 6; // categoría 600 ml
+    const contenedor = document.querySelector('.modal-opciones');
+    contenedor.innerHTML = ''; // limpiar el contenedor
+
+    fetch(`/materias-primas/obtener/${categoriaId}`)
+        .then(res => res.json())
+        .then(data => {
+            if (!data.length) {
+                contenedor.innerHTML = '<p>No hay materias primas disponibles</p>';
+                return;
+            }
+
+            data.forEach(m => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'extra-item';
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.dataset.nombre = m.nombre;
+                checkbox.value = productoActual.precio;
+                checkbox.id = `materia-${m.id}`;
+
+                // ✅ Evitar que se seleccionen varios
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        // Desmarcar todos los demás checkboxes
+                        const todos = contenedor.querySelectorAll('input[type="checkbox"]');
+                        todos.forEach(cb => {
+                            if (cb !== this) cb.checked = false;
+                        });
+                    }
+                });
+
+                const label = document.createElement('label');
+                label.setAttribute('for', `materia-${m.id}`);
+                label.textContent = `${m.nombre} - $${productoActual.precio.toFixed(2)}`;
+
+                wrapper.appendChild(checkbox);
+                wrapper.appendChild(label);
+
+                contenedor.appendChild(wrapper);
+            });
+        })
+        .catch(err => console.error('Error cargando materias primas:', err));
+}
 
 function cambiarCantidad(valor) {
-    if (tipoVentaSeleccionado !== 'kilo') return;
+    if (!productoActual) return;
 
     const input = document.getElementById('cantidad-producto');
+    if (!input) return;
+
     let cantidad = parseFloat(input.value) || 0;
 
-    cantidad += valor * 0.1;
-    cantidad = Math.round(cantidad * 10) / 10;
+    // 🔹 Incremento según medida_id
+    // medida_id == 1 → kilo, otros → pieza
+    const incremento = productoActual.medida_id == 1 ? 0.1 : 1;
 
-    if (cantidad <= 0) cantidad = 0.1;
+    cantidad += valor * incremento;
+
+    if (productoActual.medida_id == 1) {
+        // kilos: mínimo 0.1
+        cantidad = Math.round(cantidad * 10) / 10;
+        if (cantidad < 0.1) cantidad = 0.1;
+    } else {
+        // piezas: mínimo 1 entero
+        cantidad = Math.max(1, Math.round(cantidad));
+    }
 
     input.value = cantidad;
     cantidadActual = cantidad;
-
 }
+
+function obtenerIncremento(item) {
+    // Ejemplo: categoría 1 = pieza, categoría 2 = kilo
+    if (item.medida_id === 1) return 1.2; // kilo
+    return 1; // pieza
+}
+
+
 function cerrarModal() {
     document.getElementById('modal-agregados').style.display = 'none';
     productoActual = null;
@@ -807,61 +945,77 @@ function cerrarModal() {
 
 function confirmarProducto() {
 
-    const productoConfirmado = productoActual; 
+    const productoConfirmado = productoActual; // 👈 Guardamos referencia
 
-  
+    // 🥩 PRODUCTOS POR MONTO
     if (tipoVentaSeleccionado === 'monto') {
 
-    const monto = parseFloat(document.getElementById('monto-input').value);
-    const kilos = Math.round((monto / productoActual.precio) * 10) / 10;
+        const monto = parseFloat(document.getElementById('monto-input').value);
+        if (!monto || monto <= 0) {
+            showMessage('❌ Ingrese un monto válido', 'error');
+            return;
+        }
 
-carrito.push({
-    id: productoActual.id,
-    nombre: `${productoActual.nombre} (${kilos} kg)`,
-    precio: monto,
-    cantidad: kilos,
-    subtotal: monto,
-    tipoVenta: 'monto',
-    esServicioCarnitas: true  
-});
+        const kilos = Math.round((monto / productoActual.precio) * 10) / 10;
 
+        carrito.push({
+            id: productoActual.id,
+            nombre: `${productoActual.nombre} (${kilos} kg)`,
+            precio: monto,
+            cantidad: kilos,
+            subtotal: monto,
+            tipoVenta: 'monto',
+            esServicioCarnitas: esServicioCarnitas(productoActual) || false
+        });
 
-
-    if (esServicioCarnitas(productoActual)) {
-        agregarActualizarTortillas(kilos);
+        if (esServicioCarnitas(productoActual)) {
+            agregarActualizarTortillas(kilos);
+        }
     }
-}
 
-else if (tipoVentaSeleccionado === 'kilo') {
+    // 🥩 PRODUCTOS POR KILO
+    else if (tipoVentaSeleccionado === 'kilo') {
 
-    cantidadActual = Math.round(cantidadActual * 10) / 10;
-    const subtotal = productoActual.precio * cantidadActual;
-carrito.push({
-    id: productoActual.id,
-    nombre: `${productoActual.nombre} (${cantidadActual} kg)`,
-    precio: productoActual.precio,
-    cantidad: cantidadActual,
-    subtotal: subtotal,
-    tipoVenta: 'kilo',
-    esServicioCarnitas: true   
-});
+        if (!cantidadActual || cantidadActual <= 0) {
+            showMessage('❌ Ingrese una cantidad válida', 'error');
+            return;
+        }
 
+        cantidadActual = Math.round(cantidadActual * 10) / 10;
+        const subtotal = productoActual.precio * cantidadActual;
 
-    if (esServicioCarnitas(productoActual)) {
-        agregarActualizarTortillas(cantidadActual);
+        carrito.push({
+            id: productoActual.id,
+            nombre: `${productoActual.nombre} (${cantidadActual} kg)`,
+            precio: productoActual.precio,
+            cantidad: cantidadActual,
+            subtotal: subtotal,
+            tipoVenta: 'kilo',
+            esServicioCarnitas: esServicioCarnitas(productoActual) || false
+        });
+
+        if (esServicioCarnitas(productoActual)) {
+            agregarActualizarTortillas(cantidadActual);
+        }
     }
-}
 
+    // 🌮 PRODUCTOS NORMALES (tacos, tortas, bebidas, etc.)
     else {
 
         let extras = [];
         let extraTotal = 0;
 
+        const esRefresco = productoActual.nombre.toLowerCase().includes('refresco');
+
         document
             .querySelectorAll('#modal-agregados input[type="checkbox"]:checked')
             .forEach(c => {
                 extras.push(c.dataset.nombre);
-                extraTotal += parseFloat(c.value);
+
+                // ✅ Solo sumamos precio si NO es refresco
+                if (!esRefresco) {
+                    extraTotal += parseFloat(c.value);
+                }
             });
 
         const precioFinal = productoConfirmado.precio + extraTotal;
@@ -870,12 +1024,19 @@ carrito.push({
             id: productoConfirmado.id,
             nombre: productoConfirmado.nombre + (extras.length ? ' + ' + extras.join(', ') : ''),
             precio: precioFinal,
-            cantidad: cantidadActual,
-            subtotal: precioFinal * cantidadActual,
+            cantidad: cantidadActual || 1,
+            subtotal: precioFinal * (cantidadActual || 1),
             extras
         });
-    }
 
+        // Para mostrar el nombre de la bebida seleccionada
+        if (esRefresco) {
+            const refrescoSeleccionado = document.querySelector('input[name="refresco"]:checked');
+            if (refrescoSeleccionado) {
+                carrito[carrito.length - 1].nombre += ` (${refrescoSeleccionado.value})`;
+            }
+        }
+    }
 
     cerrarModal();
     actualizarCarrito();
