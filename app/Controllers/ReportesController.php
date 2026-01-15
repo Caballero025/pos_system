@@ -4,52 +4,68 @@ namespace App\Controllers;
 use App\Models\VentaModel;
 use App\Models\ProductoModel;
 use App\Models\ClienteModel;
+use App\Models\MateriaModel;
 
 class ReportesController extends BaseController
 {
     protected $ventaModel;
     protected $productoModel;
     protected $clienteModel;
+    protected $materiaModel;
+
 
     public function __construct()
     {
         $this->ventaModel = new VentaModel();
         $this->productoModel = new ProductoModel();
         $this->clienteModel = new ClienteModel();
+        $this->materiaModel = new MateriaModel();
     }
 
-    public function index()
-    {
-        $this->checkLogin();
-        
-        $fechaInicio = $this->request->getGet('fecha_inicio') ?? date('Y-m-01');
-        $fechaFin = $this->request->getGet('fecha_fin') ?? date('Y-m-d');
-        
-        // Reporte de ventas
-        $ventas = $this->ventaModel->where('fecha_venta >=', $fechaInicio)
-                                  ->where('fecha_venta <=', $fechaFin . ' 23:59:59')
-                                  ->findAll();
-        
-        // Productos más vendidos
-        $productosVendidos = $this->productoModel->select('productos.*, SUM(detalle_ventas.cantidad) as total_vendido')
-                                                ->join('detalle_ventas', 'detalle_ventas.producto_id = productos.id', 'left')
-                                                ->join('ventas', 'ventas.id = detalle_ventas.venta_id', 'left')
-                                                ->where('ventas.fecha_venta >=', $fechaInicio)
-                                                ->where('ventas.fecha_venta <=', $fechaFin . ' 23:59:59')
-                                                ->groupBy('productos.id')
-                                                ->orderBy('total_vendido', 'DESC')
-                                                ->findAll();
-        
-        $data = [
-            'title' => 'Reportes',
-            'ventas' => $ventas,
-            'productos_vendidos' => $productosVendidos,
-            'fecha_inicio' => $fechaInicio,
-            'fecha_fin' => $fechaFin
-        ];
-        
-        return view('reportes/index', $data);
-    }
+public function index()
+{
+    $this->checkLogin();
+
+
+    $fechaInicio = $this->request->getGet('fecha_inicio') ?? date('Y-m-01');
+    $fechaFin = $this->request->getGet('fecha_fin') ?? date('Y-m-d');
+
+    $ventas = $this->ventaModel
+        ->where('fecha_venta >=', $fechaInicio)
+        ->where('fecha_venta <=', $fechaFin . ' 23:59:59')
+        ->findAll();
+
+    $topProductos = $this->productoModel
+        ->select('productos.nombre, SUM(detalle_ventas.cantidad) AS total_vendido')
+        ->join('detalle_ventas', 'detalle_ventas.producto_id = productos.id')
+        ->join('ventas', 'ventas.id = detalle_ventas.venta_id')
+        ->where('ventas.fecha_venta >=', $fechaInicio)
+        ->where('ventas.fecha_venta <=', $fechaFin . ' 23:59:59')
+        ->groupBy('productos.nombre')
+        ->orderBy('total_vendido', 'DESC')
+        ->limit(2)
+        ->findAll();
+    $productosMenosVendidos = $this->productoModel
+        ->select('productos.nombre, SUM(detalle_ventas.cantidad) AS total_vendido')
+        ->join('detalle_ventas', 'detalle_ventas.producto_id = productos.id')
+        ->join('ventas', 'ventas.id = detalle_ventas.venta_id')
+        ->where('ventas.fecha_venta >=', $fechaInicio)
+        ->where('ventas.fecha_venta <=', $fechaFin . ' 23:59:59')
+        ->groupBy('productos.nombre')
+        ->orderBy('total_vendido', 'ASC')
+        ->limit(2)
+        ->findAll();
+    $data = [
+        'title' => 'Reportes',
+        'ventas' => $ventas,
+          'topProductos' => $topProductos,
+        'productosMenosVendidos' => $productosMenosVendidos,
+        'fecha_inicio' => $fechaInicio,
+        'fecha_fin' => $fechaFin
+    ];
+
+    return view('reportes/index', $data);
+}
 
     public function ventas()
     {

@@ -1,6 +1,6 @@
 <?php
 namespace App\Controllers;
-
+use Dompdf\Dompdf;
 use App\Models\ProductoModel;
 use App\Models\VentaModel;
 use App\Models\DetalleVentaModel;
@@ -134,6 +134,26 @@ class VentasController extends BaseController
         }
 
         foreach ($carrito as $item) {
+            if (!empty($item['materia_prima_id'])) {
+
+    $materiaModel = new \App\Models\MateriaModel();
+    $materia = $materiaModel->find($item['materia_prima_id']);
+
+    if (!$materia) {
+        throw new \Exception('Materia prima no encontrada');
+    }
+
+    if ($materia['cantidad'] < $item['cantidad']) {
+        throw new \Exception('Cantidad insuficiente de ' . $materia['nombre']);
+    }
+
+    // 🔻 Reducir cantidad
+    $materiaModel->update(
+        $materia['id'],
+        ['cantidad' => $materia['cantidad'] - $item['cantidad']]
+    );
+}
+
             $producto = $this->productoModel->find($item['id']);
             if (!$producto) {
                 throw new \Exception('Producto no encontrado: ' . $item['id']);

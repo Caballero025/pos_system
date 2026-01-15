@@ -54,10 +54,10 @@
 
     <!-- GRÁFICAS -->
     <div class="row mt-4">
-        <div class="card-reporte grafica animate">
-            <div class="card-header-reporte">📈 Ventas por día</div>
-            <canvas id="ventasDia"></canvas>
-        </div>
+    <div class="card-reporte grafica animate">
+        <div class="card-header-reporte">💸 Inversión vs Ganancia</div>
+        <canvas id="inversionGanancia"></canvas>
+    </div>
 
         <div class="card-reporte grafica animate">
             <div class="card-header-reporte">💰 Ingresos vs Ganancias</div>
@@ -67,37 +67,40 @@
 
     <!-- SECCIONES -->
     <div class="row mt-4">
-        <div class="card-reporte animate">
-            <div class="card-header-reporte">🔥 Productos más vendidos</div>
-            <div class="item-reporte"><span>Hamburguesa</span><span>50</span></div>
-            <div class="item-reporte"><span>Tacos</span><span>40</span></div>
+    <div class="card-reporte animate">
+        <div class="card-header-reporte">🔥 Productos más vendidos</div>
+        <?php foreach ($topProductos as $p): ?>
+        <div class="item-reporte">
+            <span><?= esc($p['nombre']) ?></span>
+            <span><?= $p['total_vendido'] ?></span>
         </div>
-
-        <div class="card-reporte animate">
-            <div class="card-header-reporte">🐢 Productos menos vendidos</div>
-            <div class="item-reporte"><span>Ensalada</span><span>2</span></div>
-            <div class="item-reporte"><span>Sopa</span><span>3</span></div>
-        </div>
-
-        <div class="card-reporte animate">
-            <div class="card-header-reporte">💳 Métodos de pago</div>
-            <div class="item-reporte"><span>Efectivo</span><span>$500</span></div>
-            <div class="item-reporte"><span>Tarjeta</span><span>$700</span></div>
-        </div>
-
-        <div class="card-reporte animate">
-            <div class="card-header-reporte">⏰ Horas pico</div>
-            <div class="item-reporte"><span>2pm - 4pm</span><span>35 ventas</span></div>
-            <div class="item-reporte"><span>7pm - 9pm</span><span>50 ventas</span></div>
-        </div>
+    <?php endforeach; ?>
     </div>
 
-    <div class="row mt-4">
-        <div class="card-reporte animate">
-            <div class="card-header-reporte">👨‍🍳 Ventas por empleado</div>
-            <div class="item-reporte"><span>Juan</span><span>$500</span></div>
-            <div class="item-reporte"><span>Ana</span><span>$650</span></div>
+    <div class="card-reporte animate">
+        <div class="card-header-reporte">🐢 Productos menos vendidos</div>
+           <?php foreach ($productosMenosVendidos as $p): ?>
+        <div class="item-reporte">
+            <span><?= esc($p['nombre']) ?></span>
+            <span><?= $p['total_vendido'] ?></span>
         </div>
+    <?php endforeach; ?>
+    </div>
+
+  
+     <div class="card-reporte grafica animate">
+            <div class="card-header-reporte">📈 Ventas por día</div>
+            <canvas id="ventasDia"></canvas>
+        </div>
+</div>
+    <div class="row mt-4">
+       <div class="card-reporte animate">
+    <div class="card-header-reporte">💼 Productos de Inversión</div>
+    <div class="item-reporte"><span>Coca Cola 1L</span><span>20 unidades</span></div>
+    <div class="item-reporte"><span>Papas Fritas</span><span>15 unidades</span></div>
+    <div class="item-reporte"><span>Harina</span><span>10 unidades</span></div>
+    <div class="item-reporte"><span>Leche</span><span>12 unidades</span></div>
+</div>
 
         <div class="card-reporte full animate">
             <div class="card-header-reporte">📦 Productos con bajo stock</div>
@@ -130,6 +133,7 @@ function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
 }
 
+/* 📈 Ventas por día */
 new Chart(document.getElementById('ventasDia'), {
     type: 'line',
     data: {
@@ -138,19 +142,84 @@ new Chart(document.getElementById('ventasDia'), {
             label: 'Ventas',
             data: [10,25,40,30,50,70,60],
             tension: 0.4,
-            fill: true
+            fill: true,
+            backgroundColor: 'rgba(54,162,235,0.2)',
+            borderColor: 'rgba(54,162,235,1)'
         }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { position: 'top' }
+        },
+        scales: {
+            y: { beginAtZero: true }
+        }
     }
 });
 
+/* 💰 Ingresos vs Ganancias */
 new Chart(document.getElementById('ingresosGanancias'), {
     type: 'bar',
     data: {
         labels: ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'],
         datasets: [
-            { label: 'Ingresos', data: [500,700,800,650,900,1200,1100] },
-            { label: 'Ganancias', data: [200,300,350,280,400,600,550] }
+            { 
+                label: 'Ingresos', 
+                data: [500,700,800,650,900,1200,1100],
+                backgroundColor: 'rgba(54,162,235,0.8)'
+            },
+            { 
+                label: 'Ganancias', 
+                data: [200,300,350,280,400,600,550],
+                backgroundColor: 'rgba(25,135,84,0.8)'
+            }
         ]
+    },
+    options: {
+        responsive: true,
+        plugins: { legend: { position: 'top' } },
+        scales: { y: { beginAtZero: true } }
+    }
+});
+
+/* 💸 Inversión vs Ganancia - LINEA */
+new Chart(document.getElementById('inversionGanancia'), {
+    type: 'line',
+    data: {
+        labels: ['Enero','Febrero','Marzo','Abril','Mayo'], 
+        datasets: [
+            {
+                label: 'Inversión',
+                data: [20000,18000,22000,25000,24000],
+                borderColor: 'rgba(220,53,69,1)',
+                backgroundColor: 'rgba(220,53,69,0.2)',
+                tension: 0.4,
+                fill: true
+            },
+            {
+                label: 'Ganancia',
+                data: [12000,15000,17000,22000,26000],
+                borderColor: 'rgba(25,135,84,1)',
+                backgroundColor: 'rgba(25,135,84,0.2)',
+                tension: 0.4,
+                fill: true
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { position: 'bottom' }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    callback: value => '$' + value.toLocaleString()
+                }
+            }
+        }
     }
 });
 </script>

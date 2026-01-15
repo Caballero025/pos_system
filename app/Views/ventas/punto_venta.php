@@ -832,6 +832,7 @@ function cargarRefrescos600() {
 
                 const checkbox = document.createElement('input');
                 checkbox.type = 'checkbox';
+                checkbox.dataset.id = m.id; 
                 checkbox.dataset.nombre = m.nombre;
                 checkbox.value = productoActual.precio;
                 checkbox.id = `materia-${m.id}`;
@@ -880,6 +881,7 @@ function cargarRefrescosvidrio() {
 
                 const checkbox = document.createElement('input');
                 checkbox.type = 'checkbox';
+                checkbox.dataset.id = m.id; 
                 checkbox.dataset.nombre = m.nombre;
                 checkbox.value = productoActual.precio;
                 checkbox.id = `materia-${m.id}`;
@@ -1018,6 +1020,7 @@ else {
     const esRefresco = productoActual.nombre.toLowerCase().includes('refresco');
     const esAgua = productoActual.nombre.toLowerCase().includes('agua');
 
+
     document
         .querySelectorAll('#modal-agregados input[type="checkbox"]:checked')
         .forEach(c => {
@@ -1047,7 +1050,11 @@ carrito.push({
     subtotal: precioUnitario * cantidad,
     extras
 });
+const seleccionada = document.querySelector('#modal-agregados input[type="checkbox"]:checked');
 
+if (seleccionada) {
+    carrito[carrito.length - 1].materia_prima_id = seleccionada.dataset.id;
+}
 
     if (esRefresco) {
         const refrescoSeleccionado = document.querySelector('input[name="refresco"]:checked');
