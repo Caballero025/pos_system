@@ -55,16 +55,63 @@ public function index()
         ->orderBy('total_vendido', 'ASC')
         ->limit(2)
         ->findAll();
-    $data = [
-        'title' => 'Reportes',
-        'ventas' => $ventas,
-          'topProductos' => $topProductos,
-        'productosMenosVendidos' => $productosMenosVendidos,
+
+$this->materiaModel = new MateriaModel();
+
+$productosBajoStock = $this->materiaModel
+    ->select('materias_primas.*, categorias_prima.nombre AS categoria_nombre')
+    ->join('categorias_prima', 'categorias_prima.id = materias_primas.categoria_id')
+    ->whereIn('materias_primas.categoria_id', [5,6])
+    ->where('materias_primas.cantidad <=', 5)
+    ->where('materias_primas.activo', 1)
+    ->findAll();
+$productosInversion = $this->materiaModel
+    ->select('materias_primas.*, categorias_prima.nombre AS categoria_nombre')
+    ->join('categorias_prima', 'categorias_prima.id = materias_primas.categoria_id')
+    ->where('materias_primas.activo', 1)
+    ->orderBy('categorias_prima.nombre', 'ASC')
+    ->findAll();
+
+    $this->ventaModel = new \App\Models\VentaModel();
+
+    $fechaInicio = $this->request->getGet('fecha_inicio') ?? date('Y-m-01');
+    $fechaFin = $this->request->getGet('fecha_fin') ?? date('Y-m-d');
+
+    $ventas = $this->ventaModel
+                   ->select('DAYOFWEEK(fecha_venta) as dia_semana, SUM(total) as total_ventas')
+                   ->where('fecha_venta >=', $fechaInicio)
+                   ->where('fecha_venta <=', $fechaFin . ' 23:59:59')
+                   ->groupBy('dia_semana')
+                   ->orderBy('dia_semana')
+                   ->findAll();
+    $diasSemana = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+    $labels = [];
+    $data = [];
+    for ($i = 1; $i <= 7; $i++) {
+        $labels[] = $diasSemana[$i - 1];
+        $data[$i] = 0;
+    }
+    foreach ($ventas as $v) {
+        $data[$v['dia_semana']] = (float)$v['total_ventas'];
+    }
+    $data = array_values($data);
+
+$data = [
+    'title' => 'Reportes',
+    'ventas' => $ventas,
+    'topProductos' => $topProductos,
+    'productosMenosVendidos' => $productosMenosVendidos,
+    'fecha_inicio' => $fechaInicio,
+    'fecha_fin' => $fechaFin,
+    'productosBajoStock' => $productosBajoStock,
+    'productosInversion' => $productosInversion,
+       'labels' => $labels,
+        'data' => $data,
         'fecha_inicio' => $fechaInicio,
         'fecha_fin' => $fechaFin
-    ];
+];
 
-    return view('reportes/index', $data);
+return view('reportes/index', $data);
 }
 
     public function ventas()

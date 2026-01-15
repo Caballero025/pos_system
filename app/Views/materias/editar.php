@@ -55,7 +55,7 @@
                 <option value="">Seleccionar medida</option>
                 <?php foreach($medidas as $medida): ?>
                     <option value="<?= $medida['id'] ?>" 
-                        <?= (old('categoria_id', $materia['categoria_id']) == $medida['id']) ? 'selected' : '' ?>>
+                        <?= (old('medida_id', $materia['medida_id']) == $medida['id']) ? 'selected' : '' ?>>
                         <?= esc($medida['nombre']) ?>
                     </option>
                 <?php endforeach; ?>

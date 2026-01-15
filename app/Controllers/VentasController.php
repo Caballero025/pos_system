@@ -147,7 +147,6 @@ class VentasController extends BaseController
         throw new \Exception('Cantidad insuficiente de ' . $materia['nombre']);
     }
 
-    // 🔻 Reducir cantidad
     $materiaModel->update(
         $materia['id'],
         ['cantidad' => $materia['cantidad'] - $item['cantidad']]

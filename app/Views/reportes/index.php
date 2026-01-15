@@ -94,19 +94,54 @@
         </div>
 </div>
     <div class="row mt-4">
-       <div class="card-reporte animate">
+<div class="card-reporte full animate">
     <div class="card-header-reporte">💼 Productos de Inversión</div>
-    <div class="item-reporte"><span>Coca Cola 1L</span><span>20 unidades</span></div>
-    <div class="item-reporte"><span>Papas Fritas</span><span>15 unidades</span></div>
-    <div class="item-reporte"><span>Harina</span><span>10 unidades</span></div>
-    <div class="item-reporte"><span>Leche</span><span>12 unidades</span></div>
+
+    <?php if(!empty($productosInversion)): ?>
+        <table class="tabla-reporte">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($productosInversion as $p): ?>
+                    <tr>
+                        <td><?= esc($p['nombre']) ?></td>
+                        <td><?= esc($p['cantidad']) ?></td>
+                        <td>$<?= number_format($p['precio'] * $p['cantidad'], 2) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    <?php else: ?>
+        <div class="item-reporte">
+            <span>No hay productos registrados</span>
+            <span>-</span>
+        </div>
+    <?php endif; ?>
 </div>
 
-        <div class="card-reporte full animate">
-            <div class="card-header-reporte">📦 Productos con bajo stock</div>
-            <div class="item-reporte alert"><span>Coca Cola</span><span>2</span></div>
-            <div class="item-reporte alert"><span>Papas</span><span>3</span></div>
+ <div class="card-reporte full animate">
+    <div class="card-header-reporte">📦 Productos con bajo stock</div>
+
+    <?php if(!empty($productosBajoStock)): ?>
+        <?php foreach($productosBajoStock as $p): ?>
+            <div class="item-reporte alert">
+                <span><?= esc($p['categoria_nombre']) ?> / <?= esc($p['nombre']) ?></span>
+                <span><?= esc($p['cantidad']) ?></span>
+            </div>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <div class="item-reporte">
+            <span>Todos los productos están en stock</span>
+            <span>-</span>
         </div>
+    <?php endif; ?>
+</div>
+
     </div>
 
 <div class="col-md-6"> 
@@ -133,14 +168,13 @@ function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
 }
 
-/* 📈 Ventas por día */
 new Chart(document.getElementById('ventasDia'), {
     type: 'line',
     data: {
-        labels: ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'],
+        labels: <?= json_encode($labels) ?>,   // etiquetas desde la base de datos
         datasets: [{
             label: 'Ventas',
-            data: [10,25,40,30,50,70,60],
+            data: <?= json_encode($data) ?>,   // valores dinámicos
             tension: 0.4,
             fill: true,
             backgroundColor: 'rgba(54,162,235,0.2)',
@@ -157,7 +191,6 @@ new Chart(document.getElementById('ventasDia'), {
         }
     }
 });
-
 /* 💰 Ingresos vs Ganancias */
 new Chart(document.getElementById('ingresosGanancias'), {
     type: 'bar',
