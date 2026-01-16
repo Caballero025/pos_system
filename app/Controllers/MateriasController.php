@@ -4,6 +4,7 @@ namespace App\Controllers;
 use App\Models\MateriaModel;
 use App\Models\PrimaModel;
 use App\Models\MedidaModel;
+use App\Models\EntradaModel;
 
 
 class MateriasController extends BaseController
@@ -11,12 +12,14 @@ class MateriasController extends BaseController
     protected $materiaModel;
     protected $primaModel;
     protected $medidaModel;
+    protected $entradaModel;
 
     public function __construct()
     {
         $this->materiaModel = new MateriaModel();
         $this->primaModel = new PrimaModel();
         $this->medidaModel = new MedidaModel();
+        $this->entradaModel = new EntradaModel();
     }
 
 public function materias()
@@ -66,6 +69,8 @@ public function guardar()
             ->withInput()
             ->with('errors', $this->validator->getErrors());
     }
+    
+  
 
     $productoData = [
         'nombre' => $this->request->getPost('nombre'),
@@ -109,32 +114,42 @@ public function guardar()
         return view('materias/editar', $data);
     }
 
-   public function actualizar($id)
+public function actualizar($id)
 {
     $this->checkLogin();
 
-    $rules = [
-        'nombre' => 'required',
-        'precio' => 'required|decimal'
-    ];
+    $cantidadNueva = (int) $this->request->getPost('cantidad');
+    $costoUnitarioNuevo = (float) $this->request->getPost('precio');
 
-    if (!$this->validate($rules)) {
+    $entrada = $this->entradaModel
+        ->where('materia_id', $id)
+        ->orderBy('id', 'DESC')
+        ->first();
+
+    if (!$entrada) {
         return redirect()->back()
-            ->withInput()
-            ->with('errors', $this->validator->getErrors());
+            ->with('error', 'No existe entrada para esta materia prima');
     }
 
-    $materiaData = [
+    $diferencia = $cantidadNueva - $entrada['cantidad'];
+
+    $this->materiaModel->update($id, [
         'nombre' => $this->request->getPost('nombre'),
-        'precio' => $this->request->getPost('precio'),
+        'precio' => $costoUnitarioNuevo,
         'categoria_id' => $this->request->getPost('categoria_id'),
         'medida_id' => $this->request->getPost('medida_id'),
-        'activo' => 1,
-        'cantidad' => $this->request->getPost('cantidad'),
+    ]);
 
-    ];
+    $this->entradaModel->update($entrada['id'], [
+        'cantidad' => $cantidadNueva,
+        'costo_unitario' => $costoUnitarioNuevo,
+        'total' => $cantidadNueva * $costoUnitarioNuevo
+    ]);
 
-    $this->materiaModel->update($id, $materiaData);
+    $this->materiaModel
+        ->set('cantidad', 'cantidad + ' . $diferencia, false)
+        ->where('id', $id)
+        ->update();
 
     return redirect()->to('admin/materias')
         ->with('success', 'Materia actualizada correctamente');

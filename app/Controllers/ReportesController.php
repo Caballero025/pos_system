@@ -5,6 +5,7 @@ use App\Models\VentaModel;
 use App\Models\ProductoModel;
 use App\Models\ClienteModel;
 use App\Models\MateriaModel;
+use App\Models\EntradaModel;
 
 class ReportesController extends BaseController
 {
@@ -12,6 +13,7 @@ class ReportesController extends BaseController
     protected $productoModel;
     protected $clienteModel;
     protected $materiaModel;
+    protected $entradaModel;
 
 
     public function __construct()
@@ -20,6 +22,7 @@ class ReportesController extends BaseController
         $this->productoModel = new ProductoModel();
         $this->clienteModel = new ClienteModel();
         $this->materiaModel = new MateriaModel();
+        $this->entradaModel = new EntradaModel();
     }
 
 public function index()
@@ -27,18 +30,18 @@ public function index()
     $this->checkLogin();
 
     $fechaInicio = $this->request->getGet('fecha_inicio') ?? date('Y-m-01');
-    $fechaFin = $this->request->getGet('fecha_fin') ?? date('Y-m-d');
+    $fechaFin    = $this->request->getGet('fecha_fin') ?? date('Y-m-d');
 
-    $this->ventaModel = new \App\Models\VentaModel();
-    $this->materiaModel = new \App\Models\MateriaModel();
+    $this->ventaModel    = new \App\Models\VentaModel();
+    $this->materiaModel  = new \App\Models\MateriaModel();
+    $this->entradaModel  = new \App\Models\EntradaModel();
+    $this->productoModel = new \App\Models\ProductoModel();
 
-    // --- Ventas totales ---
     $ventas = $this->ventaModel
         ->where('fecha_venta >=', $fechaInicio)
         ->where('fecha_venta <=', $fechaFin . ' 23:59:59')
         ->findAll();
 
-    // --- Top y menos vendidos ---
     $topProductos = $this->productoModel
         ->select('productos.nombre, SUM(detalle_ventas.cantidad) AS total_vendido')
         ->join('detalle_ventas', 'detalle_ventas.producto_id = productos.id')
@@ -61,7 +64,6 @@ public function index()
         ->limit(2)
         ->findAll();
 
-    // --- Productos inversión y bajo stock ---
     $productosBajoStock = $this->materiaModel
         ->select('materias_primas.*, categorias_prima.nombre AS categoria_nombre')
         ->join('categorias_prima', 'categorias_prima.id = materias_primas.categoria_id')
@@ -77,67 +79,63 @@ public function index()
         ->orderBy('categorias_prima.nombre', 'ASC')
         ->findAll();
 
-    // --- Datos por día (lunes a domingo) ---
-    $diasSemana = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
-    $labelsDia = $diasSemana;
-
-    $ingresosDia = array_fill(0, 7, 0);
-    $gananciaDia = array_fill(0, 7, 0);
+    $labelsDia    = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+    $ingresosDia  = array_fill(0, 7, 0);
+    $inversionDia = array_fill(0, 7, 0);
 
     $ventasDia = $this->ventaModel
-        ->select('DAYOFWEEK(fecha_venta) as dia_semana, SUM(total) as total_ingresos')
+        ->select('DAYOFWEEK(fecha_venta) AS dia, SUM(total) AS total')
         ->where('fecha_venta >=', $fechaInicio)
         ->where('fecha_venta <=', $fechaFin . ' 23:59:59')
-        ->groupBy('dia_semana')
-        ->orderBy('dia_semana')
+        ->groupBy('dia')
         ->findAll();
 
-    // --- Costo total materias primas ---
-    $totalMateriaPrima = 0;
-    foreach ($this->materiaModel->findAll() as $m) {
-        $totalMateriaPrima += $m['precio'] * $m['cantidad'];
-    }
-
-    $totalIngresos = 0;
     foreach ($ventasDia as $v) {
-        $dia = (int)$v['dia_semana'] - 1; // ajustar 1-7 a 0-6
-        $ingresosDia[$dia] = (float)$v['total_ingresos'];
-        $totalIngresos += $v['total_ingresos'];
+        $index = (int)$v['dia'] - 1;
+        $ingresosDia[$index] = (float)$v['total'];
     }
+    $inversionesDia = $this->entradaModel
+        ->select('DAYOFWEEK(fecha) AS dia, SUM(total) AS total')
+        ->where('fecha >=', $fechaInicio)
+        ->where('fecha <=', $fechaFin . ' 23:59:59')
+        ->groupBy('dia')
+        ->findAll();
 
-    // --- Ganancia por día ---
-    foreach ($ingresosDia as $i => $monto) {
-        $proporcion = $totalIngresos > 0 ? $monto / $totalIngresos : 0;
-        $gananciaDia[$i] = round($monto - ($totalMateriaPrima * $proporcion), 2);
+    foreach ($inversionesDia as $i) {
+        $index = (int)$i['dia'] - 1;
+        $inversionDia[$index] = (float)$i['total'];
     }
+$gananciaDia = [];
 
-    // --- Inversión distribuida por día ---
-    $inversionDia = array_fill(0, 7, round($totalMateriaPrima / 7, 2));
+for ($i = 0; $i < 7; $i++) {
+    $gananciaDia[$i] = round(
+        $ingresosDia[$i] - $inversionDia[$i],
+        2
+    );
 
-    // --- Totales ---
-    $totalGanancias = array_sum($gananciaDia);
+    $totalIngresos  = array_sum($ingresosDia);
+    $totalInversion = array_sum($inversionDia);
+    $totalGanancias = $totalIngresos - $totalInversion;
 
-    // --- Preparar datos para la vista ---
-    $data = [
-        'title' => 'Reportes',
-        'ventas' => $ventas,
-        'topProductos' => $topProductos,
+    return view('reportes/index', [
+        'title'                  => 'Reportes',
+        'ventas'                 => $ventas,
+        'topProductos'           => $topProductos,
         'productosMenosVendidos' => $productosMenosVendidos,
-        'productosBajoStock' => $productosBajoStock,
-        'productosInversion' => $productosInversion,
-        'fecha_inicio' => $fechaInicio,
-        'fecha_fin' => $fechaFin,
-        'labelsDia' => $labelsDia,
-        'ingresosDia' => $ingresosDia,
-        'gananciaDia' => $gananciaDia,
-        'inversionDia' => $inversionDia,
-        'totalIngresos' => $totalIngresos,
-        'totalGanancias' => $totalGanancias
-    ];
-
-    return view('reportes/index', $data);
+        'productosBajoStock'     => $productosBajoStock,
+        'productosInversion'     => $productosInversion,
+        'fecha_inicio'           => $fechaInicio,
+        'fecha_fin'              => $fechaFin,
+        'labelsDia'     => $labelsDia,
+    'ingresosDia'   => $ingresosDia,
+    'inversionDia'  => $inversionDia,
+    'gananciaDia'   => $gananciaDia,
+    'totalIngresos' => $totalIngresos,
+    'totalGanancias'=> array_sum($gananciaDia),
+    ]);
 }
 
+}
 
 
     public function ventas()

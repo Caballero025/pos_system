@@ -232,10 +232,10 @@ new Chart(document.getElementById('inversionGanancia'), {
                 fill: true
             },
             {
-                label: 'Ganancia',
-                data: <?= json_encode($gananciaDia) ?>,
-                borderColor: 'rgba(25,135,84,1)',
-                backgroundColor: 'rgba(25,135,84,0.2)',
+                label: 'Ingresos',
+                data: <?= json_encode($ingresosDia) ?>,
+                borderColor: 'rgba(13,110,253,1)',
+                backgroundColor: 'rgba(13,110,253,0.2)',
                 tension: 0.4,
                 fill: true
             }
@@ -244,7 +244,14 @@ new Chart(document.getElementById('inversionGanancia'), {
     options: {
         responsive: true,
         plugins: { legend: { position: 'bottom' } },
-        scales: { y: { beginAtZero: true, ticks: { callback: value => '$' + value.toLocaleString() } } }
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    callback: value => '$' + value.toLocaleString()
+                }
+            }
+        }
     }
 });
 </script>
