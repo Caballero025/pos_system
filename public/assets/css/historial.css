@@ -32,6 +32,30 @@
     flex: 1;
 }
 
+.btn-volver {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+.btn-volver:hover {
+    background: #fecaca;
+}
+.btn-return {
+    background: #f7e4a4;
+    color: #000000;
+    padding: 10px 18px;
+    border-radius: 999px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.btn-return:hover {
+    background: #ffe282;
+}
+
+
 .filter-group {
     flex: 1;
     min-width: 200px;

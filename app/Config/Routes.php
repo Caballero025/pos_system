@@ -58,6 +58,7 @@ $routes->get('/ventas/historial', 'VentasController::historial');
 $routes->post('/ventas/procesar', 'VentasController::procesarVenta');
 $routes->get('/ventas/buscar-producto/(:any)', 'VentasController::buscarProducto/$1');
 $routes->get('/ventas/detalle/(:num)', 'VentasController::detalle/$1');
+$routes->get('/ventas/detalle_historial/(:num)', 'VentasController::detalle_historial/$1');
 $routes->get('/ventas/imprimir/(:num)', 'VentasController::imprimirTicket/$1');
 $routes->get('/ventas/cancelar/(:num)', 'VentasController::cancelarVenta/$1');
 

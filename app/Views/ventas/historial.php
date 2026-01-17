@@ -70,11 +70,8 @@
                             </span>
                         </td>
                         <td class="actions">
-                            <a href="<?= base_url('ventas/detalle/' . $venta['id']) ?>" class="btn btn-info">👁️ Ver</a>
-                            <a href="<?= base_url('ventas/imprimir/' . $venta['id']) ?>" class="btn btn-secondary" target="_blank">🖨️ Ticket</a>
-                            <?php if($venta['estado'] == 'completada'): ?>
-                                <a href="<?= base_url('ventas/cancelar/' . $venta['id']) ?>" class="btn btn-delete" onclick="return confirm('¿Estás seguro de cancelar esta venta? Se restaurará el stock.')">❌ Cancelar</a>
-                            <?php endif; ?>
+                            <a href="<?= base_url('ventas/detalle_historial/' . $venta['id']) ?>" class="btn btn-info">👁️ Ver</a>
+                    
                         </td>
                     </tr>
                 <?php endforeach; ?>

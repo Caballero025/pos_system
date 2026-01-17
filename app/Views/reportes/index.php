@@ -4,20 +4,46 @@
 
 <div class="reportes-container">
     <div class="filtros-reportes">
-        <form method="get" class="row">
-            <div class="col">
-                <label>Fecha inicio</label>
-                <input type="date" name="fecha_inicio" class="form-control-reporte" value="<?= $fecha_inicio ?? '' ?>">
-            </div>
-            <div class="col">
-                <label>Fecha fin</label>
-                <input type="date" name="fecha_fin" class="form-control-reporte" value="<?= $fecha_fin ?? '' ?>">
-            </div>
-            <div class="col">
-                <label style="opacity:0;">Filtrar</label>
-                <button class="btn-reporte">🔍 Filtrar</button>
-            </div>
-        </form>
+<form method="get" class="row">
+    <!-- Año -->
+    <div class="col">
+        <label>Año</label>
+        <select name="anio" id="anio" class="form-control-reporte">
+            <?php 
+                $anioInicio = 2020;
+                $anioActual = date('Y');
+                for($a = $anioInicio; $a <= $anioActual + 1; $a++): 
+            ?>
+                <option value="<?= $a ?>" <?= $anio == $a ? 'selected' : '' ?>><?= $a ?></option>
+            <?php endfor; ?>
+        </select>
+    </div>
+
+    <!-- Mes -->
+    <div class="col">
+        <label>Mes</label>
+        <select name="mes" id="mes" class="form-control-reporte">
+            <?php foreach($meses as $num => $nombre): ?>
+                <option value="<?= $num ?>" <?= $mes == $num ? 'selected' : '' ?>><?= $nombre ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+
+    <!-- Semana -->
+    <div class="col">
+        <label>Semana</label>
+        <select name="semana" id="semana" class="form-control-reporte">
+            <!-- JS llenará las semanas automáticamente -->
+        </select>
+    </div>
+
+    <div class="col">
+        <label style="opacity:0;">Filtrar</label>
+        <button class="btn-reporte">🔍 Filtrar</button>
+    </div>
+</form>
+
+
     </div>
 
     <div class="page-header">
@@ -27,7 +53,13 @@
 
     <!-- MÉTRICAS -->
     <div class="row">
-        <div class="metric-card primary animate">
+                 
+                    <div class="metric-card primary animate">
+    <div class="metric-label">Inversión</div>
+    <div class="metric-value">$<?= number_format($totalInversion, 2) ?></div>
+    <div class="metric-detail">Efectivo</div>
+</div>
+        <div class="metric-card warning animate">
             <div class="metric-label">Ingresos</div>
             <div class="metric-value">$<?= number_format($totalIngresos, 2) ?></div>
             <div class="metric-detail">Brutos</div>
@@ -40,19 +72,21 @@
         </div>
 
         <div class="metric-card info animate">
-            <div class="metric-label">Ventas</div>
+            <div class="metric-label">Promedio de ventas</div>
             <div class="metric-value">$<?= count($ventas) > 0 ? number_format(array_sum(array_column($ventas, 'total')) / count($ventas), 2) : '0.00' ?></div>
             <div class="metric-detail">Efectivo</div>
         </div>
+ 
+
 
     </div>
 
     <!-- GRÁFICAS -->
     <div class="row mt-4">
-        <div class="card-reporte grafica animate">
-            <div class="card-header-reporte">💸 Inversión vs Ganancia</div>
-            <canvas id="inversionGanancia"></canvas>
-        </div>
+           <div class="card-reporte grafica animate">
+        <div class="card-header-reporte">💸 Inversión vs Ingreso</div>
+        <canvas id="inversionIngreso"></canvas>
+    </div>
 
         <div class="card-reporte grafica animate">
             <div class="card-header-reporte">💰 Ingresos vs Ganancias</div>
@@ -143,13 +177,18 @@
             <div class="card-header-reporte">🔗 Acceso Rápido</div> 
             <div class="card-body-reporte">
                 <div class="acceso-rapido-buttons">
-                    <a href="<?= base_url('admin/reportes/ventas') . '?fecha_inicio=' . $fecha_inicio . '&fecha_fin=' . $fecha_fin ?>" class="btn-acceso">
+                    <a href="<?= base_url('admin/reportes/ventas')
+    . '?anio=' . $anio
+    . '&mes=' . $mes
+    . '&semana=' . $semana ?>"
+   class="btn-acceso">
+
                         📋 Reporte Detallado de Ventas
                     </a>
-                    <a href="<?= base_url('admin/reportes/productos') ?>" class="btn-acceso">
-                        🏷️ Reporte de Productos
-                    </a>
-                    <a href="<?= base_url('admin/reportes/clientes') ?>" class="btn-acceso">
+                    <a href="<?= base_url('admin/reportes/clientes')     . '?anio=' . $anio
+    . '&mes=' . $mes
+    . '&semana=' . $semana ?>"
+   class="btn-acceso">
                         👥 Reporte de Clientes
                     </a>
                 </div>
@@ -157,6 +196,61 @@
         </div>
     </div>
 </div>
+
+<script>
+// Función para calcular cuántas semanas tiene un mes (sin domingos)
+function llenarSemanas() {
+    const anio = parseInt(document.getElementById('anio').value);
+    const mes  = parseInt(document.getElementById('mes').value);
+    const selectSemana = document.getElementById('semana');
+
+    selectSemana.innerHTML = '';
+
+    const primerDia = new Date(anio, mes-1, 1);
+    const ultimoDia = new Date(anio, mes, 0);
+
+    let semana = 1;
+    let diasEnSemana = 0;
+
+    for (let dia = 1; dia <= ultimoDia.getDate(); dia++) {
+        const fecha = new Date(anio, mes-1, dia);
+        const diaSemana = fecha.getDay(); // 0=Domingo, 1=Lunes,...,6=Sábado
+
+        // Si es domingo, no se cuenta
+        if (diaSemana === 0) continue;
+
+        diasEnSemana++;
+
+        // Si ya se completaron 6 días (Lun a Sab), se cuenta una semana
+        if (diasEnSemana === 6) {
+            semana++;
+            diasEnSemana = 0;
+        }
+    }
+
+    // Si quedó algún día parcial (menos de 6), también cuenta como semana
+    const totalSemanas = diasEnSemana > 0 ? semana : semana - 1;
+
+    for (let s = 1; s <= totalSemanas; s++) {
+        const option = document.createElement('option');
+        option.value = s;
+        option.text = 'Semana ' + s;
+
+        if (s == <?= $semana ?>) option.selected = true;
+        selectSemana.appendChild(option);
+    }
+}
+
+// Inicializar al cargar la página
+llenarSemanas();
+
+// Actualizar cuando cambie año o mes
+document.getElementById('anio').addEventListener('change', llenarSemanas);
+document.getElementById('mes').addEventListener('change', llenarSemanas);
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
 function toggleDarkMode() {
@@ -218,7 +312,7 @@ new Chart(document.getElementById('ingresosGanancias'), {
 
 
 // 💸 Inversión vs Ganancia
-new Chart(document.getElementById('inversionGanancia'), {
+new Chart(document.getElementById('inversionIngreso'), {
     type: 'line',
     data: {
         labels: <?= json_encode($labelsDia) ?>,
@@ -232,10 +326,10 @@ new Chart(document.getElementById('inversionGanancia'), {
                 fill: true
             },
             {
-                label: 'Ingresos',
+                label: 'Ingreso',
                 data: <?= json_encode($ingresosDia) ?>,
-                borderColor: 'rgba(13,110,253,1)',
-                backgroundColor: 'rgba(13,110,253,0.2)',
+                borderColor: 'rgba(54,162,235,1)',
+                backgroundColor: 'rgba(54,162,235,0.2)',
                 tension: 0.4,
                 fill: true
             }
@@ -247,9 +341,7 @@ new Chart(document.getElementById('inversionGanancia'), {
         scales: {
             y: {
                 beginAtZero: true,
-                ticks: {
-                    callback: value => '$' + value.toLocaleString()
-                }
+                ticks: { callback: value => '$' + value.toLocaleString() }
             }
         }
     }

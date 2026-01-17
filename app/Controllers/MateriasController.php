@@ -87,7 +87,16 @@ public function guardar()
     if (!$id) {
         dd($this->materiaModel->errors());
     }
+$cantidad = $this->request->getPost('cantidad');
+$costo = $this->request->getPost('precio');
+$total = $cantidad * $costo;
 
+$this->entradaModel->insert([
+    'materia_id' => $id, 
+    'cantidad' => $cantidad,
+    'costo_unitario' => $costo,
+    'total' => $total
+]);
     return redirect()->to('admin/materias')
         ->with('success', 'Producto agregado correctamente');
 }
@@ -131,25 +140,21 @@ public function actualizar($id)
             ->with('error', 'No existe entrada para esta materia prima');
     }
 
-    $diferencia = $cantidadNueva - $entrada['cantidad'];
-
+    // Actualizar materia
     $this->materiaModel->update($id, [
-        'nombre' => $this->request->getPost('nombre'),
-        'precio' => $costoUnitarioNuevo,
+        'nombre'       => $this->request->getPost('nombre'),
+        'precio'       => $costoUnitarioNuevo,
         'categoria_id' => $this->request->getPost('categoria_id'),
-        'medida_id' => $this->request->getPost('medida_id'),
+        'medida_id'    => $this->request->getPost('medida_id'),
+        'cantidad'     => $cantidadNueva // ✅ CLAVE
     ]);
-
+$nuevaCantidad = $entrada['cantidad'] + $cantidadNueva;
+    // Actualizar entrada
     $this->entradaModel->update($entrada['id'], [
-        'cantidad' => $cantidadNueva,
-        'costo_unitario' => $costoUnitarioNuevo,
-        'total' => $cantidadNueva * $costoUnitarioNuevo
+        'cantidad'       => $nuevaCantidad,
+        'costo_unitario'  => $costoUnitarioNuevo,
+        'total'           => $nuevaCantidad * $costoUnitarioNuevo
     ]);
-
-    $this->materiaModel
-        ->set('cantidad', 'cantidad + ' . $diferencia, false)
-        ->where('id', $id)
-        ->update();
 
     return redirect()->to('admin/materias')
         ->with('success', 'Materia actualizada correctamente');

@@ -30,22 +30,20 @@
     </div>
 
     <!-- GRÁFICAS -->
-    <div class="row mt-4">
-        <div class="card-reporte small">
-            <h3>📈 Ganancias</h3>
-            <canvas id="graficaGanancias"></canvas>
-        </div>
-
-        <div class="card-reporte small">
-            <h3>💵 Ingresos</h3>
-            <canvas id="graficaIngresos"></canvas>
-        </div>
-
-        <div class="card-reporte small">
-            <h3>📉 Inversión</h3>
-            <canvas id="graficaInversion"></canvas>
-        </div>
+<div class="row mt-4">
+    <!-- Mes -->
+    <div class="card-reporte col-12 col-md-6">
+        <h3>📈 Ganancias (Mes)</h3>
+        <canvas id="graficaGananciasMes"></canvas>
     </div>
+
+    <!-- Año -->
+    <div class="card-reporte col-12 col-md-6">
+        <h3>📈 Ganancias (Año)</h3>
+        <canvas id="graficaGananciasAnio"></canvas>
+    </div>
+</div>
+
 
     <!-- ACCIONES RÁPIDAS -->
     <div class="card-reporte mt-4">
@@ -77,70 +75,43 @@
 </div>
 
 <script>
-const labels = ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
 
-const ctxG = document.getElementById('graficaGanancias');
-new Chart(ctxG, {
-    type: 'line',
-    data: {
-        labels: labels,
-        datasets: [{
-            label: 'Ganancias',
-            data: [120,190,300,250,220,320,400],
-            tension: 0.4,
-            fill: true
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            legend: { display: true }
+
+    // Mes
+    new Chart(document.getElementById('graficaGananciasMes'), {
+        type: 'line',
+        data: {
+            labels: <?= json_encode($labelsMes) ?>,
+            datasets: [{
+                label: 'Ganancias',
+                data: <?= json_encode($gananciasMes) ?>,
+                borderColor: 'rgba(54,162,235,1)',
+                backgroundColor: 'rgba(54,162,235,0.2)',
+                fill: true
+            }]
         }
-    }
-});
+    });
 
-const ctxI = document.getElementById('graficaIngresos');
-new Chart(ctxI, {
-    type: 'bar',
-    data: {
-        labels: labels,
-        datasets: [{
-            label: 'Ingresos',
-            data: [500,700,800,650,900,1000,1200]
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            legend: { display: true }
+    // Año
+    new Chart(document.getElementById('graficaGananciasAnio'), {
+        type: 'line',
+        data: {
+            labels: <?= json_encode($labelsAnio) ?>,
+            datasets: [{
+                label: 'Ganancias',
+                data: <?= json_encode($gananciasAnio) ?>,
+                borderColor: 'rgba(255,193,7,1)',
+                backgroundColor: 'rgba(255,193,7,0.2)',
+                fill: true
+            }]
         }
-    }
-});
+    });
 
-const ctxInv = document.getElementById('graficaInversion');
-new Chart(ctxInv, {
-    type: 'line',
-    data: {
-        labels: labels,
-        datasets: [{
-            label: 'Inversión',
-            data: [300,400,350,500,450,600,550],
-            tension: 0.4,
-            fill: true
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            legend: { display: true }
-        }
+    // Toggle theme
+    const toggle = document.getElementById('toggleTheme');
+    toggle.onclick = () => {
+        document.body.classList.toggle('dark-mode');
     }
-});
-
-const toggle = document.getElementById('toggleTheme');
-toggle.onclick = () => {
-    document.body.classList.toggle('dark-mode');
-}
 </script>
 
 <?= $this->include('layouts/footer') ?>

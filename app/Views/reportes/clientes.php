@@ -4,7 +4,13 @@
 <div class="reportes-container">
     <div class="page-header">
         <h1>👥 Reporte de Clientes</h1>
-        <a href="<?= base_url('admin/reportes') ?>" class="btn">🔙 Volver a Reportes</a>
+               <a href="<?= base_url('admin/reportes')
+    . '?anio=' . $anio
+    . '&mes=' . $mes
+    . '&semana=' . $semana ?>"
+   class="btn btn-secondary">
+    🔙 Volver a Reportes
+</a>
     </div>
 
     <!-- Métricas de clientes -->

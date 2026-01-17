@@ -4,11 +4,7 @@
 <div class="page-header">
     <h1>Detalle de Venta</h1>
     <div style="display: flex; gap: 10px;">
-<a href="<?= base_url('admin/reportes/ventas')
-    . '?anio=' . $anio
-    . '&mes=' . $mes
-    . '&semana=' . $semana ?>"
-   class="btn-return">
+<a href="<?= base_url('ventas/historial')?>" class="btn-return">
     ⬅ Regresar
 </a>
 

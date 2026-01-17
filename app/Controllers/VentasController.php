@@ -229,34 +229,82 @@ class VentasController extends BaseController
 
         return view('ventas/historial', $data);
     }
+public function detalle($id)
+{
+    $this->checkLogin();
 
-    // DETALLE DE VENTA
-    public function detalle($id)
-    {
-        $this->checkLogin();
+    // Recuperar filtros reales
+    $anio   = $this->request->getGet('anio');
+    $mes    = $this->request->getGet('mes');
+    $semana = $this->request->getGet('semana');
 
-        // Ajusta los campos según tus tablas
-        $venta = $this->ventaModel->select('ventas.*, clientes.nombre as cliente_nombre, clientes.telefono, clientes.direccion')
-                                 ->join('clientes', 'clientes.id = ventas.cliente_id', 'left')
-                                 ->find($id);
+    // Obtener venta
+    $venta = $this->ventaModel
+        ->select('ventas.*, clientes.nombre AS cliente_nombre')
+        ->join('clientes', 'clientes.id = ventas.cliente_id', 'left')
+        ->find($id);
 
-        if (!$venta) {
-            return redirect()->to('/ventas/historial')->with('error', 'Venta no encontrada');
-        }
-
-        $detalles = $this->detalleVentaModel->select('detalle_ventas.*, productos.nombre as producto_nombre, productos.codigo as producto_codigo')
-                                           ->join('productos', 'productos.id = detalle_ventas.producto_id')
-                                           ->where('venta_id', $id)
-                                           ->findAll();
-
-        $data = [
-            'title' => 'Detalle de Venta',
-            'venta' => $venta,
-            'detalles' => $detalles
-        ];
-
-        return view('ventas/detalle', $data);
+    if (!$venta) {
+        return redirect()->to('/ventas/historial')
+            ->with('error', 'Venta no encontrada');
     }
+
+    // Detalles de la venta
+    $detalles = $this->detalleVentaModel
+        ->select('detalle_ventas.*, productos.nombre AS producto_nombre')
+        ->join('productos', 'productos.id = detalle_ventas.producto_id')
+        ->where('venta_id', $id)
+        ->findAll();
+
+    return view('ventas/detalle', [
+    'title'   => 'Detalle de Venta',
+    'venta'   => $venta,
+    'detalles'=> $detalles,
+    'anio'    => $anio,
+    'mes'     => $mes,
+    'semana'  => $semana
+]);
+}
+
+public function detalle_historial($id)
+{
+    $this->checkLogin();
+
+    // Recuperar filtros reales
+    $anio   = $this->request->getGet('anio');
+    $mes    = $this->request->getGet('mes');
+    $semana = $this->request->getGet('semana');
+
+    // Obtener venta
+    $venta = $this->ventaModel
+        ->select('ventas.*, clientes.nombre AS cliente_nombre')
+        ->join('clientes', 'clientes.id = ventas.cliente_id', 'left')
+        ->find($id);
+
+    if (!$venta) {
+        return redirect()->to('/ventas/historial')
+            ->with('error', 'Venta no encontrada');
+    }
+
+    // Detalles de la venta
+    $detalles = $this->detalleVentaModel
+        ->select('detalle_ventas.*, productos.nombre AS producto_nombre')
+        ->join('productos', 'productos.id = detalle_ventas.producto_id')
+        ->where('venta_id', $id)
+        ->findAll();
+
+    return view('ventas/detalle_historial', [
+    'title'   => 'Detalle de Venta',
+    'venta'   => $venta,
+    'detalles'=> $detalles,
+    'anio'    => $anio,
+    'mes'     => $mes,
+    'semana'  => $semana
+]);
+}
+
+
+
 
 public function imprimirTicket($id)
 {

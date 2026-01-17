@@ -4,29 +4,16 @@
 <div class="reportes-container">
     <div class="page-header">
         <h1>📋 Reporte Detallado de Ventas</h1>
-        <a href="<?= base_url('admin/reportes') ?>" class="btn">🔙 Volver a Reportes</a>
+        <a href="<?= base_url('admin/reportes')
+    . '?anio=' . $anio
+    . '&mes=' . $mes
+    . '&semana=' . $semana ?>"
+   class="btn btn-secondary">
+    🔙 Volver a Reportes
+</a>
     </div>
 
-    <!-- Filtros -->
-    <div class="filtros-reportes">
-        <h3 style="margin-bottom: 20px; color: #333;">Filtrar Ventas</h3>
-        <form method="get" class="row">
-            <div class="col-md-4">
-                <label style="display: block; margin-bottom: 5px; color: #666;">Fecha Inicio:</label>
-                <input type="date" name="fecha_inicio" class="form-control-reporte" value="<?= $fecha_inicio ?>">
-            </div>
-            <div class="col-md-4">
-                <label style="display: block; margin-bottom: 5px; color: #666;">Fecha Fin:</label>
-                <input type="date" name="fecha_fin" class="form-control-reporte" value="<?= $fecha_fin ?>">
-            </div>
-            <div class="col-md-4">
-                <label style="display: block; margin-bottom: 5px; color: transparent;">Filtrar</label>
-                <button type="submit" class="btn-reporte" style="text-align: center; background: #667eea; color: white; border: none;">
-                    🔍 Filtrar Ventas
-                </button>
-            </div>
-        </form>
-    </div>
+
 
     <!-- Resumen -->
     <div class="row mb-4">
@@ -78,11 +65,14 @@
                             <td>$<?= number_format($venta['efectivo'], 2) ?></td>
                             <td>$<?= number_format($venta['cambio'], 2) ?></td>
                             <td>
-                                <a href="<?= base_url('ventas/detalle/' . $venta['id']) ?>" 
-                                   class="btn-reporte" 
-                                   style="padding: 5px 10px; font-size: 12px; background: #17a2b8; color: white; border: none; text-align: center;">
-                                    👁️ Ver
-                                </a>
+                                <a href="<?= base_url('ventas/detalle/' . $venta['id'])
+    . '?anio=' . $anio
+    . '&mes=' . $mes
+    . '&semana=' . $semana ?>"
+   class="btn btn-info btn-sm">
+    👁️ Ver
+</a>
+
                             </td>
                         </tr>
                     <?php endforeach; ?>
