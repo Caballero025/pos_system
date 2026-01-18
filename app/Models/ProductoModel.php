@@ -47,4 +47,34 @@ protected $allowedFields = [
             'integer' => 'El stock debe ser un número entero'
         ]
     ];
+
+
+    
+public function actualizarStockDesdeMateriaPrima($categoriaPrimaId)
+{
+    $materiaModel = new \App\Models\MateriaModel();
+    $categoriaModel = new \App\Models\PrimaModel();
+
+    // Obtener categoría prima
+    $categoria = $categoriaModel->find($categoriaPrimaId);
+    if (!$categoria) return false;
+
+    // Sumar cantidades y calcular costo promedio
+    $resultado = $materiaModel
+        ->select('SUM(cantidad) AS stock_total, AVG(precio) AS costo_unitario')
+        ->where('categoria_id', $categoriaPrimaId)
+        ->first();
+
+    $stock = (int) ($resultado['stock_total'] ?? 0);
+    $costo = (float) ($resultado['costo_unitario'] ?? 0);
+
+    // Actualizar producto que tenga el mismo nombre
+    return $this->where('nombre', $categoria['nombre'])
+                ->set([
+                    'stock' => $stock,
+                    'costo' => $costo
+                ])
+                ->update();
+}
+
 }

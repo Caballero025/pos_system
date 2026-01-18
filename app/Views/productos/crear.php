@@ -99,23 +99,7 @@
                        placeholder="0.00">
             </div>
 
-            <div class="form-group" style="flex: 1;">
-                <label class="form-label" for="costo">Costo de Proveedor</label>
-                <input type="number" id="costo" name="costo" class="form-input" 
-                       value="<?= old('costo') ?>" step="0.01" min="0" 
-                       placeholder="0.00">
-            </div>
-        </div>
-
-        <div class="form-row" style="display: flex; gap: 15px;">
-            <div class="form-group" style="flex: 1;">
-                <label class="form-label" for="stock">Stock Actual *</label>
-                <input type="number" id="stock" name="stock" class="form-input" 
-                       value="<?= old('stock', 0) ?>" min="0" required 
-                       placeholder="0">
-            </div>
-
-        
+    
         </div>
 
         <div class="form-group">

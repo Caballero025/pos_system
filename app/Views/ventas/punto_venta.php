@@ -261,6 +261,7 @@ function agregarAlCarrito(productoId) {
 
     if (
         producto.nombre.trim().toLowerCase() === 'servicio de carnitas' &&
+        !carrito.some(i => i.nombre.trim().toLowerCase() === 'tortillas') ||  producto.nombre.trim().toLowerCase() === 'servicio de arreachera' &&
         !carrito.some(i => i.nombre.trim().toLowerCase() === 'tortillas')
     ) {
         const productoExtra = Object.values(productosMap)
@@ -399,12 +400,12 @@ function modificarCantidad(index, cambio) {
         return;
     }
 
-    let incremento = item.esServicioCarnitas ? 0.1 : 1;
+    let incremento = item.esServicio ? 0.1 : 1;
     item.cantidad = Math.round((item.cantidad + cambio * incremento) * 10) / 10;
 
     if (item.cantidad <= 0) {
         // 🗑️ Si se elimina el servicio, eliminar tortillas
-        if (item.esServicioCarnitas) {
+        if (item.esServicio) {
             carrito = carrito.filter(i => !i.ligadoCarnitas);
         }
         carrito.splice(index, 1);
@@ -415,7 +416,7 @@ function modificarCantidad(index, cambio) {
     item.subtotal = item.precio * item.cantidad;
 
     // 🔄 SI ES SERVICIO → ACTUALIZAR TORTILLAS
-    if (item.esServicioCarnitas) {
+    if (item.esServicio) {
         agregarActualizarTortillas(item.cantidad);
     }
 
@@ -636,7 +637,9 @@ const opcionesPorProducto = {
     torta: {
         extras: [{ nombre: 'Queso extra', precio: 5, icono: '🧀' }]
     },
-
+    gordita: {
+        extras: [{ nombre: 'Queso extra', precio: 5, icono: '🧀' }]
+    },
     carnitas: {
         tipoVenta: [
             { tipo: 'kilo', nombre: 'Por kilo', icono: '⚖️' },
@@ -692,9 +695,14 @@ function calcularPesoDesdeMonto() {
     resultado.style.display = 'block';
 }
 
-function esServicioCarnitas(producto) {
-    return producto.nombre.trim().toLowerCase() === 'servicio de carnitas';
+function esServicio(producto) {
+    const nombre = producto.nombre.trim().toLowerCase();
+    return nombre === 'servicio de carnitas' ||
+           nombre === 'servicio de campechano' ||
+           nombre === 'servicio de arrachera' ||
+           nombre === 'servicio de chorizo';
 }
+
 
 function abrirModal(productoId) {
     productoActual = productosMap[productoId];
@@ -727,7 +735,7 @@ function abrirModal(productoId) {
     tipoVentaSeleccionado = null;
 
     // 🔹 Servicio de carnitas
-    if (esServicioCarnitas(productoActual)) {
+    if (esServicio(productoActual)) {
         document.querySelector('.modal-opciones').innerHTML += `
             <label class="extra-item obligatorio">
                 <input type="checkbox" checked disabled>
@@ -740,12 +748,14 @@ function abrirModal(productoId) {
     // Determinar tipo de producto
     let tipo = 'bebida';
     const nombre = productoActual.nombre.toLowerCase();
-    if (nombre.includes('taco')) tipo = 'taco';
-    else if (nombre.includes('torta')) tipo = 'torta';
-    else if (nombre.includes('carnita')) tipo = 'carnitas';
-    else if (nombre.includes('bistec')) tipo = 'bistec';
-    else if (nombre.includes('chorizo')) tipo = 'chorizo';
-    else if (nombre.includes('arrachera')) tipo = 'arrachera';
+   if (nombre.includes('taco')) tipo = 'taco';
+else if (nombre.includes('torta')) tipo = 'torta';
+else if (nombre.includes('carnita') || nombre.includes('servicio de campechano')) tipo = 'carnitas';
+else if (nombre.includes('bistec') || nombre.includes('servicio de arrachera')) tipo = 'bistec';
+else if (nombre.includes('chorizo') || nombre.includes('servicio de chorizo')) tipo = 'chorizo';
+else if (nombre.includes('arrachera')) tipo = 'arrachera';
+else if (nombre.includes('gordita')) tipo = 'gordita';
+
 
     const config = opcionesPorProducto[tipo] || {};
     const opcionesDiv = document.querySelector('.modal-opciones');
@@ -977,10 +987,10 @@ function confirmarProducto() {
             cantidad: kilos,
             subtotal: monto,
             tipoVenta: 'monto',
-            esServicioCarnitas: esServicioCarnitas(productoActual) || false
+            esServicioCarnitas: esServicio(productoActual) || false
         });
 
-        if (esServicioCarnitas(productoActual)) {
+        if (esServicio(productoActual)) {
             agregarActualizarTortillas(kilos);
         }
     }
@@ -1003,10 +1013,11 @@ function confirmarProducto() {
             cantidad: cantidadActual,
             subtotal: subtotal,
             tipoVenta: 'kilo',
-            esServicioCarnitas: esServicioCarnitas(productoActual) || false
+           esServicioCarnitas: esServicio(productoActual) || false
+
         });
 
-        if (esServicioCarnitas(productoActual)) {
+        if (esServicio(productoActual)) {
             agregarActualizarTortillas(cantidadActual);
         }
     }

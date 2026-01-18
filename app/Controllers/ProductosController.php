@@ -5,6 +5,8 @@ use App\Models\ProductoModel;
 use App\Models\CategoriaModel;
 use App\Models\DetalleVentaModel;
 use App\Models\MedidaModel;
+use App\Models\MateriaModel;
+use App\Models\PrimaModel;
 
 
 class ProductosController extends BaseController
@@ -12,12 +14,18 @@ class ProductosController extends BaseController
     protected $productoModel;
     protected $categoriaModel;
     protected $medidaModel;
+    protected $materiaModel;
+    protected $primaModel;
+
 
     public function __construct()
     {
         $this->productoModel = new ProductoModel();
         $this->categoriaModel = new CategoriaModel();
         $this->medidaModel = new MedidaModel();
+          $this->materiaModel = new MateriaModel();
+            $this->primaModel = new PrimaModel();
+
     }
 
     public function index()
@@ -70,28 +78,51 @@ class ProductosController extends BaseController
         return view('productos/crear', $data);
     }
 
-   public function guardar()
+public function guardar()
 {
     $this->checkLogin();
 
     $categoria_id = $this->request->getPost('categoria_id');
+    $nombre       = $this->request->getPost('nombre');
 
+    // ───────────────────────────────
+    // VALIDACIÓN (SIN STOCK)
+    // ───────────────────────────────
     $rules = [
         'nombre' => 'required',
         'precio' => 'required|decimal',
         'imagen' => 'max_size[imagen,2048]|is_image[imagen]'
     ];
 
-    if ($categoria_id == 2) {
-        $rules['stock'] = 'required|integer';
-    } 
-
     if (!$this->validate($rules)) {
         return redirect()->back()
             ->withInput()
             ->with('errors', $this->validator->getErrors());
     }
+    
+    $stock = 0;
+    $costo = 0;
 
+    $categoriaPrima = $this->primaModel
+        ->where('nombre', $nombre)
+        ->first();
+
+  if ($categoriaPrima) {
+
+    $resultado = $this->materiaModel
+        ->select('SUM(cantidad) AS stock_total, AVG(precio) AS costo_unitario')
+        ->where('categoria_id', $categoriaPrima['id'])
+        ->first();
+
+    $stock = (int) ($resultado['stock_total'] ?? 0);
+    $costo = (float) ($resultado['costo_unitario'] ?? 0);
+}
+
+ 
+
+    // ───────────────────────────────
+    // IMAGEN
+    // ───────────────────────────────
     $file = $this->request->getFile('imagen');
     $imagenName = 'default.png';
 
@@ -100,20 +131,20 @@ class ProductosController extends BaseController
         $file->move(ROOTPATH . 'public/uploads/productos', $imagenName);
     }
 
+    // ───────────────────────────────
+    // GUARDAR PRODUCTO
+    // ───────────────────────────────
     $productoData = [
-        'nombre' => $this->request->getPost('nombre'),
-        'precio' => $this->request->getPost('precio'),
+        'nombre'       => $nombre,
+        'precio'       => $this->request->getPost('precio'),
         'categoria_id' => $categoria_id,
-        'medida_id' => $this->request->getPost('medida_id'),
-        'imagen' => $imagenName,
-        'activo' => 1,
-        'stock' => 0,
-        'costo' => 0
+        'medida_id'    => $this->request->getPost('medida_id'),
+        'imagen'       => $imagenName,
+        'activo'       => 1,
+        'stock'        => $stock,
+        'costo'        => $costo
     ];
-if ($categoria_id == 2) {
-    $productoData['stock'] = $this->request->getPost('stock');
-    $productoData['costo'] = $this->request->getPost('costo'); 
-}
+
     $id = $this->productoModel->insert($productoData);
 
     if (!$id) {
@@ -121,8 +152,9 @@ if ($categoria_id == 2) {
     }
 
     return redirect()->to("admin/productos/categoria/$categoria_id")
-                 ->with('success', 'Producto agregado correctamente');
+        ->with('success', 'Producto agregado correctamente');
 }
+
 
     public function editar($id)
     {

@@ -8,7 +8,34 @@ class MateriaModel extends Model
     protected $table = 'materias_primas';
     protected $primaryKey = 'id';
     
-    
+    protected $afterInsert = ['syncStock'];
+protected $afterUpdate = ['syncStock'];
+protected $afterDelete = ['syncStock'];
+
+protected function syncStock(array $data)
+{
+    if (!isset($data['data']['categoria_id'])) {
+        return $data;
+    }
+
+    $categoriaId = $data['data']['categoria_id'];
+
+    $resultado = $this->select('SUM(cantidad) AS stock_total, AVG(precio) AS costo_unitario')
+                      ->where('categoria_id', $categoriaId)
+                      ->first();
+
+    $productoModel = new \App\Models\ProductoModel();
+
+    $productoModel->where('categoria_id', $categoriaId)
+                  ->set([
+                      'stock' => (int) ($resultado['stock_total'] ?? 0),
+                      'costo' => (float) ($resultado['costo_unitario'] ?? 0),
+                  ])
+                  ->update();
+
+    return $data;
+}
+
 protected $allowedFields = [
     'nombre',
     'categoria_id',
