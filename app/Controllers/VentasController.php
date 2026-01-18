@@ -163,13 +163,15 @@ class VentasController extends BaseController
                 throw new \Exception('Stock insuficiente para: ' . $producto['nombre']);
             }
 
-            $detalleData = [
-                'venta_id' => $venta_id,
-                'producto_id' => $item['id'],
-                'cantidad' => $item['cantidad'],
-                'precio_unitario' => $item['precio'],
-                'subtotal' => $item['subtotal']
-            ];
+       $detalleData = [
+    'venta_id' => $venta_id,
+    'producto_id' => $item['id'],
+    'nombre' => $item['nombre'], // 👈 NOMBRE CON EXTRAS
+    'cantidad' => $item['cantidad'],
+    'precio_unitario' => $item['precio'],
+    'subtotal' => $item['subtotal']
+];
+
             $this->detalleVentaModel->insert($detalleData);
 
             // ✅ Actualizar stock solo para bebidas
@@ -316,13 +318,12 @@ public function imprimirTicket($id)
 
     $detalleModel = new DetalleVentaModel();
     $detalles = $detalleModel
-        ->select('detalle_ventas.*, productos.nombre as producto_nombre')
-        ->join('productos', 'productos.id = detalle_ventas.producto_id')
-        ->where('detalle_ventas.venta_id', $id)
-        ->findAll();
+    ->where('venta_id', $id)
+    ->findAll();
+
 
    
-    $connector = new WindowsPrintConnector("POS-58");// nombre de tu impresora (AQUI COLOCAR EL NOMBRE)
+    $connector = new WindowsPrintConnector("POS-80");// nombre de tu impresora (AQUI COLOCAR EL NOMBRE)
     $printer = new Printer($connector);
 
   
@@ -370,7 +371,8 @@ public function imprimirTicket($id)
     }
 
     foreach($detalles as $d){
-        $producto_lines = splitText($d['producto_nombre'], $col_producto);
+        $producto_lines = splitText($d['nombre'], $col_producto);
+
         $cant = str_pad($d['cantidad'], $col_cant, ' ', STR_PAD_LEFT);
         $precio = str_pad(number_format($d['subtotal'],2), $col_precio, ' ', STR_PAD_LEFT);
 
@@ -394,14 +396,14 @@ public function imprimirTicket($id)
     $printer->text(str_pad("TOTAL: $".number_format($venta['total'],2), $max_chars, ' ', STR_PAD_LEFT)."\n");
     $printer->setEmphasis(false);
 
-    $printer->text("\n");
-    $printer->setJustification(Printer::JUSTIFY_CENTER);
-    $printer->text($config['mensaje_ticket'] ?? '¡Gracias por su compra!'."\n");
-    $printer->text('*** Venta '.strtoupper($venta['estado']).' ***'."\n");
-    $printer->text('Powered by POS System'."\n");
+ $printer->text("\n");
+        $printer->setJustification(Printer::JUSTIFY_CENTER);
+        $printer->text(($config['mensaje_ticket'] ?? '¡Gracias por su compra!') . "\n");
+        $printer->text('*** Venta '.strtoupper($venta['estado']).' ***'."\n");
 
-    $printer->cut();
-    $printer->close();
+        $printer->feed(3); 
+        $printer->cut();
+        $printer->close();
 }
 
     // CANCELAR VENTA

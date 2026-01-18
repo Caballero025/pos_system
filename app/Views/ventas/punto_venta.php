@@ -741,6 +741,8 @@ function abrirModal(productoId) {
         `;
     }
 
+    
+
 let tipo = 'bebida';
 const nombre = productoActual.nombre.toLowerCase();
 

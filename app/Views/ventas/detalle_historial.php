@@ -63,7 +63,7 @@
             <tbody>
                 <?php foreach($detalles as $detalle): ?>
                     <tr>
-                        <td><?= esc($detalle['producto_nombre']) ?></td>
+                        <td><?= esc($detalle['nombre']) ?></td>
                         <td><?= $detalle['cantidad'] ?></td>
                         <td>$<?= number_format($detalle['precio_unitario'], 2) ?></td>
                         <td>$<?= number_format($detalle['subtotal'], 2) ?></td>
