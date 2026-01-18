@@ -385,10 +385,19 @@ carrito.forEach((item, index) => {
 
 
 function eliminarDelCarrito(index) {
-    console.log('Eliminar item:', index);
+
+    const item = carrito[index];
+    if (!item) return;
+
+    // 🥩 Si se elimina un servicio → eliminar tortillas
+    if (item.esServicio) {
+        carrito = carrito.filter(i => !i.esTortillas);
+    }
+
     carrito.splice(index, 1);
     actualizarCarrito();
 }
+
 function modificarCantidad(index, cambio) {
 
     const item = carrito[index];
@@ -403,15 +412,17 @@ function modificarCantidad(index, cambio) {
     let incremento = item.esServicio ? 0.1 : 1;
     item.cantidad = Math.round((item.cantidad + cambio * incremento) * 10) / 10;
 
-    if (item.cantidad <= 0) {
-        // 🗑️ Si se elimina el servicio, eliminar tortillas
-        if (item.esServicio) {
-            carrito = carrito.filter(i => !i.ligadoCarnitas);
-        }
-        carrito.splice(index, 1);
-        actualizarCarrito();
-        return;
+ if (item.cantidad <= 0) {
+
+    if (item.esServicio) {
+        carrito = carrito.filter(i => !i.esTortillas);
     }
+
+    carrito.splice(index, 1);
+    actualizarCarrito();
+    return;
+}
+
 
     item.subtotal = item.precio * item.cantidad;
 
@@ -630,6 +641,13 @@ let cantidadActual = 1;
 
 
 const opcionesPorProducto = {
+    kilo: {
+        tipoVenta: [
+            { tipo: 'kilo', nombre: 'Por kilo', icono: '⚖️' },
+            { tipo: 'monto', nombre: 'Por monto ($)', icono: '💵' }
+        ]
+    },
+
     taco: {
         extras: [{ nombre: 'Queso extra', precio: 2, icono: '🧀' }]
     },
@@ -637,35 +655,9 @@ const opcionesPorProducto = {
     torta: {
         extras: [{ nombre: 'Queso extra', precio: 5, icono: '🧀' }]
     },
+
     gordita: {
         extras: [{ nombre: 'Queso extra', precio: 5, icono: '🧀' }]
-    },
-    carnitas: {
-        tipoVenta: [
-            { tipo: 'kilo', nombre: 'Por kilo', icono: '⚖️' },
-            { tipo: 'monto', nombre: 'Por monto ($)', icono: '💵' }
-        ]
-    },
-
-    bistec: {
-        tipoVenta: [
-            { tipo: 'kilo', nombre: 'Por kilo', icono: '⚖️' },
-            { tipo: 'monto', nombre: 'Por monto ($)', icono: '💵' }
-        ]
-    },
-
-    chorizo: {
-        tipoVenta: [
-            { tipo: 'kilo', nombre: 'Por kilo', icono: '⚖️' },
-            { tipo: 'monto', nombre: 'Por monto ($)', icono: '💵' }
-        ]
-    },
-
-    arrachera: {
-        tipoVenta: [
-            { tipo: 'kilo', nombre: 'Por kilo', icono: '⚖️' },
-            { tipo: 'monto', nombre: 'Por monto ($)', icono: '💵' }
-        ]
     },
 
     bebida: {}
@@ -696,12 +688,16 @@ function calcularPesoDesdeMonto() {
 }
 
 function esServicio(producto) {
-    const nombre = producto.nombre.trim().toLowerCase();
-    return nombre === 'servicio de carnitas' ||
-           nombre === 'servicio de campechano' ||
-           nombre === 'servicio de arrachera' ||
-           nombre === 'servicio de chorizo';
+    if (!producto || !producto.nombre) return false;
+
+    const nombre = producto.nombre
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, ' ');
+
+    return nombre.startsWith('servicio');
 }
+
 
 
 function abrirModal(productoId) {
@@ -745,17 +741,42 @@ function abrirModal(productoId) {
         `;
     }
 
-    // Determinar tipo de producto
-    let tipo = 'bebida';
-    const nombre = productoActual.nombre.toLowerCase();
-   if (nombre.includes('taco')) tipo = 'taco';
-else if (nombre.includes('torta')) tipo = 'torta';
-else if (nombre.includes('carnita') || nombre.includes('servicio de campechano')) tipo = 'carnitas';
-else if (nombre.includes('bistec') || nombre.includes('servicio de arrachera')) tipo = 'bistec';
-else if (nombre.includes('chorizo') || nombre.includes('servicio de chorizo')) tipo = 'chorizo';
-else if (nombre.includes('arrachera')) tipo = 'arrachera';
-else if (nombre.includes('gordita')) tipo = 'gordita';
+let tipo = 'bebida';
+const nombre = productoActual.nombre.toLowerCase();
 
+// 🔹 1. COMIDA POR PIEZA (PRIORIDAD ALTA)
+const esPieza =
+    nombre.includes('taco') ||
+    nombre.includes('torta') ||
+    nombre.includes('gordita') ||
+    nombre.includes('quesadilla');
+
+// 🔹 2. SERVICIOS
+const esServicioProducto = nombre.startsWith('servicio de');
+
+// 🔹 3. CARNE DIRECTA (SOLO nombre exacto)
+const esCarneDirecta =
+    !esPieza && (
+        nombre === 'bistec' ||
+        nombre === 'carnitas' ||
+        nombre === 'chorizo' ||
+        nombre === 'campechano' ||
+        nombre === 'arrachera'
+    );
+
+// 🔹 4. DECISIÓN FINAL
+if (esServicioProducto || esCarneDirecta) {
+    tipo = 'kilo';
+}
+else if (esPieza) {
+    if (nombre.includes('taco')) tipo = 'taco';
+    else if (nombre.includes('torta')) tipo = 'torta';
+    else if (nombre.includes('gordita')) tipo = 'gordita';
+    else if (nombre.includes('quesadilla')) tipo = 'quesadilla';
+}
+else {
+    tipo = 'bebida';
+}
 
     const config = opcionesPorProducto[tipo] || {};
     const opcionesDiv = document.querySelector('.modal-opciones');
@@ -980,19 +1001,21 @@ function confirmarProducto() {
 
         const kilos = Math.round((monto / productoActual.precio) * 10) / 10;
 
-        carrito.push({
-            id: productoActual.id,
-            nombre: `${productoActual.nombre} (${kilos} kg)`,
-            precio: monto,
-            cantidad: kilos,
-            subtotal: monto,
-            tipoVenta: 'monto',
-            esServicioCarnitas: esServicio(productoActual) || false
-        });
+carrito.push({
+    id: productoActual.id,
+    nombre: `${productoActual.nombre} (${kilos} kg)`,
+    precio: monto,
+    cantidad: kilos,
+    subtotal: monto,
+    tipoVenta: 'monto',
+    esServicio: esServicio(productoActual)
+});
 
-        if (esServicio(productoActual)) {
-            agregarActualizarTortillas(kilos);
-        }
+
+if (typeof agregarActualizarTortillas === 'function' && esServicio(productoActual)) {
+    agregarActualizarTortillas(kilos);
+}
+
     }
 
     // 🥩 PRODUCTOS POR KILO
@@ -1006,20 +1029,22 @@ function confirmarProducto() {
         cantidadActual = Math.round(cantidadActual * 10) / 10;
         const subtotal = productoActual.precio * cantidadActual;
 
-        carrito.push({
-            id: productoActual.id,
-            nombre: `${productoActual.nombre} (${cantidadActual} kg)`,
-            precio: productoActual.precio,
-            cantidad: cantidadActual,
-            subtotal: subtotal,
-            tipoVenta: 'kilo',
-           esServicioCarnitas: esServicio(productoActual) || false
+carrito.push({
+    id: productoActual.id,
+    nombre: `${productoActual.nombre} (${cantidadActual} kg)`,
+    precio: productoActual.precio,
+    cantidad: cantidadActual,
+    subtotal: subtotal,
+    tipoVenta: 'kilo',
+    esServicio: esServicio(productoActual)
+});
 
-        });
 
-        if (esServicio(productoActual)) {
-            agregarActualizarTortillas(cantidadActual);
-        }
+
+if (typeof agregarActualizarTortillas === 'function' && esServicio(productoActual)) {
+    agregarActualizarTortillas(cantidadActual);
+}
+
     }
 
     // 🌮 PRODUCTOS NORMALES (tacos, tortas, bebidas, etc.)
@@ -1152,22 +1177,24 @@ function actualizarCantidadDesdeInput(input) {
 
 
 
-function agregarActualizarTortillas(kilosCarnitas) {
+function agregarActualizarTortillas(kilosServicio) {
 
     const productoTortillas = Object.values(productosMap)
-        .find(p => p.nombre.trim().toLowerCase() === 'tortillas');
+        .find(p => p.nombre.toLowerCase().includes('tortilla'));
 
-    if (!productoTortillas) return;
+    if (!productoTortillas) {
+        console.warn('⚠️ Producto tortillas no encontrado');
+        return;
+    }
 
     const precioPorKilo = 40;
-    const kilos = Math.round(kilosCarnitas * 10) / 10;
+    const kilos = Math.round(kilosServicio * 10) / 10;
     const subtotal = kilos * precioPorKilo;
 
-    let tortillas = carrito.find(i => i.ligadoCarnitas);
+    let tortillas = carrito.find(i => i.esTortillas);
 
     if (tortillas) {
         tortillas.cantidad = kilos;
-        tortillas.precio = precioPorKilo;
         tortillas.subtotal = subtotal;
         tortillas.nombre = `Tortillas (${kilos} kg)`;
     } else {
@@ -1178,7 +1205,7 @@ function agregarActualizarTortillas(kilosCarnitas) {
             cantidad: kilos,
             subtotal: subtotal,
             bloqueado: true,
-            ligadoCarnitas: true
+            esTortillas: true
         });
     }
 }
