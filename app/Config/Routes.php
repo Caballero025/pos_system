@@ -62,4 +62,18 @@ $routes->get('/ventas/detalle_historial/(:num)', 'VentasController::detalle_hist
 $routes->get('/ventas/imprimir/(:num)', 'VentasController::imprimirTicket/$1');
 $routes->get('/ventas/cancelar/(:num)', 'VentasController::cancelarVenta/$1');
 
+// Mostrar vista (si la usas, opcional)
+$routes->get(
+    'admin/materias/agregar-cantidad/(:num)',
+    'MateriasController::agregarCantidad/$1'
+);
+
+// Guardar cantidad desde el modal
+$routes->post(
+    'admin/materias/guardar-cantidad/(:num)',
+    'MateriasController::guardarCantidad/$1'
+);
+
+
+
 

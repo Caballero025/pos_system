@@ -477,6 +477,124 @@
     box-shadow: 0 25px 45px rgba(0,0,0,0.4);
 }
 
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.35);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #fff;
+    width: 340px;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.2);
+}
+
+.modal-content h3 {
+    margin-bottom: 15px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.modal-content label {
+    font-size: 13px;
+    margin-top: 10px;
+    display: block;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 13px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 18px;
+}
+
+.btn-cancel {
+    padding: 7px 12px;
+    font-size: 13px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    background: #818181;
+    cursor: pointer;
+}
+
+.btn-cancel:hover {
+    background: #bebebe;
+}
+
+.btn-save {
+    padding: 7px 14px;
+    font-size: 13px;
+    border-radius: 8px;
+    border: none;
+    background: #111;
+    color: #fff;
+    cursor: pointer;
+}
+
+.btn-save:hover {
+    background: #9f9f9f;
+}
+
+
+.btn-add {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #dadada;
+    background: #326da9;
+    border-radius: 8px;
+    text-decoration: none;
+    border: 1px solid #e0e0e0;
+    transition: all .15s ease;
+}
+
+.btn-add:hover {
+    background: #111;
+    color: #fff;
+    border-color: #111;
+}
+
+
+
+.btn-save:hover {
+    background: #000;
+}
+
+.modal-close {
+    position: absolute;
+    right: 18px;
+    top: 14px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #777;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(.96); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+
 .categoria-card img {
     width: 100%;
     height: 100%;

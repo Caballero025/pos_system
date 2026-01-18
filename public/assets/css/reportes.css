@@ -477,9 +477,28 @@ body {
         gap: 10px;
     }
 }
+.table-scroll {
+    overflow-x: auto;
+    max-width: 100%;
+    padding-bottom: 10px;
+}
+
+.table-scroll::-webkit-scrollbar {
+    height: 8px;
+}
+
+.table-scroll::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.table-scroll::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
 
 .tabla-reporte {
     width: 100%;
+    min-width: 600px; /* importante */
     border-collapse: collapse;
     margin-top: 10px;
 }
@@ -492,8 +511,8 @@ body {
 }
 
 .tabla-reporte th {
-    background-color: #333;  /* Color oscuro del encabezado */
-    color: #fff;             /* Texto blanco */
+    background-color: #333;
+    color: #fff;
     font-weight: bold;
 }
 

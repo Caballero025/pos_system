@@ -125,34 +125,38 @@
 
     <!-- PRODUCTOS DE INVERSIÓN Y BAJO STOCK -->
     <div class="row mt-4">
-        <div class="card-reporte full animate">
-            <div class="card-header-reporte">💼 Productos de Inversión</div>
-            <?php if(!empty($productosInversion)): ?>
-                <table class="tabla-reporte">
-                    <thead>
+      <div class="card-reporte full animate">
+    <div class="card-header-reporte">💼 Productos de Inversión</div>
+
+    <?php if(!empty($productosInversion)): ?>
+        <div class="table-scroll">
+            <table class="tabla-reporte">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Cantidad</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach($productosInversion as $p): ?>
                         <tr>
-                            <th>Nombre</th>
-                            <th>Cantidad</th>
-                            <th>Total</th>
+                            <td><?= esc($p['nombre']) ?></td>
+                            <td><?= esc($p['cantidad_total']) ?></td>
+                            <td>$<?= number_format($p['total_inversion'], 2) ?></td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach($productosInversion as $p): ?>
-                            <tr>
-                                <td><?= esc($p['nombre']) ?></td>
-                                <td><?= esc($p['cantidad']) ?></td>
-                                <td>$<?= number_format($p['precio'] * $p['cantidad'], 2) ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            <?php else: ?>
-                <div class="item-reporte">
-                    <span>No hay productos registrados</span>
-                    <span>-</span>
-                </div>
-            <?php endif; ?>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
         </div>
+    <?php else: ?>
+        <div class="item-reporte">
+            <span>No hay productos registrados</span>
+            <span>-</span>
+        </div>
+    <?php endif; ?>
+</div>
+
 
         <div class="card-reporte full animate">
             <div class="card-header-reporte">📦 Productos con bajo stock</div>

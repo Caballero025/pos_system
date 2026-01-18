@@ -128,12 +128,14 @@ public function index()
     // ───────────────────────────────
     // Productos inversión
     // ───────────────────────────────
-    $productosInversion = $this->materiaModel
-        ->select('materias_primas.*, categorias_prima.nombre AS categoria_nombre')
-        ->join('categorias_prima', 'categorias_prima.id = materias_primas.categoria_id')
-        ->where('materias_primas.activo', 1)
-        ->orderBy('categorias_prima.nombre', 'ASC')
-        ->findAll();
+$productosInversion = $this->entradaModel
+    ->select('materia_entradas.materia_id, materias_primas.nombre, SUM(materia_entradas.cantidad) AS cantidad_total, SUM(materia_entradas.total) AS total_inversion')
+    ->join('materias_primas', 'materias_primas.id = materia_entradas.materia_id')
+    ->groupBy('materia_entradas.materia_id, materias_primas.nombre')
+    ->orderBy('materias_primas.nombre', 'ASC')
+    ->findAll();
+
+
 
     // ───────────────────────────────
     // Ventas e inversión por día (lunes a sábado)
@@ -153,6 +155,7 @@ public function index()
         ->groupBy('DATE(fecha)')
         ->orderBy('fecha', 'ASC')
         ->findAll();
+
 
     // ───────────────────────────────
     // Llenar datos por día

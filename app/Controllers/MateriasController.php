@@ -204,4 +204,51 @@ public function obtenerPorCategoria($categoriaId)
     return $this->response->setJSON($materias);
 }
 
+
+public function guardarCantidad($materiaId)
+{
+    $this->checkLogin();
+
+    $materia = $this->materiaModel->find($materiaId);
+    if (!$materia) {
+        return redirect()->back()->with('error', 'Materia no encontrada');
+    }
+
+    $cantidadNueva = (float) $this->request->getPost('cantidad');
+    $precio        = (float) $this->request->getPost('precio');
+
+    if ($cantidadNueva <= 0 || $precio <= 0) {
+        return redirect()->back()->with('error', 'Datos inválidos');
+    }
+
+    // 🔹 Última entrada registrada
+    $entrada = $this->entradaModel
+        ->where('materia_id', $materiaId)
+        ->orderBy('id', 'DESC')
+        ->first();
+
+    // 1️⃣ Registrar NUEVA entrada
+    $totalEntrada = $cantidadNueva * $precio;
+
+    $this->entradaModel->insert([
+        'materia_id'      => $materiaId,
+        'cantidad'        => $cantidadNueva,
+        'costo_unitario'  => $precio,
+        'total'           => $totalEntrada
+    ]);
+
+    // 2️⃣ Actualizar stock en materias_primas
+    $cantidadActual = $materia['cantidad'] + $cantidadNueva;
+
+    $this->materiaModel->update($materiaId, [
+        'cantidad' => $cantidadActual,
+        'precio'   => $precio // opcional si cambia
+    ]);
+
+    return redirect()->to('admin/materias')
+        ->with('success', 'Cantidad agregada correctamente');
+}
+
+
+
 }
