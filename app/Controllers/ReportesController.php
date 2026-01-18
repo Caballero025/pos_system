@@ -73,13 +73,17 @@ public function index()
     // ───────────────────────────────
     // Calcular lunes y sábado de la semana seleccionada
     // ───────────────────────────────
-    $lunes = (clone $primerDiaMes)->modify('+'.(($semana - 1) * 7).' days');
-    $diaSemana = (int)$lunes->format('N');
-    $lunes->modify('-'.($diaSemana - 1).' days'); // ajustar al lunes
-    $sabado = (clone $lunes)->modify('+5 days');
+// ───────────────────────────────
+// Calcular lunes y domingo de la semana seleccionada
+// ───────────────────────────────
+$lunes = (clone $primerDiaMes)->modify('+'.(($semana - 1) * 7).' days');
+$diaSemana = (int)$lunes->format('N');
+$lunes->modify('-'.($diaSemana - 1).' days'); // ajustar al lunes
+$domingo = (clone $lunes)->modify('+6 days');
 
-    $fechaInicio = $lunes->format('Y-m-d');
-    $fechaFin    = $sabado->format('Y-m-d');
+$fechaInicio = $lunes->format('Y-m-d');
+$fechaFin    = $domingo->format('Y-m-d');
+
 
     // ───────────────────────────────
     // Ventas del período
@@ -160,14 +164,16 @@ $productosInversion = $this->entradaModel
     // ───────────────────────────────
     // Llenar datos por día
     // ───────────────────────────────
-    $diasSemana = [
-        'Monday'    => 'Lunes',
-        'Tuesday'   => 'Martes',
-        'Wednesday' => 'Miércoles',
-        'Thursday'  => 'Jueves',
-        'Friday'    => 'Viernes',
-        'Saturday'  => 'Sábado',
-    ];
+$diasSemana = [
+    'Monday'    => 'Lunes',
+    'Tuesday'   => 'Martes',
+    'Wednesday' => 'Miércoles',
+    'Thursday'  => 'Jueves',
+    'Friday'    => 'Viernes',
+    'Saturday'  => 'Sábado',
+    'Sunday'    => 'Domingo',
+];
+
 
     $datosDia = [];
     $periodo = new \DatePeriod(new \DateTime($fechaInicio), new \DateInterval('P1D'), (new \DateTime($fechaFin))->modify('+1 day'));
@@ -256,10 +262,12 @@ public function ventas()
         $diaSemana = (int)$lunes->format('N');
         $lunes->modify('-'.($diaSemana - 1).' days');
 
-        $sabado = (clone $lunes)->modify('+5 days');
+        $domingo = (clone $lunes)->modify('+6 days');
+
 
         $fechaInicio = $lunes->format('Y-m-d');
-        $fechaFin    = $sabado->format('Y-m-d');
+        $fechaFin = $domingo->format('Y-m-d');
+
     }
 
     // ───────────────────────────────

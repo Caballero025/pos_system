@@ -701,128 +701,143 @@ function esServicio(producto) {
 
 
 function abrirModal(productoId) {
-    productoActual = productosMap[productoId];
-    if (!productoActual) return;
+  const modal = document.getElementById('modal-agregados');
 
-    cantidadActual = 1;
+  // ❌ NO agregar clase aquí
+  // modal.classList.add('modal-refrescos');
 
-    // Configurar input de cantidad
-    const inputCantidad = document.getElementById('cantidad-producto');
-    inputCantidad.value = 1;
+  modal.style.display = 'block';
+  productoActual = productosMap[productoId];
+  if (!productoActual) return;
 
-    if (productoActual.medida_id == 1) { // kilos
-        inputCantidad.step = "0.1";
-        inputCantidad.min = "0.1";
-    } else { // piezas
-        inputCantidad.step = "1";
-        inputCantidad.min = "1";
-    }
+  cantidadActual = 1;
 
-    // Nombre y precio
-    document.getElementById('modal-producto-nombre').textContent = productoActual.nombre;
-    document.getElementById('modal-precio-base').textContent = productoActual.precio.toFixed(2);
+  // Configurar input de cantidad
+  const inputCantidad = document.getElementById('cantidad-producto');
+  inputCantidad.value = 1;
 
-    // Limpiar modal
-    document.querySelector('.modal-opciones').innerHTML = '';
-    document.getElementById('monto-control').style.display = 'none';
-    document.querySelector('.cantidad-control').style.display = 'flex';
-    document.getElementById('monto-input').value = '';
-    document.getElementById('resultado-peso').style.display = 'none';
-    tipoVentaSeleccionado = null;
+  if (productoActual.medida_id == 1) { // kilos
+      inputCantidad.step = "0.1";
+      inputCantidad.min = "0.1";
+  } else { // piezas
+      inputCantidad.step = "1";
+      inputCantidad.min = "1";
+  }
 
-    // 🔹 Servicio de carnitas
-    if (esServicio(productoActual)) {
-        document.querySelector('.modal-opciones').innerHTML += `
-            <label class="extra-item obligatorio">
-                <input type="checkbox" checked disabled>
-                <span>🫓 Tortillas</span>
-                <small>Incluido</small>
-            </label>
-        `;
-    }
+  // Nombre y precio
+  document.getElementById('modal-producto-nombre').textContent = productoActual.nombre;
+  document.getElementById('modal-precio-base').textContent = productoActual.precio.toFixed(2);
 
-    
+  // Limpiar modal
+  document.querySelector('.modal-opciones').innerHTML = '';
+  document.getElementById('monto-control').style.display = 'none';
+  document.querySelector('.cantidad-control').style.display = 'flex';
+  document.getElementById('monto-input').value = '';
+  document.getElementById('resultado-peso').style.display = 'none';
+  tipoVentaSeleccionado = null;
 
-let tipo = 'bebida';
-const nombre = productoActual.nombre.toLowerCase();
+  // 🔹 Servicio de carnitas
+  if (esServicio(productoActual)) {
+      document.querySelector('.modal-opciones').innerHTML += `
+          <label class="extra-item obligatorio">
+              <input type="checkbox" checked disabled>
+              <span>🫓 Tortillas</span>
+              <small>Incluido</small>
+          </label>
+      `;
+  }
 
-// 🔹 1. COMIDA POR PIEZA (PRIORIDAD ALTA)
-const esPieza =
-    nombre.includes('taco') ||
-    nombre.includes('torta') ||
-    nombre.includes('gordita') ||
-    nombre.includes('quesadilla');
+  let tipo = 'bebida';
+  const nombre = productoActual.nombre.toLowerCase();
 
-// 🔹 2. SERVICIOS
-const esServicioProducto = nombre.startsWith('servicio de');
+  // 🔹 1. COMIDA POR PIEZA (PRIORIDAD ALTA)
+  const esPieza =
+      nombre.includes('taco') ||
+      nombre.includes('torta') ||
+      nombre.includes('gordita') ||
+      nombre.includes('quesadilla');
 
-// 🔹 3. CARNE DIRECTA (SOLO nombre exacto)
-const esCarneDirecta =
-    !esPieza && (
-        nombre === 'bistec' ||
-        nombre === 'carnitas' ||
-        nombre === 'chorizo' ||
-        nombre === 'campechano' ||
-        nombre === 'arrachera'
-    );
+  // 🔹 2. SERVICIOS
+  const esServicioProducto = nombre.startsWith('servicio de');
 
-// 🔹 4. DECISIÓN FINAL
-if (esServicioProducto || esCarneDirecta) {
-    tipo = 'kilo';
+  // 🔹 3. CARNE DIRECTA (SOLO nombre exacto)
+  const esCarneDirecta =
+      !esPieza && (
+          nombre === 'bistec' ||
+          nombre === 'carnitas' ||
+          nombre === 'chorizo' ||
+          nombre === 'campechano' ||
+          nombre === 'arrachera'
+      );
+
+  // 🔹 4. DECISIÓN FINAL
+  if (esServicioProducto || esCarneDirecta) {
+      tipo = 'kilo';
+  }
+  else if (esPieza) {
+      if (nombre.includes('taco')) tipo = 'taco';
+      else if (nombre.includes('torta')) tipo = 'torta';
+      else if (nombre.includes('gordita')) tipo = 'gordita';
+      else if (nombre.includes('quesadilla')) tipo = 'quesadilla';
+  }
+  else {
+      tipo = 'bebida';
+  }
+
+  const config = opcionesPorProducto[tipo] || {};
+  const opcionesDiv = document.querySelector('.modal-opciones');
+
+  // 🔹 Tipo de venta (kilo / monto)
+  if (config.tipoVenta) {
+      config.tipoVenta.forEach(op => {
+          const btn = document.createElement('button');
+          btn.className = 'opcion-btn';
+          btn.innerHTML = `${op.icono} ${op.nombre}`;
+          btn.onclick = () => seleccionarTipoVenta(op.tipo);
+          opcionesDiv.appendChild(btn);
+      });
+      document.querySelector('.cantidad-control').style.display = 'none';
+  }
+
+  // 🔹 Extras
+  if (config.extras) {
+      config.extras.forEach(extra => {
+          opcionesDiv.innerHTML += `
+              <label class="extra-item">
+                  <input type="checkbox" value="${extra.precio}" data-nombre="${extra.nombre}">
+                  <span>${extra.icono} ${extra.nombre}</span>
+                  <small>+$${extra.precio}</small>
+              </label>
+          `;
+      });
+  }
+
+  // 🔹 Refresco 600 ml
+  if (productoActual.nombre.toLowerCase().includes('refresco 600ml')) {
+      cargarRefrescos600();
+  }
+  if (productoActual.nombre.toLowerCase().includes('refresco vidrio')) {
+      cargarRefrescosvidrio();
+  }
+  if (productoActual.nombre.toLowerCase().includes('agua de sabor')) {
+      cargarOpcionesAgua();
+  }
+
+  // 🔹 SOLO PARA REFRESCOS Y AGUA: hacer modal más ancho
+  if (
+    nombre.includes('refresco 600ml') ||
+    nombre.includes('refresco vidrio') ||
+    nombre.includes('agua de sabor')
+  ) {
+    modal.classList.add('modal-refrescos');
+  } else {
+    modal.classList.remove('modal-refrescos');
+  }
+
+  // Abrir modal
+  document.getElementById('modal-agregados').style.display = 'flex';
 }
-else if (esPieza) {
-    if (nombre.includes('taco')) tipo = 'taco';
-    else if (nombre.includes('torta')) tipo = 'torta';
-    else if (nombre.includes('gordita')) tipo = 'gordita';
-    else if (nombre.includes('quesadilla')) tipo = 'quesadilla';
-}
-else {
-    tipo = 'bebida';
-}
 
-    const config = opcionesPorProducto[tipo] || {};
-    const opcionesDiv = document.querySelector('.modal-opciones');
-
-    // 🔹 Tipo de venta (kilo / monto)
-    if (config.tipoVenta) {
-        config.tipoVenta.forEach(op => {
-            const btn = document.createElement('button');
-            btn.className = 'opcion-btn';
-            btn.innerHTML = `${op.icono} ${op.nombre}`;
-            btn.onclick = () => seleccionarTipoVenta(op.tipo);
-            opcionesDiv.appendChild(btn);
-        });
-        document.querySelector('.cantidad-control').style.display = 'none';
-    }
-
-    // 🔹 Extras
-    if (config.extras) {
-        config.extras.forEach(extra => {
-            opcionesDiv.innerHTML += `
-                <label class="extra-item">
-                    <input type="checkbox" value="${extra.precio}" data-nombre="${extra.nombre}">
-                    <span>${extra.icono} ${extra.nombre}</span>
-                    <small>+$${extra.precio}</small>
-                </label>
-            `;
-        });
-    }
-
-    // 🔹 Refresco 600 ml
-    if (productoActual.nombre.toLowerCase().includes('refresco 600ml')) {
-        cargarRefrescos600();
-    }
-    if (productoActual.nombre.toLowerCase().includes('refresco vidrio')) {
-        cargarRefrescosvidrio();
-    }
-    if (productoActual.nombre.toLowerCase().includes('agua de sabor')) {
-    cargarOpcionesAgua();
-}
-
-
-    // Abrir modal
-    document.getElementById('modal-agregados').style.display = 'flex';
-}
 
 
 let tipoVentaSeleccionado = null;
@@ -978,6 +993,9 @@ function obtenerIncremento(item) {
 
 
 function cerrarModal() {
+const modal = document.getElementById('modal-agregados');
+    modal.classList.remove('modal-refrescos');
+    modal.style.display = 'none';
     document.getElementById('modal-agregados').style.display = 'none';
     productoActual = null;
     tipoVentaSeleccionado = null;

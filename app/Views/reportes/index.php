@@ -208,43 +208,54 @@ function llenarSemanas() {
     const mes  = parseInt(document.getElementById('mes').value);
     const selectSemana = document.getElementById('semana');
 
+    // Si no encuentra el select, detener
+    if (!selectSemana) {
+        console.error("No se encontró el select de semanas");
+        return;
+    }
+
     selectSemana.innerHTML = '';
 
-    const primerDia = new Date(anio, mes-1, 1);
-    const ultimoDia = new Date(anio, mes, 0);
+    const ultimoDia = new Date(anio, mes, 0).getDate();
 
     let semana = 1;
     let diasEnSemana = 0;
 
-    for (let dia = 1; dia <= ultimoDia.getDate(); dia++) {
-        const fecha = new Date(anio, mes-1, dia);
-        const diaSemana = fecha.getDay(); // 0=Domingo, 1=Lunes,...,6=Sábado
-
-        // Si es domingo, no se cuenta
-        if (diaSemana === 0) continue;
-
+    for (let dia = 1; dia <= ultimoDia; dia++) {
         diasEnSemana++;
 
-        // Si ya se completaron 6 días (Lun a Sab), se cuenta una semana
-        if (diasEnSemana === 6) {
+        if (diasEnSemana === 7) {
             semana++;
             diasEnSemana = 0;
         }
     }
 
-    // Si quedó algún día parcial (menos de 6), también cuenta como semana
     const totalSemanas = diasEnSemana > 0 ? semana : semana - 1;
+
+    if (totalSemanas <= 0) {
+        selectSemana.innerHTML = '<option value="">No hay semanas</option>';
+        return;
+    }
+
+    // <-- AQUI tomamos la semana seleccionada desde PHP
+    const semanaSeleccionada = <?= $semana ?? 1 ?>;
 
     for (let s = 1; s <= totalSemanas; s++) {
         const option = document.createElement('option');
         option.value = s;
         option.text = 'Semana ' + s;
 
-        if (s == <?= $semana ?>) option.selected = true;
+        if (s == semanaSeleccionada) option.selected = true;
         selectSemana.appendChild(option);
     }
 }
 
+document.addEventListener('DOMContentLoaded', function() {
+    llenarSemanas();
+
+    document.getElementById('anio').addEventListener('change', llenarSemanas);
+    document.getElementById('mes').addEventListener('change', llenarSemanas);
+});
 // Inicializar al cargar la página
 llenarSemanas();
 

@@ -577,3 +577,16 @@
     font-size: 14px;
     font-weight: bold;
 }
+/* SOLO cuando sea refrescos */
+.modal-refrescos .modal-box {
+    width: 90%;
+    max-width: 1000px; /* más ancho */
+}
+
+.modal-refrescos .modal-opciones {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columnas */
+    gap: 10px;
+    max-height: 380px;
+    overflow-y: auto;
+}
