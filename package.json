@@ -1,0 +1,12 @@
+{
+  "name": "pos-system-full",
+  "version": "1.0.0",
+  "scripts": {
+    "install-deps": "cd electron-app && npm install",
+    "start": "cd electron-app && npm start",
+    "build": "cd electron-app && npm run build",
+    "build-installer": "makensis installer/setup.nsi",
+    "dev": "cd electron-app && npm run dev",
+    "package": "cd electron-app && npm run package"
+  }
+}

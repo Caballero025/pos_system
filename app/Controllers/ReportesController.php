@@ -73,17 +73,13 @@ public function index()
     // ───────────────────────────────
     // Calcular lunes y sábado de la semana seleccionada
     // ───────────────────────────────
-// ───────────────────────────────
-// Calcular lunes y domingo de la semana seleccionada
-// ───────────────────────────────
-$lunes = (clone $primerDiaMes)->modify('+'.(($semana - 1) * 7).' days');
-$diaSemana = (int)$lunes->format('N');
-$lunes->modify('-'.($diaSemana - 1).' days'); // ajustar al lunes
-$domingo = (clone $lunes)->modify('+6 days');
+    $lunes = (clone $primerDiaMes)->modify('+'.(($semana - 1) * 7).' days');
+    $diaSemana = (int)$lunes->format('N');
+    $lunes->modify('-'.($diaSemana - 1).' days'); // ajustar al lunes
+    $sabado = (clone $lunes)->modify('+5 days');
 
-$fechaInicio = $lunes->format('Y-m-d');
-$fechaFin    = $domingo->format('Y-m-d');
-
+    $fechaInicio = $lunes->format('Y-m-d');
+    $fechaFin    = $sabado->format('Y-m-d');
 
     // ───────────────────────────────
     // Ventas del período
@@ -135,6 +131,7 @@ $fechaFin    = $domingo->format('Y-m-d');
 $productosInversion = $this->entradaModel
     ->select('materia_entradas.materia_id, materias_primas.nombre, SUM(materia_entradas.cantidad) AS cantidad_total, SUM(materia_entradas.total) AS total_inversion')
     ->join('materias_primas', 'materias_primas.id = materia_entradas.materia_id')
+
     ->groupBy('materia_entradas.materia_id, materias_primas.nombre')
     ->orderBy('materias_primas.nombre', 'ASC')
     ->findAll();
@@ -164,16 +161,14 @@ $productosInversion = $this->entradaModel
     // ───────────────────────────────
     // Llenar datos por día
     // ───────────────────────────────
-$diasSemana = [
-    'Monday'    => 'Lunes',
-    'Tuesday'   => 'Martes',
-    'Wednesday' => 'Miércoles',
-    'Thursday'  => 'Jueves',
-    'Friday'    => 'Viernes',
-    'Saturday'  => 'Sábado',
-    'Sunday'    => 'Domingo',
-];
-
+    $diasSemana = [
+        'Monday'    => 'Lunes',
+        'Tuesday'   => 'Martes',
+        'Wednesday' => 'Miércoles',
+        'Thursday'  => 'Jueves',
+        'Friday'    => 'Viernes',
+        'Saturday'  => 'Sábado',
+    ];
 
     $datosDia = [];
     $periodo = new \DatePeriod(new \DateTime($fechaInicio), new \DateInterval('P1D'), (new \DateTime($fechaFin))->modify('+1 day'));
@@ -262,12 +257,10 @@ public function ventas()
         $diaSemana = (int)$lunes->format('N');
         $lunes->modify('-'.($diaSemana - 1).' days');
 
-        $domingo = (clone $lunes)->modify('+6 days');
-
+        $sabado = (clone $lunes)->modify('+5 days');
 
         $fechaInicio = $lunes->format('Y-m-d');
-        $fechaFin = $domingo->format('Y-m-d');
-
+        $fechaFin    = $sabado->format('Y-m-d');
     }
 
     // ───────────────────────────────
