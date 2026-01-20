@@ -37,9 +37,13 @@
     if ($producto['categoria_id'] == 1) {
         // Comida → mostrar siempre
         $mostrar = true;
-    } elseif ($producto['categoria_id'] == 2 && $producto['stock'] > 0) {
-        // Bebida → mostrar solo si stock > 0
-        $mostrar = true;
+    } elseif ($producto['categoria_id'] == 2) {
+        if (stripos($producto['nombre'], 'agua') !== false) {
+            $mostrar = true;
+        }
+        elseif ($producto['stock'] > 0) {
+            $mostrar = true;
+        }
     }
     ?>
 
@@ -63,6 +67,58 @@
 </div>
 
     </div>
+
+
+    <!-- MODAL ESPECIAL: GORDITA A LA PLANCHA -->
+<div id="modal-gordita-plancha" class="modal-overlay" style="display:none;">
+  <div class="modal-box minimal">
+
+    <div class="modal-header">
+      <span class="modal-icon"></span>
+      <h3>Gordita a la plancha</h3>
+    </div>
+
+    <p class="modal-precio">
+      $<span id="modal-precio-gordita"></span>
+    </p>
+
+    <div class="modal-opciones-gordita">
+      <h4>Elige tu carne</h4>
+      <label><input type="radio" name="carne-gordita" value="Campechano" checked> Campechano</label><br>
+      <label><input type="radio" name="carne-gordita" value="Arrachera"> Arrachera</label><br>
+      <label><input type="radio" name="carne-gordita" value="Bistec"> Bistec</label>
+    </div>
+
+    <div class="modal-extras-gordita">
+      <h4>Extras</h4>
+      <label><input type="checkbox" id="extra-queso-gordita" value="5"> 🧀 Queso (+$5)</label>
+    </div>
+
+   <div class="cantidad-control">
+  <button type="button" onclick="cambiarCantidad(-1, 'cantidad-gordita')">−</button>
+
+  <input
+  type="number"
+  id="cantidad-gordita"
+  value="1"
+  inputmode="decimal"
+  oninput="actualizarCantidadDesdeInput(this)"
+  min="0.1"
+  step="0.1"
+  style="text-align:center;">
+
+  <button type="button" onclick="cambiarCantidad(1, 'cantidad-gordita')">+</button>
+</div>
+
+
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="cerrarModalGordita()">Cancelar</button>
+      <button class="btn-confirm" onclick="confirmarGordita()">Agregar</button>
+    </div>
+
+  </div>
+</div>
+
 <!-- MODAL DE AGREGADOS -->
 <div id="modal-agregados" class="modal-overlay" style="display:none;">
   <div class="modal-box minimal">
@@ -98,19 +154,20 @@
 </div>
 
 <div class="cantidad-control">
-    <button type="button" onclick="cambiarCantidad(-1)">−</button>
+  <button type="button" onclick="cambiarCantidad(-1, 'cantidad-producto')">−</button>
 
-<input
+  <input
     type="number"
     id="cantidad-producto"
     value="1"
     inputmode="decimal"
     oninput="actualizarCantidadDesdeInput(this)"
     min="0.1"
-    step="0.1" <!-- 🔹 Esto permite decimales -->
+    step="0.1">
 
-    <button type="button" onclick="cambiarCantidad(1)">+</button>
+  <button type="button" onclick="cambiarCantidad(1, 'cantidad-producto')">+</button>
 </div>
+
     <div class="modal-actions">
       <button class="btn-cancel" onclick="cerrarModal()">Cancelar</button>
       <button class="btn-confirm" onclick="confirmarProducto()">Agregar</button>
@@ -504,9 +561,6 @@ function procesarVenta() {
     
     const cambio = efectivo - total;
     
-    if (!confirm(`¿Procesar venta por $${total.toFixed(2)}?\n\nEfectivo: $${efectivo.toFixed(2)}\nCambio: $${cambio.toFixed(2)}`)) {
-        return;
-    }
     
     const ventaData = {
         carrito: carrito,
@@ -534,8 +588,7 @@ function procesarVenta() {
     if (data.success) {
         showMessage(`✅ ${data.message}`, 'success');
 
-        const ticketUrl = `<?= base_url('ventas/imprimir/') ?>${data.venta_id}`;
-        window.open(ticketUrl, '_blank', 'width=400,height=600');
+    
 
         setTimeout(() => {
             location.reload();
@@ -699,9 +752,24 @@ function esServicio(producto) {
 }
 
 
-
 function abrirModal(productoId) {
+
+  productoActual = productosMap[productoId];
+  if (!productoActual) return;
+
+  // SI ES GORDITA A LA PLANCHA -> ABRIR MODAL ESPECIAL
+  if (productoActual.nombre.toLowerCase().includes('gordita a la plancha')) {
+    document.getElementById('modal-gordita-plancha').style.display = 'flex';
+    document.getElementById('modal-precio-gordita').textContent = productoActual.precio.toFixed(2);
+    document.getElementById('cantidad-gordita').value = 1;
+cantidadActual = 1;
+
+    return;
+  }
+
+  // SINO -> ABRIR EL MODAL NORMAL (el que ya tienes)
   const modal = document.getElementById('modal-agregados');
+  modal.style.display = 'block';
 
   // ❌ NO agregar clase aquí
   // modal.classList.add('modal-refrescos');
@@ -838,6 +906,46 @@ function abrirModal(productoId) {
   document.getElementById('modal-agregados').style.display = 'flex';
 }
 
+function cerrarModalGordita() {
+  document.getElementById('modal-gordita-plancha').style.display = 'none';
+  productoActual = null;
+}
+
+function confirmarGordita() {
+
+  const carne = document.querySelector('input[name="carne-gordita"]:checked').value;
+
+  const extras = [
+    { nombre: 'Queso extra', precio: 5, icono: '🧀' }
+  ];
+
+  let extraTotal = 0;
+  let extrasSeleccionados = [];
+
+  if (document.getElementById('extra-queso-gordita').checked) {
+    extraTotal += extras[0].precio;
+    extrasSeleccionados.push(extras[0].nombre);
+  }
+
+  // ✅ Aquí está el cambio
+  const cantidad = parseFloat(document.getElementById('cantidad-gordita').value);
+
+  const precioFinal = productoActual.precio + extraTotal;
+  const subtotal = precioFinal * cantidad;
+
+  carrito.push({
+    id: productoActual.id,
+    nombre: `${productoActual.nombre} (${carne})` + (extrasSeleccionados.length ? ' + ' + extrasSeleccionados.join(', ') : ''),
+    precio: precioFinal,
+    cantidad: cantidad,
+    subtotal: subtotal,
+    extras: extrasSeleccionados
+  });
+
+  cerrarModalGordita();
+  actualizarCarrito();
+  showMessage('✓ Gordita agregada', 'success');
+}
 
 
 let tipoVentaSeleccionado = null;
@@ -958,32 +1066,29 @@ function cargarRefrescosvidrio() {
         .catch(err => console.error('Error cargando materias primas:', err));
 }
 
-function cambiarCantidad(valor) {
+function cambiarCantidad(valor, idInput) {
     if (!productoActual) return;
 
-    const input = document.getElementById('cantidad-producto');
+    const input = document.getElementById(idInput);
     if (!input) return;
 
     let cantidad = parseFloat(input.value) || 0;
 
-    // 🔹 Incremento según medida_id
-    // medida_id == 1 → kilo, otros → pieza
     const incremento = productoActual.medida_id == 1 ? 0.1 : 1;
 
     cantidad += valor * incremento;
 
     if (productoActual.medida_id == 1) {
-        // kilos: mínimo 0.1
         cantidad = Math.round(cantidad * 10) / 10;
         if (cantidad < 0.1) cantidad = 0.1;
     } else {
-        // piezas: mínimo 1 entero
         cantidad = Math.max(1, Math.round(cantidad));
     }
 
     input.value = cantidad;
     cantidadActual = cantidad;
 }
+
 
 function obtenerIncremento(item) {
     // Ejemplo: categoría 1 = pieza, categoría 2 = kilo

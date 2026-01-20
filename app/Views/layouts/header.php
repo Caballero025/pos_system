@@ -24,6 +24,7 @@
             <li><a href="<?= base_url('admin/materias') ?>">🥩 Materias primas</a></li>
             <li><a href="<?= base_url('ventas/historial') ?>">📊 Detalles ventas</a></li>
             <li><a href="<?= base_url('admin/reportes') ?>">📈 Reportes</a></li>
+            <li><a href="<?= base_url('admin/usuarios') ?>">👤 Personal</a></li>
             <li><a href="<?= base_url('admin/configuracion') ?>">⚙️ Configuración</a></li>
         </ul>
     <?php else: ?>

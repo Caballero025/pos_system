@@ -51,6 +51,16 @@ $routes->get('clientes/editar/(:num)', 'ClientesController::editar/$1');
 $routes->post('clientes/actualizar/(:num)', 'ClientesController::actualizar/$1');
 $routes->get('clientes/eliminar/(:num)', 'ClientesController::eliminar/$1');
 $routes->get('clientes/buscar', 'ClientesController::buscar');
+$routes->get('usuarios', 'UsuarioController::index');
+$routes->get('usuarios/crear', 'UsuarioController::crear');
+$routes->post('usuarios/guardar', 'UsuarioController::guardar');
+$routes->get('usuarios/editar/(:num)', 'UsuarioController::editar/$1');
+$routes->post('usuarios/actualizar/(:num)', 'UsuarioController::actualizar/$1');
+$routes->get('usuarios/eliminar/(:num)', 'UsuarioController::eliminar/$1');
+
+// ✅ RUTA DEL PAGO
+$routes->post('usuarios/guardar-pago/(:num)', 'UsuarioController::guardarPago/$1');
+
 });
 // Rutas de Ventas
 $routes->get('/ventas', 'VentasController::puntoVenta');
@@ -61,6 +71,7 @@ $routes->get('/ventas/detalle/(:num)', 'VentasController::detalle/$1');
 $routes->get('/ventas/detalle_historial/(:num)', 'VentasController::detalle_historial/$1');
 $routes->get('/ventas/imprimir/(:num)', 'VentasController::imprimirTicket/$1');
 $routes->get('/ventas/cancelar/(:num)', 'VentasController::cancelarVenta/$1');
+
 
 // Mostrar vista (si la usas, opcional)
 $routes->get(
